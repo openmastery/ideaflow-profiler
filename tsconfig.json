@@ -1,0 +1,9 @@
+{
+  "version": "0.0.0",
+  "compilerOptions": {
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

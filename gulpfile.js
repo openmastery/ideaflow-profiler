@@ -1,10 +1,14 @@
 var gulp = require('gulp');
+var del = require('del');
 
 var PATHS = {
   src: 'src/**/*.ts'
 };
 
-gulp.task('transpile', function () {
+gulp.task('clean', function () {
+  return del(['dist/**/*']);
+});
+gulp.task('transpile', ['clean'], function () {
   var typescript = require('gulp-typescript');
   var tsConfig = require('./tsconfig.json');
   

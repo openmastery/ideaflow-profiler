@@ -1,0 +1,8 @@
+initialize (dateFormat: "yyyy-MM-dd'T'HH:mm:ss", created: '2014-08-01T10:59:44', )
+stateChange (created: '2014-08-01T10:59:44', type: 'startIdeaFlowRecording', )
+editorActivity (created: '2014-08-01T10:59:44', name: '''TargetStatisticsPutAndGetHealthCheck.groovy''', duration: 67, modified: 'false', )
+note (created: '2014-08-01T11:00:26', comment: '''Can\'t run mvn builds on LO and ADAS from command line.''', )
+editorActivity (created: '2014-08-01T11:00:52', name: '''[[deactivated]]''', duration: 167, modified: 'false', )
+editorActivity (created: '2014-08-01T11:03:42', name: '''TargetStatisticsPutAndGetHealthCheck.groovy''', duration: 7, modified: 'false', )
+editorActivity (created: '2014-08-01T11:03:50', name: '''[[deactivated]]''', duration: 8928, modified: 'false', )
+editorActivity (created: '2014-08-01T13:32:38', name: '''TargetStatisticsPutAndGetHealthCheck.groovy''', duration: 5, modified: 'false', )

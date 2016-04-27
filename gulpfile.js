@@ -15,6 +15,11 @@ gulp.task('transpile', function () {
   return tsResult.js.pipe(gulp.dest('dist'));
 });
 
+function setHeaders (res, path) {
+  console.log(path);
+  res.setHeader('Content-Type', 'text/html');
+}
+
 gulp.task('serve', ['transpile'], function () {
   var http = require('http');
   var connect = require('connect');
@@ -23,7 +28,9 @@ gulp.task('serve', ['transpile'], function () {
 
   var port = 9000, app;
 
-  app = connect().use(serveStatic(__dirname));
+  app = connect().use(serveStatic(__dirname, {
+    setHeaders: setHeaders
+  }));
   http.createServer(app).listen(port, function () {
     open('http://localhost:' + port);
   });

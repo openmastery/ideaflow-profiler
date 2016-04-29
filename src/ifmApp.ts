@@ -2,8 +2,8 @@ import {Component} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
-import {IfmGraph} from './ifmgraph';
-import {IfmTimeline} from './ifmtimeline';
+import {IfmGraph} from './ifmGraph';
+import {IfmTimeline} from './ifmTimeline';
 
 @Component({
   selector: 'ifm-app',
@@ -14,5 +14,5 @@ export class IfmApp {
 
 }
 
-bootstrap(IfmApp, [HTTP_PROVIDERS])
+bootstrap(IfmApp)
   .catch(err => console.error(err));

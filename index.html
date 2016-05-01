@@ -18,12 +18,28 @@
     //configure system loader
     System.config({defaultJSExtensions: true});
 </script>
+<script src="https://npmcdn.com/typescript@1.8.10/lib/typescript.js"></script>
 <script src="/node_modules/rxjs/bundles/Rx.js"></script>
 <script src="/node_modules/angular2/bundles/angular2.js"></script>
 <script src="node_modules/angular2/bundles/http.dev.js"></script>
 <script>
+    System.config({
+      transpiler: 'typescript', 
+      typescriptOptions: { emitDecoratorMetadata: true }, 
+      map: {
+        'rxjs': 'lib/rxjs'
+      },
+//      paths: {
+//        'rxjs/operator/*': 'node_modules/rxjs/add/operator/*.js',
+//        'rxjs/*' : 'node_modules/rxjs/*.js'
+//      },
+      packages: {
+        'src': { defaultExtension: 'ts' },
+        'rxjs': { defaultExtension: 'js' }
+      } 
+    });
     //bootstrap the Angular2 application
-    System.import('dist/ifmApp').catch(console.log.bind(console));
+    System.import('src/ifmApp').catch(console.log.bind(console));
 </script>
 
 </html>

@@ -24,7 +24,7 @@ function setHeaders (res, path) {
   res.setHeader('Content-Type', 'text/html');
 }
 
-gulp.task('serve', ['transpile'], function () {
+gulp.task('serve', ['clean'], function () {
   var http = require('http');
   var connect = require('connect');
   var serveStatic = require('serve-static');

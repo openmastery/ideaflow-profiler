@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ideaflow/ifm-visualizer/issues"
   },
-  "homepage": "https://github.com/ideaflow/ifm-visualizer#readme"
+  "homepage": "https://github.com/ideaflow/ifm-visualizer#readme",
+  "dependencies": {
+    "angular": "^1.5.6"
+  }
 }

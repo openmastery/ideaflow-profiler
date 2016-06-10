@@ -1,0 +1,19 @@
+{
+  "name": "ifm-visualizer",
+  "version": "0.0.0",
+  "description": "Visualizer tool for IdeaFlow data",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ideaflow/ifm-visualizer.git"
+  },
+  "author": "Elias Carlston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ideaflow/ifm-visualizer/issues"
+  },
+  "homepage": "https://github.com/ideaflow/ifm-visualizer#readme"
+}

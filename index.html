@@ -17,47 +17,45 @@
 -->
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
 
-    <link rel="stylesheet" type="text/css" href="src/static/css/reset.css"/>
-    <link rel="stylesheet" type="text/css" href="src/static/css/main.css"/>
+      <link rel="stylesheet" type="text/css" href="src/static/css/reset.css"/>
+      <link rel="stylesheet" type="text/css" href="src/static/css/main.css"/>
 
-    <script src="../node_modules/angular/angular.js"></script>
-</head>
-<body>
-<div class="header">
-    <div class="nav option1">
-        <ul>
-            <li class="active"><a href="#"><span id="taskDate"></span></a></li>
-            <li><a href="#"><span id="taskDescription"></span></a></li>
-        </ul>
-        <img src="src/static/images/flow.svg" alt="Idea Flow"/>
+      <script src="../node_modules/angular/angular.js"></script>
+
+      <script src="src/js/app.js"></script>
+      <script src="src/js/config.value.js"></script>
+      <script src="src/js/http.service.js"></script>
+      <script src="src/js/taskdate.controller.js"></script>
+      <script src="src/js/taskdate.directive.js"></script>
+  </head>
+  <body ng-app="ifm-viz">
+    <div class="header" ng-controller="ifmTaskController">
+        <div class="nav option1">
+            <ul>
+                <li class="active"><a href="#"><span ifm-task-date></span></a></li>
+                <li><a href="#"><span id="taskDescription"></span></a></li>
+            </ul>
+            <img src="src/static/images/flow.svg" alt="Idea Flow"/>
+        </div>
     </div>
-</div>
 
-<div id="timelineHolder" class="timeline-holder"></div>
-<script>
-    //renderTimeline();
-</script>
+    <div id="timelineHolder" class="timeline-holder"></div>
 
-<div id="navtabs" class="navtabs">
-        <span class="menuButton default active">
-            <a href="#">Timeline</a>
-        </span>
-        <span id="nav_detail" class="menuButton default">
-            <a href="#">Activity Detail</a>
-        </span>
-        <span id="nav_stats" class="menuButton">
-            <a href="#">Stats</a>
-        </span>
-</div>
-<div id="contentPanel">
+    <div id="navtabs" class="navtabs">
+            <span class="menuButton default active">
+                <a href="#">Timeline</a>
+            </span>
+            <span id="nav_detail" class="menuButton default">
+                <a href="#">Activity Detail</a>
+            </span>
+            <span id="nav_stats" class="menuButton">
+                <a href="#">Stats</a>
+            </span>
+    </div>
+    <div id="contentPanel">
 
-</div>
-<script>
-    //renderTaskInfo();
-    //renderTimelineTree();
-</script>
-
-</body>
+    </div>
+  </body>
 </html>

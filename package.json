@@ -2,7 +2,7 @@
   "name": "ifm-visualizer",
   "version": "0.0.0",
   "description": "Visualizer tool for IdeaFlow data",
-  "main": "src/app.js",
+  "main": "src/js/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

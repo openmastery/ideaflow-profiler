@@ -4,7 +4,7 @@
 angular.module('ifm-viz')
   .factory('ifmHttp', ifmHttpService);
 
-ifmHttpService.$inject = ['$http', 'ifmConfig'];
+ifmHttpService.$inject = [ '$http', 'ifmConfig' ];
 
 function ifmHttpService($http, ifmConfig) {
   var iHS = {

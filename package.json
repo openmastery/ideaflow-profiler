@@ -4,7 +4,8 @@
   "description": "Visualizer tool for IdeaFlow data",
   "main": "src/js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start",
+    "lint": "node ./node_modules/jshint/bin/jshint ./src"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "angular-mocks": "^1.5.6",
     "jasmine": "^2.4.1",
+    "jshint": "^2.9.2",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",

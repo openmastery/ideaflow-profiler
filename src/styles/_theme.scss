@@ -1,0 +1,12 @@
+@import '../../node_modules/@angular/material/core/theming/all-theme';
+@include md-core();
+
+.light-theme {
+  $light-primary: md-palette($md-orange, 800);
+  $light-accent:  md-palette($md-grey, A200, A100, A400);
+  $light-warn:    md-palette($md-red);
+
+  $light-theme: md-light-theme($light-primary, $light-accent, $light-warn);
+
+  @include angular-material-theme($light-theme);
+}

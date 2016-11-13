@@ -1,0 +1,12 @@
+<div class="login">
+  <div class="background"></div>
+  <div class="app-input-section" *ngIf="! view.authenticated">
+    <div class="login-form">
+      <h4>Sign In</h4>
+      <md-input [value]="view.email" (input)="view.email = $event.target.value" placeholder="email address"></md-input>
+      <md-input [value]="view.password" (input)="view.password = $event.target.value" type="password" placeholder="password"></md-input>
+      <button md-raised-button color="primary" (click)="onSubmitLogin()">login</button>
+      <a href="/">forgot your password?</a>
+    </div>
+  </div>
+</div>

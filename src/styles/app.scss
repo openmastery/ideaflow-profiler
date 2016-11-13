@@ -1,0 +1,44 @@
+// These will be used later with variable overwrites, but likely in o3-design, not here.
+
+//import all core scss styles
+@import "core";
+
+body{
+
+  app-root{
+    display:flex;
+    min-height:100vh;
+    flex-direction:column;
+
+    main{
+      padding:40px;
+      flex:1;
+      transition: all .5s ease;
+
+      a{
+        color:$primary-color;
+      }
+
+      input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px white inset;
+      }
+    }
+    footer{
+      text-align:center;
+      color:md-color($md-grey, A100, .2);
+      background:md-color($md-grey, 900);
+      padding:20px;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  body{
+
+    app-root{
+      main{
+        padding:0;
+      }
+    }
+  }
+}

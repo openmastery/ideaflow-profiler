@@ -36,7 +36,7 @@ For development and testing, please use a local installation of http://github.co
 
 Available endpoints (requires X-API-KEY in header, email janelle@openmastery.org for a key, swagger docs and hateoas coming soon):
 
-http://ifm-publisher.herokuapp.com/task gets a list of available tasks for the user
-http://ifm-publisher.herokuapp.com/ideaflow/timeline/task/{taskId} gets the Idea Flow timeline for a task
-http://ifm-publisher.herokuapp.com/ideaflow/metrics/task/{taskId} gets the default metrics for a task (stats by subtask)
+* http://ifm-publisher.herokuapp.com/task gets a list of available tasks for the user
+* http://ifm-publisher.herokuapp.com/ideaflow/timeline/task/{taskId} gets the Idea Flow timeline for a task
+* http://ifm-publisher.herokuapp.com/ideaflow/metrics/task/{taskId} gets the default metrics for a task (stats by subtask)
 

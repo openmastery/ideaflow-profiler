@@ -29,3 +29,14 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Accessing REST APIs
+
+For development and testing, please use a local installation of http://github.com/openmastery/ifm-publisher or the remote deploy at http://ifm-publisher.herokuapp.com/
+
+Available endpoints (requires X-API-KEY in header, email janelle@openmastery.org for a key, swagger docs and hateoas coming soon):
+
+http://ifm-publisher.herokuapp.com/task gets a list of available tasks for the user
+http://ifm-publisher.herokuapp.com/ideaflow/timeline/task/{taskId} gets the Idea Flow timeline for a task
+http://ifm-publisher.herokuapp.com/ideaflow/metrics/task/{taskId} gets the default metrics for a task (stats by subtask)
+

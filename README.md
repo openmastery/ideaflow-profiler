@@ -32,11 +32,16 @@ To get more help on the `angular-cli` use `ng --help` or go check out the [Angul
 
 ## Accessing REST APIs
 
-For development and testing, please use a local installation of http://github.com/openmastery/ifm-publisher or the remote deploy at http://ifm-publisher.herokuapp.com/
+For development and testing, please use a local installation of http://github.com/openmastery/ideaflow or the remote deploy at http://om-ideaflow.herokuapp.com/
 
 Available endpoints (requires X-API-KEY in header, email janelle@openmastery.org for a key, swagger docs and hateoas coming soon):
 
-* http://ifm-publisher.herokuapp.com/task gets a list of available tasks for the user
-* http://ifm-publisher.herokuapp.com/ideaflow/timeline/task/{taskId} gets the Idea Flow timeline for a task
-* http://ifm-publisher.herokuapp.com/ideaflow/metrics/task/{taskId} gets the default metrics for a task (stats by subtask)
+* http://om-ideaflow.herokuapp.com/ideaflow/task gets a list of available tasks for the user
+* http://om-ideaflow.herokuapp.com/ideaflow/task/{taskId} gets a specific task
+
+* http://om-ideaflow.herokuapp.com/ideaflow/timeline/task/{taskId} gets the Idea Flow timeline for a task
+* http://om-ideaflow.herokuapp.com/ideaflow/metrics/task/{taskId} gets the default metrics for a task (stats by subtask)
+
+* http://om-ideaflow.herokuapp.com/ideaflow/timeline/subtask/{subtaskId} gets the Idea Flow timeline for a subtask
+* http://om-ideaflow.herokuapp.com/ideaflow/metrics/subtask/{subtaskId} gets the detailed metrics for a subtask
 

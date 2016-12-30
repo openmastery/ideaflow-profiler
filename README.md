@@ -1,8 +1,15 @@
-# IfmVisualizer
+# IdeaFlowDX Profiler & Automated FAQ
+
+The IdeaFlowDX Profiler helps developers drill into low-level details of individual "Idea Flow Maps" recorded with the data collection plugin (https://plugins.jetbrains.com/idea/plugin/9239), in order to find out what's causing productivity loss, and look for opportunities for improvement.
+
+When the Idea Flow Map profiles are annotated with notes, the details of the "Troubleshooting Journey" are automatically saved to a searchable FAQ that's indexed along with the code.
+
+The project is written in Angular2, and is dependent on the "/ideaflow" service, located here: http://github.com/openmastery/ideaflow, and deployed here: http://om-ideaflow.herokuapp.com
+
+## Development server
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.19-3.
 
-## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
@@ -29,19 +36,3 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-## Accessing REST APIs
-
-For development and testing, please use a local installation of http://github.com/openmastery/ideaflow or the remote deploy at http://om-ideaflow.herokuapp.com/
-
-Available endpoints (requires X-API-KEY in header, email janelle@openmastery.org for a key, swagger docs and hateoas coming soon):
-
-* http://om-ideaflow.herokuapp.com/ideaflow/task gets a list of available tasks for the user
-* http://om-ideaflow.herokuapp.com/ideaflow/task/{taskId} gets a specific task
-
-* http://om-ideaflow.herokuapp.com/ideaflow/timeline/task/{taskId} gets the Idea Flow timeline for a task
-* http://om-ideaflow.herokuapp.com/ideaflow/metrics/task/{taskId} gets the default metrics for a task (stats by subtask)
-
-* http://om-ideaflow.herokuapp.com/ideaflow/timeline/subtask/{subtaskId} gets the Idea Flow timeline for a subtask
-* http://om-ideaflow.herokuapp.com/ideaflow/metrics/subtask/{subtaskId} gets the detailed metrics for a subtask
-

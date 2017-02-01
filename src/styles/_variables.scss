@@ -1,6 +1,10 @@
-$primary-color: #ef6c00;
+@import "palette";
 
-/* Variables for LESS files */
-/* Global text color on `<body>`.*/
+$primary-color: al-color($al-orange,500);
 $gray:          #888888;
 $text-color:    $gray;
+$md-font-family: 'Open Sans', Arial, sans-serif !default;
+
+
+$template_1 : "if-light-theme";
+$template_2 : "if-dark-theme";

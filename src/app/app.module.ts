@@ -49,7 +49,7 @@ import {
     routing,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider],
+  providers: [RequestOptionsProvider, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

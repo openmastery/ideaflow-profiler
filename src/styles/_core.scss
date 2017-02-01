@@ -1,19 +1,19 @@
 //import css styles for material
-@import "../../node_modules/material-design-lite/src/material-design-lite";
-@import '../../node_modules/@angular/material/core/theming/all-theme';
-@include md-core();
-
-//@import "../../node_modules/@o3-design/core/core";
 
 //import variable declarations
 @import "variables";
 
 //import material theme for this style
+@import '../../node_modules/@angular/material/core/theming/all-theme';
 @import "theme";
 
 //import overrides for material styles
 @import "angular-material/_button";
 @import "angular-material/_card";
+@import "angular-material/_input";
+@import "angular-material/_tabs";
+
+@include md-core();
 
 // import the loading animation
 @import "loading/loading";

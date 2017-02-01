@@ -1,12 +1,42 @@
-@import '../../node_modules/@angular/material/core/theming/all-theme';
-@include md-core();
+[md-button], [md-raised-button], [md-icon-button], [md-fab], [md-mini-fab],
+md-button-toggle,
+md-card,
+md-checkbox,
+md-dialog, md-dialog-title, md-dialog-content, md-dialog-close, md-dialog-actions,
+md-grid-list, md-grid-tile,
+md-input, md-input-container, md-textarea,
+md-list, md-list-item,
+md-menu, button[md-menu-item],
+md-sidenav,
+md-radio-button, md-radio-group,
+md-select, button[md-select],
+md-slide-toggle,
+md-slider,
+md-tab, md-tab-group, md-tab[label],.md-tab-label,
+md-toolbar,
+[md-tooltip],button[md-tooltip]
+{
+  font-family: $md-font-family !important;
+}
 
-.light-theme {
-  $light-primary: md-palette($md-orange, 800);
-  $light-accent:  md-palette($md-grey, A200, A100, A400);
-  $light-warn:    md-palette($md-red);
+
+// Write custom themes for this application
+.#{$template_1} {
+  $light-primary: md-palette($md-deep-purple);
+  $light-accent:  md-palette($md-pink, A200, A100, A400);
+  $light-warn:    md-palette($md-pink);
 
   $light-theme: md-light-theme($light-primary, $light-accent, $light-warn);
 
   @include angular-material-theme($light-theme);
+}
+
+.#{$template_2} {
+  $dark-primary: md-palette($md-blue-grey);
+  $dark-accent:  md-palette($md-amber, A200, A100, A400);
+  $dark-warn:    md-palette($md-deep-orange);
+
+  $dark-theme: md-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+  @include angular-material-theme($dark-theme);
 }

@@ -1,0 +1,53 @@
+/* Updated Alert Logic Palette */
+$al-orange: (
+  400: #FA9A56,
+  500: #FF7F00,
+  600: #FF5100,
+  700: #F92B0E,
+  A100: #FDBE72,
+  contrast: (
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    A100: white
+  )
+);
+
+$al-gray: (
+  300: #C3C6B9,
+  400: #D5D6D2,
+  500: #535353,
+  600: #3C3C3C,
+  700: #6C6C6C,
+  800: #535353,
+  900: #999,
+  contrast: (
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);
+
+$if-blue: (
+  300: #C3C6B9,
+  400: #D5D6D2,
+  500: #394B61,
+  600: #3C3C3C,
+  700: #6C6C6C,
+  800: #2A3849,
+  900: #17202A,
+  contrast: (
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);

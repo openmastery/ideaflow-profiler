@@ -8,16 +8,38 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import {
   ElementsComponent,
-  LoginComponent
+  LoginComponent,
+  AccountComponent,
+  FaqComponent,
+  GlossaryComponent,
+  HomeComponent,
+  ProjectComponent,
+  SubtaskComponent,
+  TaskComponent
 } from '../views';
 import { routing } from './app.routing';
+
+import { Task } from '../models/task';
+
+import {
+  RequestOptionsProvider,
+  TaskService
+} from '../services';
 
 
 @NgModule({
   declarations: [
+    LoginComponent,
     AppComponent,
     ElementsComponent,
-    LoginComponent
+    LoginComponent,
+    AccountComponent,
+    FaqComponent,
+    GlossaryComponent,
+    HomeComponent,
+    ProjectComponent,
+    SubtaskComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +49,7 @@ import { routing } from './app.routing';
     routing,
     MaterialModule.forRoot()
   ],
-  providers: [],
+  providers: [RequestOptionsProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

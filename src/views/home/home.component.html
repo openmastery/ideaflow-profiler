@@ -29,12 +29,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
+        <tr *ngFor="let task of tasks; let i = index;">
+          <td>{{i}}</td>
+          <td>{{task.project}}</td>
+          <td>{{task.name}}</td>
+          <td>{{task.description}}</td>
+          <td>{{task?.modifyDate | amTimeAgo}}</td>
         </tr>
       </tbody>
     </table>

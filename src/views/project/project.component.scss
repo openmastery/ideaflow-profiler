@@ -1,0 +1,49 @@
+@import '../../../node_modules/@angular/material/core/core';
+
+app-project{
+  display:flex;
+  flex-direction: column;
+  height:100vh;
+  & > header{
+
+  }
+  & > main{
+    flex:1;
+    padding:20px;
+    & > header{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      h1{
+        margin:0;
+        font-size: 2em;
+      }
+      md-input-container{
+        display:flex;
+        .md-input-infix{
+          display:flex;
+        }
+        md-icon{
+          float:right;
+        }
+      }
+      &:last-child{
+        text-align: right;
+      }
+    }
+    table{
+      tr{
+        th,td{
+          &:last-child{
+            text-align:right;
+          }
+        }
+      }
+    }
+  }
+  & > footer{
+    background:md-color($md-deep-purple,900);
+    color:md-contrast($md-deep-purple,900);
+    padding:20px;
+  }
+}

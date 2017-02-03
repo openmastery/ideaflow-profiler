@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import {MomentModule} from 'angular2-moment/moment.module';
+import { MomentModule } from 'angular2-moment/moment.module';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';

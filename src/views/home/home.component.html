@@ -31,7 +31,7 @@
       <tbody>
         <tr *ngFor="let task of tasks; let i = index;">
           <td>{{i}}</td>
-          <td>{{task.project}}</td>
+          <td><a href="#/project/{{task.project}}">{{task.project}}</a></td>
           <td>{{task.name}}</td>
           <td>{{task.description}}</td>
           <td>{{task?.modifyDate | amTimeAgo}}</td>
@@ -41,5 +41,5 @@
   </main>
 </main>
 <footer>
-  sticky footer
+  Open Mastery, Inc.
 </footer>

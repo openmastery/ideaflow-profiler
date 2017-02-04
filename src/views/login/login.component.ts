@@ -18,13 +18,18 @@ export class LoginComponent implements OnInit, OnDestroy {
       password:       ''
   };
 
-  constructor() {
+  constructor(private router: Router) {
+
   }
 
   ngOnInit() {
   }
 
   ngOnDestroy() {
+  }
+  login(){
+    this.router.navigate(['/home']);
+    return false;
   }
 
 }

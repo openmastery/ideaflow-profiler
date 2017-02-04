@@ -23,11 +23,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTasks();
+    this.getTasks("");
   }
 
-  getTasks() {
-    this.taskService.getTasks()
+  getTasks(project) {
+    this.taskService.getTasks(project)
     .subscribe(
       tasks => this.tasks = tasks,
       error =>  this.errorMessage = <any>error);

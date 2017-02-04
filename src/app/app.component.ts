@@ -7,5 +7,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation:  ViewEncapsulation.None
 })
 export class AppComponent {
-  title = 'app works!';
+  public navLinks = [
+    "home",
+    "glossary",
+    "faq",
+    "spc"
+  ]
 }

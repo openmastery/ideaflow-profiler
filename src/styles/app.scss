@@ -31,7 +31,7 @@ body{
       }
     }
 
-    $table-color:md-color($md-deep-purple,900);
+    $table-color:#f2f2f2;
 
     // Tables
     table, th, td {
@@ -41,6 +41,7 @@ body{
     table {
       width:100%;
       display: table;
+      border-collapse: collapse;
 
       &.bordered > thead > tr,
       &.bordered > tbody > tr {

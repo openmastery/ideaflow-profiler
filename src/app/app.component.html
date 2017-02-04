@@ -1,11 +1,14 @@
 <main>
   <header>
-    <md-tab-group>
-      <md-tab label="Idea Flow"></md-tab>
-      <md-tab label="FAQ"></md-tab>
-      <md-tab label="Glossary"></md-tab>
-      <md-tab label="SPC"></md-tab>
-    </md-tab-group>
+    <nav md-tab-nav-bar>
+      <a md-tab-link
+           *ngFor="let link of navLinks"
+           [routerLink]="link"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive">
+          {{link}}
+        </a>
+    </nav>
   </header>
   <main>
     <router-outlet></router-outlet>

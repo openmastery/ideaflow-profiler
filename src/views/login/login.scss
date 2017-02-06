@@ -1,3 +1,5 @@
+@import "./src/styles/palette";
+@import "./src/styles/functions";
 app-login{
   position:fixed;
   top:0;
@@ -10,11 +12,23 @@ app-login{
   justify-content: center;
   align-items: center;
 
+  //background:url(../assets/mountains.jpg);
+  //background-size:cover;
+  //background-repeat: no-repeat;
+  //background-attachment: fixed;
+  //background-position: center;
+
   .login{
-    background:white;
     width:400px;
+    background-color:white;
     box-shadow: 0px 2px 3px rgba(0,0,0,.2);
     transition: width .5s ease;
+
+    &::before{
+      content:url(../assets/om_vector_logo.svg);
+      display:block;
+      transform: scale(0.5);
+    }
 
     .background{
       position:fixed;
@@ -23,17 +37,12 @@ app-login{
       left:-10%;
       width: 120%;
       height:110%;
-      background:url(../assets/mountains.jpg);
-      background-size:cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-position: center;
-
+      background:al-color($md-deep-purple,900);
     }
 
     .app-input-section{
       margin:0 auto;
-      padding:20px;
+      padding:0 20px 20px 20px;
 
       .login-form{
         display:flex;

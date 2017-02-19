@@ -25,7 +25,7 @@ app-login{
     transition: width .5s ease;
 
     &::before{
-      content:url(../assets/om_vector_logo.svg);
+      content:url(/assets/om_vector_logo.svg);
       display:block;
       transform: scale(0.5);
     }

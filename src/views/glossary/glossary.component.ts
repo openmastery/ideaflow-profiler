@@ -45,8 +45,10 @@ export class GlossaryComponent implements OnInit {
 
   private sortGlossary(list,property){
     list.sort(function(a, b) {
-      var nameA = a[property].toUpperCase();
-      var nameB = b[property].toUpperCase();
+      var nameA = a[property];
+      var nameB = b[property];
+      nameA = (typeof nameA === 'string') ? nameA.toUpperCase() : nameA;
+      nameB = (typeof nameB === 'string') ? nameB.toUpperCase() : nameB;
       if (nameA < nameB) {
         return -1;
       }

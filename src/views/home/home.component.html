@@ -1,6 +1,13 @@
 <main>
   <header>
-    <h1>Recent Idea Flows</h1>
+    <main>
+      <h1>Recent Idea Flows</h1>
+      <nav>
+        <p>
+          <a>&nbsp;</a>
+        </p>
+      </nav>
+    </main>
     <aside>
       <md-input-container>
         <input md-input type="search"/><md-icon>search</md-icon>
@@ -9,7 +16,12 @@
   </header>
   <main>
 
-    <table class="mdl-data-table highlight">
+    <table class="mdl-data-table highlight"
+      infinite-scroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="300"
+      (scrolled)="getMore()">
+
       <thead>
         <tr>
           <th>IFM</th>
@@ -20,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let task of tasks; let i = index;">
+        <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
           <td>{{i}}</td>
           <td><a href="#/project/{{task.project}}">{{task.project}}</a></td>
           <td>{{task.name}}</td>

@@ -1,3 +1,40 @@
 <main>
-  glossary works!
-</main>
+  <header>
+    <main>
+      <h1>Glossary</h1>
+      <nav>
+        <p>
+          <a>&nbsp;</a>
+        </p>
+      </nav>
+    </main>
+    <aside>
+      <md-input-container>
+        <input md-input type="search"/><md-icon>search</md-icon>
+      </md-input-container>
+    </aside>
+  </header>
+  <main>
+
+    <table class="mdl-data-table highlight"
+      infinite-scroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="300"
+      (scrolled)="getMore()">
+
+      <thead>
+        <tr>
+          <th></th>
+          <th (click)="sortGlossary(glossary,'name')">Name</th>
+          <th (click)="sortGlossary(glossary,'description')">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let definition of glossary; let i = index;">
+          <td>{{definition.id}}</td>
+          <td>{{definition.name}}</td>
+          <td>{{definition.description}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>

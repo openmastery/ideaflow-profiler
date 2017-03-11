@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services';
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   tasks: Task[];
   errorMessage: string;
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService,public router: Router) {
 
   }
 
@@ -31,6 +32,15 @@ export class HomeComponent implements OnInit {
     .subscribe(
       tasks => this.tasks = tasks,
       error =>  this.errorMessage = <any>error);
+  }
+
+  goToTask(task){
+    if(task.hasOwnProperty('id')){
+      this.router.navigate(['/task/'+task.id]);
+    }
+  }
+  getMore(){
+    console.log('get more');
   }
 
 

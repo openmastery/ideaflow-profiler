@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MomentModule } from 'angular2-moment/moment.module';
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { ChartsModule } from 'ng2-charts';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import {
-  ElementsComponent,
   LoginComponent,
   AccountComponent,
   FaqComponent,
@@ -18,12 +20,14 @@ import {
   SubtaskComponent,
   TaskComponent
 } from '../views';
+
 import { routing } from './app.routing';
 
 import { Task } from '../models/task';
 
 import {
   RequestOptionsProvider,
+  GlossaryService,
   TaskService
 } from '../services';
 
@@ -32,7 +36,6 @@ import {
   declarations: [
     LoginComponent,
     AppComponent,
-    ElementsComponent,
     LoginComponent,
     AccountComponent,
     FaqComponent,
@@ -49,9 +52,12 @@ import {
     RouterModule,
     routing,
     MomentModule,
+    InfiniteScrollModule,
+    ChartsModule,
+    Ng2GoogleChartsModule,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider, TaskService],
+  providers: [RequestOptionsProvider, TaskService, GlossaryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

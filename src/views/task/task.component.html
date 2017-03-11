@@ -1,3 +1,46 @@
-<p>
-  task works!
-</p>
+<main>
+  <header>
+    <main>
+      <h1>A Visual Map of Your Idea Flow</h1>
+      <nav>
+        <p>
+          <a href="/#/home" rel="index up up up">home</a>
+          <i class="material-icons">keyboard_arrow_right</i>
+          <a>{{id}}</a>
+        </p>
+      </nav>
+
+    </main>
+    <aside>
+      <md-input-container>
+        <input md-input type="search"/><md-icon>search</md-icon>
+      </md-input-container>
+    </aside>
+  </header>
+  <main>
+    <md-card>
+      <header>
+        {{timelineTask?.task?.name}}
+      </header>
+      <main>
+        <google-chart [data]="timelineChartOptions"></google-chart>
+      </main>
+    </md-card>
+    <md-card *ngFor="let subtask of timelineTask?.ideaFlowStory?.subtasks; let i = index;">
+      <header>
+        <main>
+          {{i+1}}. {{subtask.description}}
+        </main>
+        <aside>
+          {{subtask.durationInSeconds | amDuration:'seconds'}}
+        </aside>
+      </header>
+      <main>
+        <time>{{subtask.position | date:'medium'}}</time>
+        <section *ngFor="let metric of subtask.metrics">
+          {{metric.type}}: {{metric.value}}
+        </section>
+      </main>
+    </md-card>
+  </main>
+</main>

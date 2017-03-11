@@ -1,6 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
-import { ElementsComponent,
-         LoginComponent,
+import { LoginComponent,
          AccountComponent,
          FaqComponent,
          GlossaryComponent,
@@ -15,10 +14,6 @@ const routes: Routes = [
     {
         path: '',
         component: LoginComponent
-    },
-    {
-        path: 'elements',
-        component: ElementsComponent
     },
     {
         path: 'account',
@@ -45,7 +40,7 @@ const routes: Routes = [
         component: SubtaskComponent
     },
     {
-        path: 'task',
+        path: 'task/:id',
         component: TaskComponent
     }
 ];

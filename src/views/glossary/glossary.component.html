@@ -21,12 +21,11 @@
       [infiniteScrollDistance]="2"
       [infiniteScrollThrottle]="300"
       (scrolled)="getMore()">
-
       <thead>
         <tr>
-          <th></th>
-          <th (click)="sortGlossary(glossary,'name')">Name</th>
-          <th (click)="sortGlossary(glossary,'description')">Description</th>
+          <th (click)="sortGlossary(glossary,'id')"><button md-button>Id</button></th>
+          <th (click)="sortGlossary(glossary,'name')"><button md-button>Name</button></th>
+          <th (click)="sortGlossary(glossary,'description')"><button md-button>Description</button></th>
         </tr>
       </thead>
       <tbody>

@@ -26,9 +26,6 @@ body{
     }
     table,thead,tbody,tr{
       width:100%;
-      &:last-child{
-        text-align: right;
-      }
     }
 
     $table-color:#f2f2f2;
@@ -79,14 +76,33 @@ body{
 
     thead {
       border-bottom: 1px solid $table-color;
+
+      th{
+        button{
+          width:100%;
+          text-align:left !important;
+        }
+      }
     }
 
+    th{
+        padding: 16px 0;
+    }
+    td{
+        padding: 16px 16px;
+    }
     td, th{
-      padding: 15px 5px;
       display: table-cell;
       text-align: left;
       vertical-align: middle;
       border-radius: 2px;
+
+      &:last-child{
+        text-align: right;
+        button{
+          text-align: right !important;
+        }
+      }
     }
 
     input:-webkit-autofill {

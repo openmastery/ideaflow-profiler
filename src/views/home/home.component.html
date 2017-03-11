@@ -24,16 +24,16 @@
 
       <thead>
         <tr>
-          <th>IFM</th>
-          <th>Project</th>
-          <th>TaskId</th>
-          <th>Description</th>
-          <th>Most Recent Activity</th>
+          <th (click)="sortTasks(tasks,'id')">IFM</th>
+          <th (click)="sortTasks(tasks,'project')">Project</th>
+          <th (click)="sortTasks(tasks,'name')">TaskId</th>
+          <th (click)="sortTasks(tasks,'description')">Description</th>
+          <th (click)="sortTasks(tasks,'modifyDate')">Most Recent Activity</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
-          <td>{{i}}</td>
+          <td>{{task.id}}</td>
           <td><a href="#/project/{{task.project}}">{{task.project}}</a></td>
           <td>{{task.name}}</td>
           <td>{{task.description}}</td>

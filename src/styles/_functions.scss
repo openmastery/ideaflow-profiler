@@ -1,6 +1,6 @@
 /** Alert Logic SCSS functions */
 
-@function al-color($palette, $hue: default, $opacity: 1) {
+@function md-color($palette, $hue: default, $opacity: 1) {
   // If hueKey is a number between zero and one, then it actually contains an
   // opacity value, so recall this function with the default hue and that given opacity.
   @if type-of($hue) == number and $hue >= 0 and $hue <= 1 {
@@ -16,7 +16,7 @@
 // For a given hue in a palette, return the contrast color from the map of contrast palettes.
 // @param $color-map
 // @param $hue
-@function al-contrast($palette, $hue) {
+@function md-contrast($palette, $hue) {
   @return map-get(map-get($palette, contrast), $hue);
 }
 
@@ -26,7 +26,7 @@
 // @param $color-map
 // @param $primary
 // @param $lighter
-@function al-palette($base-palette, $default: 500, $lighter: 100, $darker: 700) {
+@function md-palette($base-palette, $default: 500, $lighter: 100, $darker: 700) {
   $result: map_merge($base-palette, (
     default: map-get($base-palette, $default),
     lighter: map-get($base-palette, $lighter),

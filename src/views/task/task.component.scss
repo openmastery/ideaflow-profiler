@@ -1,0 +1,28 @@
+@import '../../../node_modules/nvd3/build/nv.d3.css';
+@import '../../styles/palette';
+@import '../../styles/functions';
+app-task{
+  & > main{
+    & > main{
+      & > md-card{
+        padding: 0;
+        margin-bottom: 40px;
+        & > header{
+          padding: 20px;
+          color: md-contrast($md-deep-purple,500);
+          background: md-color($md-deep-purple,500);
+          display:flex;
+          & > main{
+            flex:1;
+          }
+          & > aside{
+            font-weight:bold;
+          }
+        }
+        & > main{
+          padding: 20px;
+        }
+      }
+    }
+  }
+}

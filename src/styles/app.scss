@@ -43,6 +43,10 @@ body{
       display: table;
       border-collapse: collapse;
 
+      tr{
+        cursor:pointer;
+      }
+
       &.bordered > thead > tr,
       &.bordered > tbody > tr {
         border-bottom: 1px solid $table-color;

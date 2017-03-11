@@ -12,12 +12,6 @@ app-login{
   justify-content: center;
   align-items: center;
 
-  //background:url(../assets/mountains.jpg);
-  //background-size:cover;
-  //background-repeat: no-repeat;
-  //background-attachment: fixed;
-  //background-position: center;
-
   .login{
     width:400px;
     background-color:white;
@@ -37,7 +31,7 @@ app-login{
       left:-10%;
       width: 120%;
       height:110%;
-      background:al-color($md-deep-purple,900);
+      background:md-color($md-deep-purple,900);
     }
 
     .app-input-section{

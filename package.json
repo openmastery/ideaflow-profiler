@@ -63,8 +63,13 @@
     "@angular/material": "^2.0.0-beta.1"
   },
   "dependencies": {
+    "angular2-infinite-scroll": "^0.3.4",
     "angular2-moment": "^1.1.0",
+    "angular2-nvd3": "^1.0.4",
+    "chart.js": "^2.5.0",
     "material-design-lite": "^1.3.0",
-    "materialize-css": "^0.98.0"
+    "materialize-css": "^0.98.0",
+    "ng2-charts": "^1.5.0",
+    "ng2-google-charts": "^1.0.1"
   }
 }

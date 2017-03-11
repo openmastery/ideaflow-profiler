@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   getTasks(project) {
     this.taskService.getTasks(project)
     .subscribe(
-      tasks => this.tasks = tasks,
+      tasks => this.setTasks(tasks),
       error =>  this.errorMessage = <any>error);
   }
 
@@ -43,5 +43,26 @@ export class HomeComponent implements OnInit {
     console.log('get more');
   }
 
+  private setTasks(response){
+    this.tasks = this.sortTasks(response,"id");
+  }
 
+  private sortTasks(list,property){
+    list.sort(function(a, b) {
+      var nameA = a[property];
+      var nameB = b[property];
+      nameA = (typeof nameA === 'string') ? nameA.toUpperCase() : nameA;
+      nameB = (typeof nameB === 'string') ? nameB.toUpperCase() : nameB;
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+    return list;
+  }
 }

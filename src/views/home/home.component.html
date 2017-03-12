@@ -34,7 +34,8 @@
       <tbody>
         <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
           <td>{{task.id}}</td>
-          <td><a href="#/project/{{task.project}}">{{task.project}}</a></td>
+          <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
+          <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
           <td>{{task.name}}</td>
           <td>{{task.description}}</td>
           <td>{{task?.modifyDate | amTimeAgo}}</td>

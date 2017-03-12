@@ -26,7 +26,6 @@ app-root{
             border-bottom:1px solid #f2f2f2;
             & > main{
               h1{
-                margin:0;
                 font-size: 2em;
                 font-weight:normal;
               }
@@ -54,7 +53,98 @@ app-root{
                   }
                 }
               }
+              .breadcrumb {
+                text-align: center;
+                display: inline-block;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+                overflow: hidden;
+                border-radius: 5px;
+                counter-reset: flag;
+                margin-bottom:10px;
+
+                & > a {
+                  text-decoration: none;
+                  outline: none;
+                  display: block;
+                  float: left;
+                  font-size: 12px;
+                  line-height: 36px;
+                  color: #fff;
+                  padding: 0 10px 0 60px;
+                  position: relative;
+                  &:first-child{
+                    padding-left: 46px;
+                    border-radius: 5px 0 0 5px;
+                    &::before {
+                      left: 14px;
+                    }
+                  }
+                  &:last-child{
+                    border-radius: 0 5px 5px 0;
+                    padding-right: 20px;
+                    &::after{
+                      content: none;
+                    }
+                  }
+                  &::before{
+                    content: counter(flag);
+                    counter-increment: flag;
+                    border-radius: 100%;
+                    width: 20px;
+                    height: 20px;
+                    line-height: 20px;
+                    margin: 8px 0;
+                    position: absolute;
+                    top: 0;
+                    left: 30px;
+                    font-weight: bold;
+                  }
+                  &::after{
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    right: -18px;
+                    width: 36px;
+                    height: 36px;
+                    transform: scale(0.707) rotate(45deg);
+                    z-index: 1;
+                    box-shadow: 2px -2px 0 2px md-color($md-deep-purple,500) - #222;
+                    border-radius: 0 5px 0 50px;
+                  }
+                }
+                &.flat{
+                  a, a::after{
+                    background: #fff;
+                    color: md-color($md-deep-purple,500);
+                    transition: all 0.5s;
+                  }
+                  a::before{
+                    background: #fff;
+                    box-shadow: 0 0 0 1px md-color($md-deep-purple,500);
+                  }
+
+                  a:hover,
+                  a.active,
+                  a:hover::after,
+                  a.active::after{
+                    background: md-color($md-deep-purple,500);
+                  }
+
+                  a.active:hover{
+                    background: md-color($md-deep-purple,300);
+                  }
+
+                  a:hover,
+                  a.active{
+                    color: #fff;
+                    &::before{
+                      color: md-color($md-deep-purple,500);
+                    }
+                  }
+                }
+              }
             }
+
             md-input-container{
               display:flex;
               .md-input-infix{

@@ -15,12 +15,7 @@
     </aside>
   </header>
   <main>
-
-    <table class="mdl-data-table highlight"
-      infinite-scroll
-      [infiniteScrollDistance]="2"
-      [infiniteScrollThrottle]="300"
-      (scrolled)="getMore()">
+    <table class="mdl-data-table highlight" *ngIf="glossary">
       <thead>
         <tr>
           <th (click)="sortGlossary(glossary,'id')"><button md-button>Id</button></th>

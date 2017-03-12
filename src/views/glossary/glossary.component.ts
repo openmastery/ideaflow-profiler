@@ -35,10 +35,6 @@ export class GlossaryComponent implements OnInit {
       error =>  this.errorMessage = <any>error);
   }
 
-  private getMore(){
-    console.log('get more');
-  }
-
   private setGlossary(response){
     this.glossary = this.sortGlossary(response,"name");
   }

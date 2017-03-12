@@ -2,14 +2,7 @@
   <header>
     <main>
       <h1>Recent Idea Flows</h1>
-      <nav>
-        <p>
-          <a href="/#/home" rel="index up up up">home</a>
-          <i class="material-icons">keyboard_arrow_right</i>
-          <a>{{id}}</a>
-        </p>
-      </nav>
-
+      <div class="breadcrumb flat"><a href="/#/home">Home</a><a class="active" href="#">{{id}}</a></div>
     </main>
     <aside>
       <md-input-container>
@@ -19,7 +12,7 @@
   </header>
   <main>
 
-    <table class="mdl-data-table highlight">
+    <table class="mdl-data-table highlight" *ngIf="tasks">
       <thead>
         <tr>
           <th (click)="sortTasks(tasks,'id')"><button md-button>IFM</button></th>

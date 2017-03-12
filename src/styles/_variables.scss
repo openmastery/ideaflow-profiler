@@ -1,6 +1,7 @@
 @import "palette";
+@import "functions";
 
-$primary-color: al-color($al-orange,500);
+$primary-color: md-color($al-orange,500);
 $gray:          #888888;
 $text-color:    $gray;
 $md-font-family: 'Open Sans', Arial, sans-serif !default;

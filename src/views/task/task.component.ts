@@ -96,7 +96,33 @@ export class TaskComponent implements OnInit {
   getTask(timelineTask) {
     this.taskService.getTask(timelineTask)
     .subscribe(
-      timelineTask => this.timelineTask = timelineTask,
+      timelineTask => this.setTask(timelineTask),
       error =>  this.errorMessage = <any>error);
+  }
+
+  setTask(timelineTask){
+    if(timelineTask.hasOwnProperty('ideaFlowStory')){
+      if(timelineTask.ideaFlowStory.hasOwnProperty('subtasks')){
+        let subtasks = timelineTask.ideaFlowStory.subtasks;
+        for(let task of subtasks){
+          if(task.hasOwnProperty('capacityDistribution')){
+            let capacityTotal = 0;
+            for (let capacityType in task.capacityDistribution) {
+              capacityTotal+=task.capacityDistribution[capacityType];
+            }
+            let percentages = new Array();
+            for (let capacityType in task.capacityDistribution) {
+              percentages.push({
+                'name': capacityType,
+                'value': ((task.capacityDistribution[capacityType]/capacityTotal) * 100).toFixed(0) + '%'
+              });
+            }
+            task.capacityDistribution.capatityTotal = capacityTotal;
+            task.capacityDistribution.percentages = percentages;
+          }
+        }
+      }
+    }
+    this.timelineTask = timelineTask;
   }
 }

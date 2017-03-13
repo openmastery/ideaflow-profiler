@@ -91,6 +91,19 @@ app-task{
               }
             }
           }
+          & > table{
+            tr{
+              td{
+                &:first-child{
+                  width:10px;
+                  padding-right:0;
+                }
+                &:last-child{
+                  text-align: left;
+                }
+              }
+            }
+          }
         }
       }
     }

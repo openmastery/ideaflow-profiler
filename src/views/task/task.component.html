@@ -36,6 +36,18 @@
         </aside>
       </header>
       <main>
+        <legend>
+          <ul>
+            <li *ngFor="let percent of subtask?.capacityDistribution?.percentages" [class]="percent.name">
+              <i class="material-icons">lens</i>
+              <label>{{percent.name}}</label>
+            </li>
+          </ul>
+        </legend>
+
+        <figure>
+          <time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value" [class]="percent.name" [attr.percent]="percent.value"></time>
+        </figure>
         <time>{{subtask.position | date:'medium'}}</time>
         <section *ngFor="let metric of subtask.metrics">
           {{metric.type}}: {{metric.value}}

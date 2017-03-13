@@ -48,10 +48,36 @@
         <figure>
           <time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value" [class]="percent.name" [attr.percent]="percent.value"></time>
         </figure>
-        <time>{{subtask.position | date:'medium'}}</time>
-        <section *ngFor="let metric of subtask.metrics">
-          {{metric.type}}: {{metric.value}}
-        </section>
+        <table>
+          <tr>
+            <td>
+              <i class="material-icons">access_time</i>
+            </td>
+            <td>
+              START TIME
+            </td>
+            <td>
+              {{subtask.position | date:'medium'}}
+            </td>
+          </tr>
+          <tr *ngFor="let metric of subtask.metrics">
+            <td>
+              <i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>
+              <i class="material-icons" *ngIf="metric.type === 'AVG_HUMAN_CYCLE_RATIOS'">account_circle</i>
+              <i class="material-icons" *ngIf="metric.type === 'MAX_EXPERIMENT_CYCLES'">settings_backup_restore</i>
+              <i class="material-icons" *ngIf="metric.type === 'WTFS_PER_DAY'">error</i>
+            </td>
+            <td>
+              {{metric.type}}
+            </td>
+            <td *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">
+              {{metric.value | amDuration:'seconds'}}
+            </td>
+            <td *ngIf="metric.type != 'MAX_RESOLUTION_TIME'">
+              {{metric.value}}
+            </td>
+          </tr>
+        </table>
       </main>
     </md-card>
   </main>

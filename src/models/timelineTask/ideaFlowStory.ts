@@ -1,5 +1,5 @@
 import { CapacityDistribution } from './capacityDistribution';
-import { Subtask } from './Subtask';
+import { SubTask } from './subTask';
 import { Metric } from './metric';
 
 export class IdeaFlowStory {
@@ -9,11 +9,11 @@ export class IdeaFlowStory {
         public relativePositionInSeconds: number,
         public durationInSeconds: number,
         public position: Date,
-        public contextTags: <any>[],
-        public painTags: <any>[],
+        public contextTags: Array<any>,
+        public painTags: Array<any>,
         public frequency: number,
-        public capacityDistribution:<CapacityDistribution>,
-        public subtasks: <Subtask>[],
-        public metrics: <Metric>[]
+        public capacityDistribution:CapacityDistribution,
+        public subtasks: Array<SubTask>,
+        public metrics: Array<Metric>
     ){}
 }

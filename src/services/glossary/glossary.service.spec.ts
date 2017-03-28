@@ -6,7 +6,7 @@ import { GlossaryService } from './glossary.service';
 describe('GlossaryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TaskService]
+      providers: [GlossaryService]
     });
   });
 

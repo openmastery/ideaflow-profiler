@@ -31,7 +31,7 @@ export class TaskService {
     let options = new RequestOptions({headers: headers});
 
     return this.http
-      .get(this.apiUrl + 'ideaflow/timeline/task/' + task, options)
+      .get(this.apiUrl + 'ideaflow/timeline/task/' + task + '/full', options)
       .map( response => <TimelineTask>response.json());
   }
 

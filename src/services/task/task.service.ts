@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Task } from '../../models/task';
-import { TimelineTask } from '../../models/timelineTask';
+import { TaskTimeline } from '../../models/taskTimeline';
 
 
 @Injectable()
@@ -26,14 +26,14 @@ export class TaskService {
       .map( response => <Task[]>response.json().contents );
   }
 
-  getTimeline (taskId): Observable<TimelineTask> {
+  getTimeline (taskId): Observable<TaskTimeline> {
     let projectParam = (taskId) ? taskId:'';
     let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
     let options = new RequestOptions({headers: headers});
 
     return this.http
       .get(this.apiUrl + 'ideaflow/timeline/task/' + taskId + '/full', options)
-      .map( response => <TimelineTask>response.json());
+      .map( response => <TaskTimeline>response.json());
   }
 
 }

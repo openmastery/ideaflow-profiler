@@ -20,12 +20,12 @@
   <main>
 
     <h2>
-      {{timelineTask?.task?.name}} - {{timelineTask?.task?.description}}
+      {{taskTimeline?.task?.name}} - {{taskTimeline?.task?.description}}
     </h2>
     <main>
       <google-chart [data]="timelineChartOptions"></google-chart>
     </main>
-    <md-card *ngFor="let subtask of timelineTask?.ideaFlowStory?.subtasks; let i = index;" (click)="getSubtask(subtask)">
+    <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;" (click)="getSubtask(subtask)">
       <header>
         <main>
           {{i+1}}. {{subtask.description}}

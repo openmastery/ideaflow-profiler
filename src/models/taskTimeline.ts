@@ -1,8 +1,8 @@
 import { Task } from './task';
-import { Timeline } from './timelineTask/timeline';
-import { IdeaFlowStory } from './timelineTask/ideaFlowStory';
+import { Timeline } from './taskTimeline/timeline';
+import { IdeaFlowStory } from './taskTimeline/ideaFlowStory';
 
-export class TimelineTask {
+export class TaskTimeline {
     constructor(
         public task: Task,
         public timeline: Timeline,

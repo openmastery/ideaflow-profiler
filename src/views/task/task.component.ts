@@ -6,7 +6,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { Subject } from 'rxjs/Subject';
 import { Task } from '../../models/task';
-import { TimelineTask } from '../../models/timelineTask';
+import { TaskTimeline } from '../../models/taskTimeline';
 import { TaskService } from '../../services'
 import { ActivatedRoute } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
@@ -21,7 +21,7 @@ import { ChartsModule } from 'ng2-charts';
 export class TaskComponent implements OnInit {
   private id: string;
   private sub: any;
-  private timelineTask: TimelineTask;
+  private taskTimeline: TaskTimeline;
   private task : Task;
   private errorMessage: string;
   private taskName : string = 'US 23523423';
@@ -96,36 +96,36 @@ export class TaskComponent implements OnInit {
   getTask(taskId) {
     this.taskService.getTimeline(taskId)
     .subscribe(
-      timelineTask => this.setTimeline(timelineTask),
+      taskTimeline => this.setTimeline(taskTimeline),
       error =>  this.errorMessage = <any>error
     );
   }
 
 
 
-  setTimeline(timelineTask){
-    if(timelineTask.hasOwnProperty('ideaFlowStory')){
-      if(timelineTask.ideaFlowStory.hasOwnProperty('subtasks')){
-        let subtasks = timelineTask.ideaFlowStory.subtasks;
-        for(let task of subtasks){
-          if(task.hasOwnProperty('capacityDistribution')){
+  setTimeline(taskTimeline){
+    if(taskTimeline.hasOwnProperty('ideaFlowStory')){
+      if(taskTimeline.ideaFlowStory.hasOwnProperty('subtasks')){
+        let subtasks = taskTimeline.ideaFlowStory.subtasks;
+        for(let subtask of subtasks){
+          if(subtask.hasOwnProperty('capacityDistribution')){
             let capacityTotal = 0;
-            for (let capacityType in task.capacityDistribution) {
-              capacityTotal+=task.capacityDistribution[capacityType];
+            for (let capacityType in subtask.capacityDistribution) {
+              capacityTotal+=subtask.capacityDistribution[capacityType];
             }
             let percentages = new Array();
-            for (let capacityType in task.capacityDistribution) {
+            for (let capacityType in subtask.capacityDistribution) {
               percentages.push({
                 'name': capacityType,
-                'value': ((task.capacityDistribution[capacityType]/capacityTotal) * 100).toFixed(0) + '%'
+                'value': ((subtask.capacityDistribution[capacityType]/capacityTotal) * 100).toFixed(0) + '%'
               });
             }
-            task.capacityDistribution.capatityTotal = capacityTotal;
-            task.capacityDistribution.percentages = percentages;
+            subtask.capacityDistribution.capatityTotal = capacityTotal;
+            subtask.capacityDistribution.percentages = percentages;
           }
         }
       }
     }
-    this.timelineTask = timelineTask;
+    this.taskTimeline = taskTimeline;
   }
 }

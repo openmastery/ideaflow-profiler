@@ -6,6 +6,8 @@ export class TaskTimeline {
     constructor(
         public task: Task,
         public timeline: Timeline,
+        public subtaskTimelines: Array<Timeline>,
         public ideaFlowStory: IdeaFlowStory
     ){}
+
 }

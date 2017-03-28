@@ -18,15 +18,14 @@
     </aside>
   </header>
   <main>
-    <md-card>
-      <header>
-        {{timelineTask?.task?.name}}
-      </header>
-      <main>
-        <google-chart [data]="timelineChartOptions"></google-chart>
-      </main>
-    </md-card>
-    <md-card *ngFor="let subtask of timelineTask?.ideaFlowStory?.subtasks; let i = index;">
+
+    <h2>
+      {{timelineTask?.task?.name}} - {{timelineTask?.task?.description}}
+    </h2>
+    <main>
+      <google-chart [data]="timelineChartOptions"></google-chart>
+    </main>
+    <md-card *ngFor="let subtask of timelineTask?.ideaFlowStory?.subtasks; let i = index;" (click)="getSubtask(subtask)">
       <header>
         <main>
           {{i+1}}. {{subtask.description}}

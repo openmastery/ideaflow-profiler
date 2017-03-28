@@ -1,6 +1,6 @@
-import { IdeaFlowBand } from './ideaFlowBands';
+import { IdeaFlowBand } from './ideaFlowBand';
 import { Event } from './event';
-import { executionEvent } from './executionEvent';
+import { ExecutionEvent } from './executionEvent';
 
 export class Timeline {
     constructor(
@@ -8,9 +8,9 @@ export class Timeline {
         public end: Date,
         public durationInSeconds: number,
         public relativePositionInSeconds: number,
-        public ideaFlowBands:<IdeaFlowBand>[],
-        public events:<event>[],
-        public executionEvents:<executionEvent>[],
+        public ideaFlowBands:Array<IdeaFlowBand>,
+        public events:Array<Event>,
+        public executionEvents:Array<ExecutionEvent>,
         position: Date
     ){}
 }

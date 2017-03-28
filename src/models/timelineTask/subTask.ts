@@ -1,5 +1,6 @@
 import { CapacityDistribution } from './capacityDistribution';
 import { Metric } from './metric';
+import { TroubleShootingJourney } from './troubleshootingJourney';
 
 export class SubTask {
     constructor(
@@ -8,12 +9,12 @@ export class SubTask {
         public relativePositionInSeconds: number,
         public durationInSeconds: number,
         public position: Date,
-        public contextTags: <any>[],
-        public painTags: <any>[],
+        public contextTags: Array<any>,
+        public painTags: Array<any>,
         public frequency: number,
-        public capacityDistribution:<CapacityDistribution>,
-        public milestones: <any>[],
-        public troubleshootingJourneys: <any>[],
-        public metrics: <Metric>[]
+        public capacityDistribution:CapacityDistribution,
+        public milestones: Array<any>,
+        public troubleshootingJourneys: Array<TroubleShootingJourney>,
+        public metrics: Array<Metric>
     ){}
 }

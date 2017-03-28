@@ -93,14 +93,17 @@ export class TaskComponent implements OnInit {
     this.getTask(this.id);
   }
 
-  getTask(timelineTask) {
-    this.taskService.getTask(timelineTask)
+  getTask(taskId) {
+    this.taskService.getTimeline(taskId)
     .subscribe(
-      timelineTask => this.setTask(timelineTask),
-      error =>  this.errorMessage = <any>error);
+      timelineTask => this.setTimeline(timelineTask),
+      error =>  this.errorMessage = <any>error
+    );
   }
 
-  setTask(timelineTask){
+
+
+  setTimeline(timelineTask){
     if(timelineTask.hasOwnProperty('ideaFlowStory')){
       if(timelineTask.ideaFlowStory.hasOwnProperty('subtasks')){
         let subtasks = timelineTask.ideaFlowStory.subtasks;

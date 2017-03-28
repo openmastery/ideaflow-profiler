@@ -25,13 +25,14 @@ export class TaskService {
       .get(this.apiUrl + 'ideaflow/task' + params, options)
       .map( response => <Task[]>response.json().contents );
   }
-  getTask (task): Observable<TimelineTask> {
-    let projectParam = (task) ? task:'';
+
+  getTimeline (taskId): Observable<TimelineTask> {
+    let projectParam = (taskId) ? taskId:'';
     let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
     let options = new RequestOptions({headers: headers});
 
     return this.http
-      .get(this.apiUrl + 'ideaflow/timeline/task/' + task + '/full', options)
+      .get(this.apiUrl + 'ideaflow/timeline/task/' + taskId + '/full', options)
       .map( response => <TimelineTask>response.json());
   }
 

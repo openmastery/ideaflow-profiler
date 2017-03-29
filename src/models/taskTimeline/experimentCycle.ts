@@ -1,9 +1,8 @@
-import {DiscoveryCycle} from "./discoveryCycle";
+import {FormattableSnippet} from "./formattableSnippet";
 import {Metric} from "./metric";
-export class TroubleShootingJourney {
+export class ExperimentCycle {
     constructor(
         public relativePath: string,
-        public description: string,
         public position: Date,
         public relativePositionInSeconds: number,
         public durationInSeconds: number,
@@ -11,10 +10,11 @@ export class TroubleShootingJourney {
         public contextTags: Array<string>,
         public painTags: Array<string>,
 
-        public discoveryCycles: Array<DiscoveryCycle>,
-        public metrics: Array<Metric>,
-
+        public executionDurationInSeconds: number,
+        public processName: string,
+        public executionTaskType: string,
+        public failed: boolean,
+        public debug: boolean
     ){}
+
 }
-
-

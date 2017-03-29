@@ -14,6 +14,8 @@ export class IdeaFlowStory {
         public frequency: number,
         public capacityDistribution:CapacityDistribution,
         public subtasks: Array<SubTask>,
-        public metrics: Array<Metric>
+
+        public allMetrics: Array<Metric>,
+        public dangerMetrics: Array<Metric>,
     ){}
 }

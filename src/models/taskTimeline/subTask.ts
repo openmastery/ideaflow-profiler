@@ -15,6 +15,8 @@ export class SubTask {
         public capacityDistribution:CapacityDistribution,
         public milestones: Array<any>,
         public troubleshootingJourneys: Array<TroubleShootingJourney>,
-        public metrics: Array<Metric>
+
+        public allMetrics: Array<Metric>,
+        public dangerMetrics: Array<Metric>,
     ){}
 }

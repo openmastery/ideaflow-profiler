@@ -16,8 +16,9 @@ export class DiscoveryCycle {
         public formattableSnippet: FormattableSnippet,
 
         public experimentCycles: Array<ExperimentCycle>,
-        public metrics: Array<Metric>,
 
+        public allMetrics: Array<Metric>,
+        public dangerMetrics: Array<Metric>,
     ){}
 
 }

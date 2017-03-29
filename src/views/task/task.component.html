@@ -31,8 +31,16 @@
           {{i+1}}. {{subtask.description}}
         </main>
         <aside>
+          <ul>
+            <li *ngFor="let painTag of subtask?.painTags">
+              <label>{{painTag}}</label>
+            </li>
+          </ul>
+        </aside>
+        <aside>
           {{subtask.durationInSeconds | amDuration:'seconds'}}
         </aside>
+
       </header>
       <main>
         <legend>
@@ -47,6 +55,8 @@
         <figure>
           <time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value" [class]="percent.name" [attr.percent]="percent.value"></time>
         </figure>
+
+
         <table>
           <tr>
             <td>
@@ -59,7 +69,7 @@
               {{subtask.position | date:'medium'}}
             </td>
           </tr>
-          <tr *ngFor="let metric of subtask.metrics">
+          <tr *ngFor="let metric of subtask.allMetrics">
             <td>
               <i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>
               <i class="material-icons" *ngIf="metric.type === 'AVG_HUMAN_CYCLE_RATIOS'">account_circle</i>
@@ -69,14 +79,100 @@
             <td>
               {{metric.type}}
             </td>
-            <td *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">
+            <td *ngIf="metric.valueType === 'DurationInSeconds'">
               {{metric.value | amDuration:'seconds'}}
             </td>
-            <td *ngIf="metric.type != 'MAX_RESOLUTION_TIME'">
+            <td *ngIf="metric.valueType === 'Double'">
               {{metric.value}}
             </td>
           </tr>
         </table>
+
+        <md-card *ngFor="let journey of subtask.troubleshootingJourneys;">
+          <header>
+            <main>
+              Troubleshooting Journey
+            </main>
+            <aside>
+              {{journey.durationInSeconds | amDuration:'seconds'}}
+            </aside>
+            <aside>
+              {{journey.position | date:'EEEE hh:mm a'}}
+            </aside>
+          </header>
+          <md-card-content>
+            <table>
+            <tr *ngFor="let metric of journey.allMetrics">
+              <td>
+                {{metric.type}}
+              </td>
+              <td *ngIf="metric.valueType === 'DurationInSeconds'">
+                {{metric.value | amDuration:'seconds'}}
+              </td>
+              <td *ngIf="metric.valueType === 'Double'">
+                {{metric.value}}
+              </td>
+            </tr>
+            </table>
+            <ul>
+                <li *ngFor="let painTag of subtask?.painTags">
+                  <label>{{painTag}}</label>
+                </li>
+            </ul>
+            <ul>
+              <li *ngFor="let contextTags of subtask?.contextTags">
+                <label>{{contextTags}}</label>
+              </li>
+            </ul>
+
+            <md-card *ngFor="let discoveryCycle of journey.discoveryCycles">
+              <md-card-content>
+                {{discoveryCycle.description}}
+              </md-card-content>
+            </md-card>
+
+          </md-card-content>
+
+          <!--<md-card-subtitle>Troubleshooting Journey</md-card-subtitle>-->
+          <!--<md-card-title>Card with title</md-card-title>-->
+          <!--<md-card-content>-->
+            <!--<p>This is supporting text.</p>-->
+            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
+              <!--tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>-->
+          <!--</md-card-content>-->
+          <!--<md-card-actions>-->
+            <!--<button md-button>LIKE</button>-->
+            <!--<button md-button>SHARE</button>-->
+          <!--</md-card-actions>-->
+        </md-card>
+
+        <!--export class TroubleShootingJourney {-->
+        <!--constructor(-->
+        <!--public relativePath: string,-->
+        <!--public description: string,-->
+        <!--public position: Date,-->
+        <!--public relativePositionInSeconds: number,-->
+        <!--public durationInSeconds: number,-->
+
+        <!--public contextTags: Array<string>,-->
+        <!--public painTags: Array<string>,-->
+
+        <!--public discoveryCycles: Array<DiscoveryCycle>,-->
+        <!--public metrics: Array<Metric>,-->
+
+        <!--){}-->
+        <!--}-->
+        <!---->
+
+        <table>
+          <tr *ngFor="let journey of subtask.troubleshootingJourneys">
+            <td>Journey: {{journey.description}}</td>
+
+          </tr>
+        </table>
+
+
+
       </main>
     </md-card>
   </main>

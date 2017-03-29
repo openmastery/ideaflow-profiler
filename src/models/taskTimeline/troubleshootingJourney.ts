@@ -12,8 +12,8 @@ export class TroubleShootingJourney {
         public painTags: Array<string>,
 
         public discoveryCycles: Array<DiscoveryCycle>,
-        public metrics: Array<Metric>,
-
+        public allMetrics: Array<Metric>,
+        public dangerMetrics: Array<Metric>,
     ){}
 }
 

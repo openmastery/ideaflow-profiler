@@ -90,10 +90,10 @@ export class TaskComponent implements OnInit {
       this.id = params['id'];
     });
 
-    this.getTask(this.id);
+    this.getTimeline(this.id);
   }
 
-  getTask(taskId) {
+  getTimeline(taskId) {
     this.taskService.getTimeline(taskId)
     .subscribe(
       taskTimeline => this.setTimeline(taskTimeline),
@@ -106,8 +106,12 @@ export class TaskComponent implements OnInit {
   setTimeline(taskTimeline){
     if(taskTimeline.hasOwnProperty('ideaFlowStory')){
       if(taskTimeline.ideaFlowStory.hasOwnProperty('subtasks')){
+
+
         let subtasks = taskTimeline.ideaFlowStory.subtasks;
         for(let subtask of subtasks){
+
+
           if(subtask.hasOwnProperty('capacityDistribution')){
             let capacityTotal = 0;
             for (let capacityType in subtask.capacityDistribution) {
@@ -128,4 +132,5 @@ export class TaskComponent implements OnInit {
     }
     this.taskTimeline = taskTimeline;
   }
+
 }

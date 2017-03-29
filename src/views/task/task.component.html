@@ -169,7 +169,10 @@
             <md-card *ngFor="let painCycle of journey.painCycles">
               <header>
                 <main>
-                  {{painCycle.eventType}} - {{painCycle.description}}
+                  <span *ngIf="painCycle.eventType === 'PAIN'">[FireIcon] </span>
+                  <span *ngIf="painCycle.eventType === 'AWESOME'">[PurpleIcon] </span>
+
+                  {{painCycle.description}}
                 </main>
                 <aside>
                   {{painCycle.durationInSeconds | amDuration:'seconds'}}
@@ -189,7 +192,7 @@
                   </tr>
                   <tr *ngFor="let experimentCycle of painCycle.experimentCycles">
 
-                    <td><span *ngIf="experimentCycle.debug">BugIcon</span> {{experimentCycle.executionTaskType}}</td>
+                    <td><span *ngIf="experimentCycle.debug">[BugIcon]</span> {{experimentCycle.executionTaskType}}</td>
                     <td>{{experimentCycle.processName}}</td>
                     <td>{{experimentCycle.durationInSeconds }} / {{experimentCycle.executionDurationInSeconds }}</td>
                   </tr>
@@ -246,12 +249,6 @@
         <!--}-->
         <!---->
 
-        <table>
-          <tr *ngFor="let journey of subtask.troubleshootingJourneys">
-            <td>Journey: {{journey.description}}</td>
-
-          </tr>
-        </table>
 
 
       </main>

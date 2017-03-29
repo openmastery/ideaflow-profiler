@@ -1,4 +1,4 @@
-import {DiscoveryCycle} from "./discoveryCycle";
+import {PainCycle} from "./painCycle";
 import {Metric} from "./metric";
 export class TroubleShootingJourney {
     constructor(
@@ -11,9 +11,10 @@ export class TroubleShootingJourney {
         public contextTags: Array<string>,
         public painTags: Array<string>,
 
-        public discoveryCycles: Array<DiscoveryCycle>,
         public allMetrics: Array<Metric>,
         public dangerMetrics: Array<Metric>,
+
+        public painCycles: Array<PainCycle>,
     ){}
 }
 

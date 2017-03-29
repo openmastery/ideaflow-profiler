@@ -13,7 +13,8 @@
     </main>
     <aside>
       <md-input-container>
-        <input md-input type="search"/><md-icon>search</md-icon>
+        <input md-input type="search"/>
+        <md-icon>search</md-icon>
       </md-input-container>
     </aside>
   </header>
@@ -25,7 +26,8 @@
     <main>
       <google-chart [data]="timelineChartOptions"></google-chart>
     </main>
-    <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;" (click)="getSubtask(subtask)">
+    <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;"
+             (click)="getSubtask(subtask)">
       <header>
         <main>
           {{i+1}}. {{subtask.description}}
@@ -53,7 +55,8 @@
         </legend>
 
         <figure>
-          <time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value" [class]="percent.name" [attr.percent]="percent.value"></time>
+          <time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value"
+                [class]="percent.name" [attr.percent]="percent.value"></time>
         </figure>
 
 
@@ -88,6 +91,30 @@
           </tr>
         </table>
 
+        <md-card>
+          <header>
+            Progress Milestones
+          </header>
+
+          <main>
+            <table>
+              <tr *ngFor="let milestone of subtask.milestones; let k = index;">
+                <td>
+                  {{i+1}}.{{k+1}}. {{milestone.description}}
+                </td>
+                <td>
+                  {{milestone.position | date:'EEEE hh:mm a'}}
+                </td>
+                <td>
+                  {{milestone.durationInSeconds | amDuration:'seconds'}}
+                </td>
+              </tr>
+            </table>
+          </main>
+        </md-card>
+
+        <br/>
+
         <md-card *ngFor="let journey of subtask.troubleshootingJourneys;">
           <header>
             <main>
@@ -102,22 +129,22 @@
           </header>
           <md-card-content>
             <table>
-            <tr *ngFor="let metric of journey.allMetrics">
-              <td>
-                {{metric.type}}
-              </td>
-              <td *ngIf="metric.valueType === 'DurationInSeconds'">
-                {{metric.value | amDuration:'seconds'}}
-              </td>
-              <td *ngIf="metric.valueType === 'Double'">
-                {{metric.value}}
-              </td>
-            </tr>
+              <tr *ngFor="let metric of journey.allMetrics">
+                <td>
+                  {{metric.type}}
+                </td>
+                <td *ngIf="metric.valueType === 'DurationInSeconds'">
+                  {{metric.value | amDuration:'seconds'}}
+                </td>
+                <td *ngIf="metric.valueType === 'Double'">
+                  {{metric.value}}
+                </td>
+              </tr>
             </table>
             <ul>
-                <li *ngFor="let painTag of subtask?.painTags">
-                  <label>{{painTag}}</label>
-                </li>
+              <li *ngFor="let painTag of subtask?.painTags">
+                <label>{{painTag}}</label>
+              </li>
             </ul>
             <ul>
               <li *ngFor="let contextTags of subtask?.contextTags">
@@ -125,9 +152,19 @@
               </li>
             </ul>
 
-            <md-card *ngFor="let discoveryCycle of journey.discoveryCycles">
+            <md-card *ngFor="let painCycle of journey.painCycles">
               <md-card-content>
-                {{discoveryCycle.description}}
+                <table>
+                  <tr>
+                    <td>
+                      {{painCycle.eventType}}
+                    </td>
+                    <td>
+                      {{painCycle.description}}
+                    </td>
+                  </tr>
+                </table>
+
               </md-card-content>
             </md-card>
 
@@ -136,13 +173,13 @@
           <!--<md-card-subtitle>Troubleshooting Journey</md-card-subtitle>-->
           <!--<md-card-title>Card with title</md-card-title>-->
           <!--<md-card-content>-->
-            <!--<p>This is supporting text.</p>-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-              <!--tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>-->
+          <!--<p>This is supporting text.</p>-->
+          <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
+          <!--tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>-->
           <!--</md-card-content>-->
           <!--<md-card-actions>-->
-            <!--<button md-button>LIKE</button>-->
-            <!--<button md-button>SHARE</button>-->
+          <!--<button md-button>LIKE</button>-->
+          <!--<button md-button>SHARE</button>-->
           <!--</md-card-actions>-->
         </md-card>
 
@@ -157,7 +194,7 @@
         <!--public contextTags: Array<string>,-->
         <!--public painTags: Array<string>,-->
 
-        <!--public discoveryCycles: Array<DiscoveryCycle>,-->
+        <!--public discoveryCycles: Array<PainCycle>,-->
         <!--public metrics: Array<Metric>,-->
 
         <!--){}-->
@@ -170,7 +207,6 @@
 
           </tr>
         </table>
-
 
 
       </main>

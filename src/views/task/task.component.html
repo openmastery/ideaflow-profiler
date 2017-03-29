@@ -91,7 +91,7 @@
           </tr>
         </table>
 
-        <md-card>
+        <md-card *ngIf="subtask.milestones.length > 0">
           <header>
             Progress Milestones
           </header>
@@ -128,6 +128,30 @@
             </aside>
           </header>
           <md-card-content>
+            <ul>
+              <li *ngFor="let painTag of subtask?.painTags">
+                <label>{{painTag}}</label>
+              </li>
+            </ul>
+            <ul>
+              <li *ngFor="let contextTags of subtask?.contextTags">
+                <label>{{contextTags}}</label>
+              </li>
+            </ul>
+
+            <table>
+              <tr *ngFor="let metric of journey.dangerMetrics">
+                <td>
+                  Danger! {{metric.type}}
+                </td>
+                <td *ngIf="metric.valueType === 'DurationInSeconds'">
+                  {{metric.value | amDuration:'seconds'}}
+                </td>
+                <td *ngIf="metric.valueType === 'Double'">
+                  {{metric.value}}
+                </td>
+              </tr>
+            </table>
             <table>
               <tr *ngFor="let metric of journey.allMetrics">
                 <td>
@@ -141,29 +165,50 @@
                 </td>
               </tr>
             </table>
-            <ul>
-              <li *ngFor="let painTag of subtask?.painTags">
-                <label>{{painTag}}</label>
-              </li>
-            </ul>
-            <ul>
-              <li *ngFor="let contextTags of subtask?.contextTags">
-                <label>{{contextTags}}</label>
-              </li>
-            </ul>
 
             <md-card *ngFor="let painCycle of journey.painCycles">
+              <header>
+                <main>
+                  {{painCycle.eventType}} - {{painCycle.description}}
+                </main>
+                <aside>
+                  {{painCycle.durationInSeconds | amDuration:'seconds'}}
+                </aside>
+              </header>
+
               <md-card-content>
-                <table>
+                <div *ngIf="painCycle.formattableSnippet != null">
+                  {{painCycle.formattableSnippet.contents}}
+                </div>
+
+                <table *ngIf="painCycle.experimentCycles.length > 0">
                   <tr>
-                    <td>
-                      {{painCycle.eventType}}
-                    </td>
-                    <td>
-                      {{painCycle.description}}
-                    </td>
+                    <td>History</td>
+                    <td>Detail</td>
+                    <td>Human Cycle vs Execution</td>
+                  </tr>
+                  <tr *ngFor="let experimentCycle of painCycle.experimentCycles">
+
+                    <td><span *ngIf="experimentCycle.debug">BugIcon</span> {{experimentCycle.executionTaskType}}</td>
+                    <td>{{experimentCycle.processName}}</td>
+                    <td>{{experimentCycle.durationInSeconds }} / {{experimentCycle.executionDurationInSeconds }}</td>
                   </tr>
                 </table>
+
+                <!--"relativePath": "/experiment/927",-->
+                <!--"relativePositionInSeconds": 10978,-->
+                <!--"durationInSeconds": 90,-->
+                <!--"position": "2017-01-09T01:29:37",-->
+                <!--"contextTags": [],-->
+                <!--"painTags": [],-->
+                <!--"allMetrics": null,-->
+                <!--"dangerMetrics": null,-->
+                <!--"executionDurationInSeconds": 3,-->
+                <!--"processName": "ActivityResourceSpec",-->
+                <!--"executionTaskType": "JUnit",-->
+                <!--"debug": false,-->
+                <!--"failed": true-->
+
 
               </md-card-content>
             </md-card>

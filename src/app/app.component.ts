@@ -10,7 +10,6 @@ export class AppComponent {
   public navLinks = [
     "home",
     "glossary",
-    "faq",
-    "spc"
+    "faq"
   ]
 }

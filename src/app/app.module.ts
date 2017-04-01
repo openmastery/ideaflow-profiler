@@ -28,7 +28,8 @@ import { Task } from '../models/task';
 import {
   RequestOptionsProvider,
   GlossaryService,
-  TaskService
+  TaskService,
+  FaqService,
 } from '../services';
 
 
@@ -57,7 +58,7 @@ import {
     Ng2GoogleChartsModule,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider, TaskService, GlossaryService],
+  providers: [RequestOptionsProvider, TaskService, GlossaryService, FaqService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

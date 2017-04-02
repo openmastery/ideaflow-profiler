@@ -36,13 +36,17 @@ const routes: Routes = [
         component: ProjectComponent
     },
     {
-        path: 'subtask',
-        component: SubtaskComponent
-    },
-    {
         path: 'task/:id',
         component: TaskComponent
-    }
+    },
+    {
+      path: 'task/id/:id/subtask/:subtaskId/journey/:journeyId/pain/:painId',
+      component: TaskComponent
+    },
+    {
+      path: 'task/id/:id/subtask/:subtaskId/journey/:journeyId/awesome/:awesomeId',
+      component: TaskComponent
+    },
 ];
 
 export const routing = RouterModule.forRoot( routes, { useHash: true } );

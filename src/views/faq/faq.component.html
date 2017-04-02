@@ -26,7 +26,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let faq of faqs; let i = index;">
+      <tr *ngFor="let faq of faqs; let i = index;" (click)="goToFaq(faq.fullPath)">
         <td>
           <i class="material-icons" style="background-color: red" *ngIf="faq.faqType === 'PAIN'">timelapse</i>
           <i class="material-icons" style="background-color: blueviolet"*ngIf="faq.faqType === 'AWESOME'">timelapse</i>

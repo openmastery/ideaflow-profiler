@@ -34,4 +34,10 @@ export class FaqComponent implements OnInit {
     this.faqs = response;
   }
 
+  goToFaq(fullPath){
+    if(fullPath != null){
+      this.router.navigate([fullPath.substr(1, fullPath.length - 1)]);
+    }
+  }
+
 }

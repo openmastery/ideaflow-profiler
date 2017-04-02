@@ -26,19 +26,73 @@
     <main>
       <google-chart [data]="timelineChartOptions"></google-chart>
     </main>
+
+
+    <md-card>
+      <header>
+        <main>
+          Task Summary
+          </main>
+        <aside>
+          {{taskTimeline?.ideaFlowStory?.durationInSeconds | amDuration: 'seconds' }}
+        </aside>
+        </header>
+      <main>
+        <legend>
+          <ul>
+            <li *ngFor="let percent of taskTimeline?.ideaFlowStory?.capacityDistribution?.percentages" [class]="percent.name">
+              <i class="material-icons">lens</i>
+              <label>{{percent.name}}</label>
+            </li>
+          </ul>
+        </legend>
+        <figure>
+          <time *ngFor="let percent of taskTimeline?.ideaFlowStory?.capacityDistribution?.percentages" [style.width]="percent.value"
+                [class]="percent.name" [attr.percent]="percent.value"></time>
+        </figure>
+
+        <table>
+          <tr>
+            <td>
+              <i class="material-icons">access_time</i>
+            </td>
+            <td>
+              START TIME
+            </td>
+            <td>
+              {{taskTimeline?.ideaFlowStory?.position | date:'medium'}}
+            </td>
+          </tr>
+          <tr *ngFor="let metric of taskTimeline?.ideaFlowStory?.allMetrics">
+            <td>
+              <i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>
+              <i class="material-icons" *ngIf="metric.type === 'MAX_HAYSTACK_SIZE'">timelapse</i>
+              <i class="material-icons" *ngIf="metric.type === 'AVG_HUMAN_CYCLE_RATIOS'">account_circle</i>
+              <i class="material-icons" *ngIf="metric.type === 'MAX_EXPERIMENT_CYCLES'">settings_backup_restore</i>
+              <i class="material-icons" *ngIf="metric.type === 'WTFS_PER_DAY'">error</i>
+            </td>
+            <td>
+              {{metric.type}}
+            </td>
+            <td *ngIf="metric.valueType === 'DurationInSeconds'">
+              {{metric.value | amDuration:'seconds'}}
+            </td>
+            <td *ngIf="metric.valueType === 'Double'">
+              {{metric.value}}
+            </td>
+          </tr>
+        </table>
+      </main>
+
+    </md-card>
+
+
     <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;"
              (click)="getSubtask(subtask)">
       <header>
         <main>
           {{i+1}}. {{subtask.description}}
         </main>
-        <aside>
-          <ul>
-            <li *ngFor="let painTag of subtask?.painTags">
-              <label>{{painTag}}</label>
-            </li>
-          </ul>
-        </aside>
         <aside>
           {{subtask.durationInSeconds | amDuration:'seconds'}}
         </aside>
@@ -59,7 +113,11 @@
                 [class]="percent.name" [attr.percent]="percent.value"></time>
         </figure>
 
-
+        <ul>
+          <li *ngFor="let painTag of subtask?.painTags">
+            <label>{{painTag}}</label>
+          </li>
+        </ul>
         <table>
           <tr>
             <td>
@@ -93,7 +151,7 @@
 
         <md-card *ngIf="subtask.milestones.length > 0">
           <header>
-            Progress Milestones
+            <h3>Progress Milestones</h3>
           </header>
 
           <main>
@@ -118,7 +176,7 @@
         <md-card *ngFor="let journey of subtask.troubleshootingJourneys;">
           <header>
             <main>
-              Troubleshooting Journey
+              <h3>Troubleshooting Session</h3>
             </main>
             <aside>
               {{journey.durationInSeconds | amDuration:'seconds'}}

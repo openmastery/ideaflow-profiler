@@ -11,7 +11,7 @@ export class IdeaFlowStory {
         public position: Date,
         public contextTags: Array<any>,
         public painTags: Array<any>,
-        public frequency: number,
+
         public capacityDistribution:CapacityDistribution,
         public subtasks: Array<SubTask>,
 

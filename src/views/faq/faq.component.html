@@ -20,9 +20,9 @@
     <table class="mdl-data-table highlight">
       <thead>
       <tr>
-        <th colspan="2" (click)="sortGlossary(glossary,'description')"><button md-button>StoryPoint</button></th>
-        <th (click)="sortGlossary(glossary,'journeyPainInSeconds')"><button md-button>Session Pain</button></th>
+        <th colspan="2" (click)="sortGlossary(glossary,'description')"><button md-button>Story Point</button></th>
         <th (click)="sortGlossary(glossary,'taskPainInSeconds')"><button md-button>Task Pain</button></th>
+        <th (click)="sortGlossary(glossary,'journeyPainInSeconds')"><button md-button>Session Pain</button></th>
       </tr>
       </thead>
       <tbody>
@@ -33,21 +33,21 @@
         </td>
         <td>
           <h4>{{faq.faqType === 'PAIN'? 'WTF?!' : 'YAY!'}}: {{faq.eventDescription}}</h4>
-          <i> {{faq.position | date: 'MMM dd yyyy'}} </i>
+          <p> {{faq.faqAnnotation}}</p>
+
+          <p><i> {{faq.position | date: 'MMM dd yyyy'}} </i>
             <span *ngFor="let contextTag of faq.contextTags">
               <label>{{contextTag}}</label>
             </span>
             <span color="red" *ngFor="let painTag of faq.painTags">
               <label>{{painTag}}</label>
             </span>
+          </p>
 
-          <p> {{faq.faqAnnotation}}</p>
 
-          <p><i><a>{{faq.fullPath}}</a> </i></p>
-
-        <td>
-        <td>{{faq.journeyPainInSeconds | amDuration:'seconds' }}</td>
         <td>{{faq.taskPainInSeconds | amDuration:'seconds'}}</td>
+
+        <td>{{faq.journeyPainInSeconds | amDuration:'seconds' }}</td>
       </tr>
       </tbody>
     </table>

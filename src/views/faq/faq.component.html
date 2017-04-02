@@ -32,23 +32,22 @@
           <i class="material-icons" style="background-color: blueviolet"*ngIf="faq.faqType === 'AWESOME'">timelapse</i>
         </td>
         <td>
-
           <h4>{{faq.faqType === 'PAIN'? 'WTF?!' : 'YAY!'}}: {{faq.eventDescription}}</h4>
-          <p> {{faq.faqAnnotation}}</p>
-          <p><i>{{faq.taskName}} .. {{faq.position | date: 'MMM dd yyyy'}}</i></p>
-          <ul>
-            <li *ngFor="let painTag of faq.painTags">
+          <i> {{faq.position | date: 'MMM dd yyyy'}} </i>
+            <span *ngFor="let contextTag of faq.contextTags">
+              <label>{{contextTag}}</label>
+            </span>
+            <span color="red" *ngFor="let painTag of faq.painTags">
               <label>{{painTag}}</label>
-            </li>
-          </ul>
-          <ul>
-            <li *ngFor="let contextTags of faq.contextTags">
-              <label>{{contextTags}}</label>
-            </li>
-          </ul>
+            </span>
+
+          <p> {{faq.faqAnnotation}}</p>
+
+          <p><i><a>{{faq.fullPath}}</a> </i></p>
+
         <td>
-        <td>{{faq.journeyPainInSeconds}}</td>
-        <td>{{faq.taskPainInSeconds}}</td>
+        <td>{{faq.journeyPainInSeconds | amDuration:'seconds' }}</td>
+        <td>{{faq.taskPainInSeconds | amDuration:'seconds'}}</td>
       </tr>
       </tbody>
     </table>

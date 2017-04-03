@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Definition } from '../../models/definition';
 import { GlossaryService } from '../../services';
@@ -20,16 +20,29 @@ export class GlossaryComponent implements OnInit {
   private glossary: Definition[];
   private errorMessage: string;
 
-  constructor( private glossaryService: GlossaryService, public router: Router ) {
+  constructor( private glossaryService: GlossaryService, private route: ActivatedRoute, public router: Router ) {
 
   }
 
   ngOnInit() {
-    this.getDefinitions();
+      this.route.params.subscribe(params => {
+        if (params['tag']) {
+          this.getTaskDefinitions(+params['id'], params['tag'])
+        } else {
+          this.getAllDefinitions();
+        }
+      });
   }
 
-  private getDefinitions() {
-    this.glossaryService.getDefinitions()
+  private getTaskDefinitions(taskId, tag) {
+    this.glossaryService.getTaskDefinitions(taskId)
+      .subscribe(
+        glossary => this.setGlossary(glossary),
+        error =>  this.errorMessage = <any>error);
+  }
+
+  private getAllDefinitions() {
+    this.glossaryService.getAllDefinitions()
     .subscribe(
       glossary => this.setGlossary(glossary),
       error =>  this.errorMessage = <any>error);

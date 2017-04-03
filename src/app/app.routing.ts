@@ -28,6 +28,10 @@ const routes: Routes = [
         component: GlossaryComponent
     },
     {
+        path: 'glossary/task/:id/tag/:tag',
+        component: GlossaryComponent
+    },
+    {
         path: 'home',
         component: HomeComponent
     },

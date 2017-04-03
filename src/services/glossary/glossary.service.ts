@@ -21,4 +21,23 @@ export class GlossaryService {
     .map( response => <Definition[]>response.json().definitions );
   }
 
+
+  getTaskDefinitions (taskId): Observable<Definition[]> {
+    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.get(this.apiUrl + 'storyweb/glossary/task/'+taskId, options)
+      .map( response => <Definition[]>response.json().definitions );
+  }
+
+
+  getAllDefinitions (): Observable<Definition[]> {
+    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.get(this.apiUrl + 'storyweb/glossary', options)
+      .map( response => <Definition[]>response.json().definitions );
+  }
+
+
 }

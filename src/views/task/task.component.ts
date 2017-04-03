@@ -9,6 +9,7 @@ import { Task } from '../../models/task';
 import { TaskTimeline } from '../../models/taskTimeline';
 import { TaskService } from '../../services'
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 
 
@@ -81,7 +82,7 @@ export class TaskComponent implements OnInit {
      */
   }
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute) {
+  constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
 
   }
 
@@ -93,6 +94,13 @@ export class TaskComponent implements OnInit {
     this.getTimeline(this.id);
   }
 
+  goToGlossary(hashTag) {
+    if(hashTag){
+      let hashTagWithoutPound = hashTag.substring(1, hashTag.length);
+      this.router.navigate(['/glossary/task/'+this.id+'/tag/'+hashTagWithoutPound]);
+    }
+  }
+
   getTimeline(taskId) {
     this.taskService.getTimeline(taskId)
     .subscribe(
@@ -100,8 +108,6 @@ export class TaskComponent implements OnInit {
       error =>  this.errorMessage = <any>error
     );
   }
-
-
 
   setTimeline(taskTimeline){
     if(taskTimeline.hasOwnProperty('ideaFlowStory')){

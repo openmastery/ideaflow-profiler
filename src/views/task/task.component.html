@@ -1,7 +1,7 @@
 <main>
   <header>
     <main>
-      <h1>IdeaFlow Profiler</h1>
+      <h1>IdeaFlow Timeline</h1>
       <nav>
         <p>
           <a href="/#/home" rel="index up up up">home</a>
@@ -87,8 +87,7 @@
     </md-card>
 
 
-    <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;"
-             (click)="getSubtask(subtask)">
+    <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;">
       <header>
         <main>
           Subtask {{i+1}}. {{subtask.description}}
@@ -115,7 +114,7 @@
 
         <ul>
           <li *ngFor="let painTag of subtask?.painTags">
-            <label>{{painTag}}</label>
+            <label><a (click)="goToGlossary(painTag)">{{painTag}}</a></label>
           </li>
         </ul>
         <table>
@@ -191,12 +190,12 @@
           <md-card-content>
             <ul>
               <li *ngFor="let painTag of subtask?.painTags">
-                <label>{{painTag}}</label>
+                <label><a (click)="goToGlossary(painTag)">{{painTag}}</a></label>
               </li>
             </ul>
             <ul>
               <li *ngFor="let contextTags of subtask?.contextTags">
-                <label>{{contextTags}}</label>
+                <label><a (click)="goToGlossary(painTag)">{{contextTags}}</a></label>
               </li>
             </ul>
 
@@ -259,20 +258,6 @@
                   </tr>
                 </table>
 
-                <!--"relativePath": "/experiment/927",-->
-                <!--"relativePositionInSeconds": 10978,-->
-                <!--"durationInSeconds": 90,-->
-                <!--"position": "2017-01-09T01:29:37",-->
-                <!--"contextTags": [],-->
-                <!--"painTags": [],-->
-                <!--"allMetrics": null,-->
-                <!--"dangerMetrics": null,-->
-                <!--"executionDurationInSeconds": 3,-->
-                <!--"processName": "ActivityResourceSpec",-->
-                <!--"executionTaskType": "JUnit",-->
-                <!--"debug": false,-->
-                <!--"failed": true-->
-
 
               </md-card-content>
             </md-card>
@@ -291,25 +276,6 @@
           <!--<button md-button>SHARE</button>-->
           <!--</md-card-actions>-->
         </md-card>
-
-        <!--export class TroubleShootingJourney {-->
-        <!--constructor(-->
-        <!--public relativePath: string,-->
-        <!--public description: string,-->
-        <!--public position: Date,-->
-        <!--public relativePositionInSeconds: number,-->
-        <!--public durationInSeconds: number,-->
-
-        <!--public contextTags: Array<string>,-->
-        <!--public painTags: Array<string>,-->
-
-        <!--public discoveryCycles: Array<PainCycle>,-->
-        <!--public metrics: Array<Metric>,-->
-
-        <!--){}-->
-        <!--}-->
-        <!---->
-
 
 
       </main>

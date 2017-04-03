@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services'
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -22,7 +23,7 @@ export class ProjectComponent implements OnInit {
   tasks: Task[];
   errorMessage: string;
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute) {
+  constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
 
   }
 
@@ -39,6 +40,12 @@ export class ProjectComponent implements OnInit {
     .subscribe(
       tasks => this.setTasks(tasks),
       error =>  this.errorMessage = <any>error);
+  }
+
+  goToTask(task){
+    if(task.hasOwnProperty('id')){
+      this.router.navigate(['/task/'+task.id]);
+    }
   }
 
   private setTasks(response){

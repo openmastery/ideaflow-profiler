@@ -1,7 +1,7 @@
 <main>
   <header>
     <main>
-      <h1>A Visual Map of Your Idea Flow</h1>
+      <h1>IdeaFlow Profiler</h1>
       <nav>
         <p>
           <a href="/#/home" rel="index up up up">home</a>
@@ -91,7 +91,7 @@
              (click)="getSubtask(subtask)">
       <header>
         <main>
-          {{i+1}}. {{subtask.description}}
+          Subtask {{i+1}}. {{subtask.description}}
         </main>
         <aside>
           {{subtask.durationInSeconds | amDuration:'seconds'}}
@@ -151,12 +151,15 @@
 
         <md-card *ngIf="subtask.milestones.length > 0">
           <header>
-            <h3>Progress Milestones</h3>
+            <h3>Progress Tickmarks</h3>
           </header>
 
           <main>
             <table>
               <tr *ngFor="let milestone of subtask.milestones; let k = index;">
+                <td>
+                  <md-icon>done</md-icon>
+                </td>
                 <td>
                   {{i+1}}.{{k+1}}. {{milestone.description}}
                 </td>

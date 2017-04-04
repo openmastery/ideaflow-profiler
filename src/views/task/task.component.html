@@ -181,6 +181,9 @@
               <h3>Troubleshooting Session</h3>
             </main>
             <aside>
+              <label><i>#{{journey.fullPath}}</i></label>
+            </aside>
+            <aside>
               {{journey.durationInSeconds | amDuration:'seconds'}}
             </aside>
             <aside>
@@ -229,21 +232,27 @@
             <md-card *ngFor="let painCycle of journey.painCycles">
               <header>
                 <main>
+                  <h3>
                   <span *ngIf="painCycle.eventType === 'PAIN'">[FireIcon] </span>
                   <span *ngIf="painCycle.eventType === 'AWESOME'">[PurpleIcon] </span>
-
-                  {{painCycle.description}}
+                  {{painCycle.description}}</h3>
                 </main>
+                <aside>
+                  <i>#{{painCycle.fullPath}}</i>
+                </aside>
                 <aside>
                   {{painCycle.durationInSeconds | amDuration:'seconds'}}
                 </aside>
               </header>
 
               <md-card-content>
-                <div *ngIf="painCycle.formattableSnippet != null">
-                  {{painCycle.formattableSnippet.contents}}
-                </div>
 
+                <div *ngIf="painCycle.formattableSnippet != null">
+                  <aside>Source: {{painCycle.formattableSnippet.source}}</aside>
+                  <pre>
+{{painCycle.formattableSnippet.contents}}
+                    </pre>
+                </div>
                 <table *ngIf="painCycle.experimentCycles.length > 0">
                   <tr>
                     <td>History</td>

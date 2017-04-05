@@ -2,13 +2,8 @@
   <header>
     <main>
       <h1>IdeaFlow Timeline</h1>
-      <nav>
-        <p>
-          <a href="/#/home" rel="index up up up">home</a>
-          <i class="material-icons">keyboard_arrow_right</i>
-          <a>{{id}}</a>
-        </p>
-      </nav>
+      <div class="breadcrumb flat"><a href="/#/home">Home</a><a class="active" href="#">Task
+        {{taskTimeline?.task?.name}}</a></div>
 
     </main>
     <aside>
@@ -27,28 +22,46 @@
       <google-chart [data]="timelineChartOptions"></google-chart>
     </main>
 
-
     <md-card>
       <header>
         <main>
           Task Summary
-          </main>
+        </main>
         <aside>
-          {{taskTimeline?.ideaFlowStory?.durationInSeconds | amDuration: 'seconds' }}
+          Duration: {{formatDuration(taskTimeline?.ideaFlowStory?.durationInSeconds)}}
         </aside>
-        </header>
+      </header>
       <main>
         <legend>
           <ul>
-            <li *ngFor="let percent of taskTimeline?.ideaFlowStory?.capacityDistribution?.percentages" [class]="percent.name">
+            <li class="LEARNING">
               <i class="material-icons">lens</i>
-              <label>{{percent.name}}</label>
+              <label>LEARNING</label>
+            </li>
+            <li class="PROGRESS">
+              <i class="material-icons">lens</i>
+              <label>PROGRESS</label>
+            </li>
+            <li class="TROUBLESHOOTING">
+              <i class="material-icons">lens</i>
+              <label>TROUBLESHOOTING</label>
             </li>
           </ul>
         </legend>
+
         <figure>
-          <time *ngFor="let percent of taskTimeline?.ideaFlowStory?.capacityDistribution?.percentages" [style.width]="percent.value"
-                [class]="percent.name" [attr.percent]="percent.value"></time>
+          <time *ngIf="taskTimeline?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity > 0" [style.width]="taskTimeline?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity + '%'"
+                class="LEARNING"
+                [attr.percent]="formatDuration(taskTimeline?.ideaFlowStory?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
+
+          <time *ngIf="taskTimeline?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity > 0" [style.width]="taskTimeline?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
+                class="PROGRESS"
+                [attr.percent]="formatDuration(taskTimeline?.ideaFlowStory?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
+
+          <time *ngIf="taskTimeline?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0" [style.width]="taskTimeline?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
+                class="TROUBLESHOOTING"
+                [attr.percent]="formatDuration(taskTimeline?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
+
         </figure>
 
         <table>
@@ -75,7 +88,7 @@
               {{metric.type}}
             </td>
             <td *ngIf="metric.valueType === 'DurationInSeconds'">
-              {{metric.value | amDuration:'seconds'}}
+              {{formatDuration(metric.value)}}
             </td>
             <td *ngIf="metric.valueType === 'Double'">
               {{metric.value}}
@@ -93,23 +106,44 @@
           Subtask {{i+1}}. {{subtask.description}}
         </main>
         <aside>
-          {{subtask.durationInSeconds | amDuration:'seconds'}}
+          Duration: {{formatDuration(subtask.durationInSeconds)}}
         </aside>
 
       </header>
       <main>
         <legend>
           <ul>
-            <li *ngFor="let percent of subtask?.capacityDistribution?.percentages" [class]="percent.name">
+            <li class="LEARNING">
               <i class="material-icons">lens</i>
-              <label>{{percent.name}}</label>
+              <label>LEARNING</label>
+            </li>
+            <li class="PROGRESS">
+              <i class="material-icons">lens</i>
+              <label>PROGRESS</label>
+            </li>
+            <li class="TROUBLESHOOTING">
+              <i class="material-icons">lens</i>
+              <label>TROUBLESHOOTING</label>
             </li>
           </ul>
         </legend>
 
         <figure>
-          <time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value"
-                [class]="percent.name" [attr.percent]="percent.value"></time>
+          <time *ngIf="subtask?.capacityDistribution?.LEARNING.percentCapacity > 0"
+                [style.width]="subtask?.capacityDistribution?.LEARNING.percentCapacity+ '%'"
+                class="LEARNING" [attr.percent]="formatDuration(subtask?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
+
+          <time *ngIf="subtask?.capacityDistribution?.PROGRESS.percentCapacity > 0"
+            [style.width]="subtask?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
+                class="PROGRESS" [attr.percent]="formatDuration(subtask?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
+
+          <time *ngIf="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0"
+            [style.width]="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
+                class="TROUBLESHOOTING"
+                [attr.percent]="formatDuration(subtask?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
+
+          <!--<time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value"-->
+          <!--[class]="percent.name" [attr.percent]="percent.value"></time>-->
         </figure>
 
         <ul>
@@ -140,7 +174,7 @@
               {{metric.type}}
             </td>
             <td *ngIf="metric.valueType === 'DurationInSeconds'">
-              {{metric.value | amDuration:'seconds'}}
+              {{formatDuration(metric.value)}}
             </td>
             <td *ngIf="metric.valueType === 'Double'">
               {{metric.value}}
@@ -233,9 +267,9 @@
               <header>
                 <main>
                   <h3>
-                  <span *ngIf="painCycle.eventType === 'PAIN'">[FireIcon] </span>
-                  <span *ngIf="painCycle.eventType === 'AWESOME'">[PurpleIcon] </span>
-                  {{painCycle.description}}</h3>
+                    <span *ngIf="painCycle.eventType === 'PAIN'">[FireIcon] </span>
+                    <span *ngIf="painCycle.eventType === 'AWESOME'">[PurpleIcon] </span>
+                    {{painCycle.description}}</h3>
                 </main>
                 <aside>
                   <i>#{{painCycle.fullPath}}</i>

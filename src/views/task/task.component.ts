@@ -82,6 +82,24 @@ export class TaskComponent implements OnInit {
      */
   }
 
+  formatRelative(time) {
+  let d = Number(time);
+    let h = Math.floor(d / 3600);
+    let m = Math.floor(d % 3600 / 60);
+
+  return ( h + ":" + (m < 10 ? "0" : "") + m );
+}
+
+
+  formatDuration(duration) {
+    let d = Number(duration);
+    let h = Math.floor(d / 3600);
+    let m = Math.floor(d % 3600 / 60);
+    let s = Math.floor(m % 3600 / 60);
+
+  return ( (h > 0 ? h + "h " : "") + (m < 10 ? "0" : "") + m + "m "); //+ (s < 10 ? "0" : "") + s + "s")
+}
+
   constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
 
   }
@@ -110,67 +128,8 @@ export class TaskComponent implements OnInit {
   }
 
   setTimeline(taskTimeline){
-    if(taskTimeline.hasOwnProperty('ideaFlowStory')){
-
-      if (taskTimeline.ideaFlowStory.hasOwnProperty('capacityDistribution')) {
-        let capacityDistribution = taskTimeline.ideaFlowStory.capacityDistribution;
-
-        let capacityTotal = 0;
-        for (let capacityType in capacityDistribution) {
-          capacityTotal+=capacityDistribution[capacityType];
-        }
-        let percentages = new Array();
-        for (let capacityType in capacityDistribution) {
-          percentages.push({
-            'name': capacityType,
-            'value': ((capacityDistribution[capacityType]/capacityTotal) * 100).toFixed(0) + '%'
-          });
-        }
-        capacityDistribution.capatityTotal = capacityTotal;
-        capacityDistribution.percentages = percentages;
-      }
-
-      if(taskTimeline.ideaFlowStory.hasOwnProperty('subtasks')){
-
-        let subtasks = taskTimeline.ideaFlowStory.subtasks;
-        for(let subtask of subtasks){
-
-          if(subtask.hasOwnProperty('capacityDistribution')){
-            let capacityTotal = 0;
-            for (let capacityType in subtask.capacityDistribution) {
-              capacityTotal+=subtask.capacityDistribution[capacityType];
-            }
-            let percentages = new Array();
-            for (let capacityType in subtask.capacityDistribution) {
-              percentages.push({
-                'name': capacityType,
-                'value': ((subtask.capacityDistribution[capacityType]/capacityTotal) * 100).toFixed(0) + '%'
-              });
-            }
-            subtask.capacityDistribution.capatityTotal = capacityTotal;
-            subtask.capacityDistribution.percentages = percentages;
-          }
-        }
-      }
-    }
     this.taskTimeline = taskTimeline;
   }
-
-  //TODO why doesn't this work?
-  static calculateCapacities(capacityDistribution) {
-    let capacityTotal = 0;
-    for (let capacityType in capacityDistribution) {
-      capacityTotal+= capacityDistribution[capacityType];
-    }
-    let percentages = new Array();
-    for (let capacityType in capacityDistribution) {
-      percentages.push({
-        'name': capacityType,
-        'value': ((capacityDistribution[capacityType]/capacityTotal) * 100).toFixed(0) + '%'
-      });
-    }
-    capacityDistribution.capatityTotal = capacityTotal;
-    capacityDistribution.percentages = percentages;
-  }
+  
 
 }

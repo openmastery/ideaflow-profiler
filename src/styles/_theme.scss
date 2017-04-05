@@ -23,7 +23,7 @@ md-toolbar,
 // Write custom themes for this application
 .#{$template_1} {
   $light-primary: md-palette($md-deep-purple);
-  $light-accent:  md-palette($md-pink, A200, A100, A400);
+  $light-accent:  md-palette($md-deep-purple, A200, A100, A400);
   $light-warn:    md-palette($md-pink);
 
   $light-theme: md-light-theme($light-primary, $light-accent, $light-warn);

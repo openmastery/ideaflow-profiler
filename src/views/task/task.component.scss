@@ -22,6 +22,7 @@ app-task{
         & > main{
           color: md-color($md-grey,600);
           padding: 20px;
+
           & > legend{
             ul{
               list-style: none;
@@ -44,14 +45,14 @@ app-task{
                     }
                   }
                 }
-                &.TROUBLESHOOTING{
+                &.PROGRESS{
                   & > i{
                     &.material-icons{
                       color:md-color($md-grey,100);
                     }
                   }
                 }
-                &.PROGRESS{
+                &.TROUBLESHOOTING{
                   & > i{
                     &.material-icons{
                       color:md-color($md-red,500);
@@ -72,10 +73,10 @@ app-task{
               &.LEARNING{
                 background:md-color($md-blue,500);
               }
-              &.TROUBLESHOOTING{
+              &.PROGRESS{
                 background:md-color($md-grey,100);
               }
-              &.PROGRESS{
+              &.TROUBLESHOOTING{
                 background:md-color($md-red,500);
               }
               &::before{

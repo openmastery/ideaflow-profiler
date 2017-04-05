@@ -28,7 +28,7 @@
           <td>{{task.project}}</td>
           <td>{{task.name}}</td>
           <td>{{task.description}}</td>
-          <td>{{task?.modifyDate | amTimeAgo}}</td>
+          <td>{{task?.modifyDate | amCalendar:nextDay }}</td>
         </tr>
       </tbody>
     </table>

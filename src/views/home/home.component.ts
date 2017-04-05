@@ -19,8 +19,11 @@ export class HomeComponent implements OnInit {
   tasks: Task[];
   errorMessage: string;
 
-  constructor(private taskService: TaskService,public router: Router) {
+  pageNumber: number;
+  project: string;
 
+  constructor(private taskService: TaskService,public router: Router) {
+     this.pageNumber = 1;
   }
 
   ngOnInit() {
@@ -28,6 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   getTasks(project) {
+    this.project = project;
     this.taskService.getTasks(project)
     .subscribe(
       tasks => this.setTasks(tasks),
@@ -39,12 +43,22 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/task/'+task.id]);
     }
   }
+
+//   this.results = this.results.concat(data.results);
+//   this._next = data.next;
+// },
+
   getMore(){
-    console.log('get more');
+    console.log("getMore()");
+    // this.taskService.getMoreTasks(this.project, this.pageNumber)
+    //   .subscribe(
+    //     tasks => this.setTasks(tasks),
+    //     error =>  this.errorMessage = <any>error);
   }
 
   private setTasks(response){
-    this.tasks = this.sortTasks(response,"id");
+    this.tasks = response;
+    //this.tasks = this.sortTasks(response,"id");
   }
 
   private sortTasks(list,property){

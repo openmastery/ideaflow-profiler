@@ -3,7 +3,8 @@
 # compiled output
 /dist
 /tmp
-
+*.css
+*.css.map
 # dependencies
 /node_modules
 /bower_components

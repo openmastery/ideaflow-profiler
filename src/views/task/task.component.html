@@ -19,7 +19,8 @@
       {{taskTimeline?.task?.name}} - {{taskTimeline?.task?.description}}
     </h2>
     <main>
-      <google-chart [data]="timelineChartOptions"></google-chart>
+      <h3>Bar Chart</h3>
+      <app-barchart *ngIf="chartData" [data]="chartData"></app-barchart>
     </main>
 
     <md-card>

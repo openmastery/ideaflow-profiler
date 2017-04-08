@@ -7,3 +7,4 @@ export { HomeComponent } from './home/home.component';
 export { ProjectComponent } from './project/project.component';
 export { SubtaskComponent } from './subtask/subtask.component';
 export { TaskComponent } from './task/task.component';
+export { BarchartComponent } from './barchart/barchart.component';

@@ -7,7 +7,6 @@ import { MomentModule } from 'angular2-moment/moment.module';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
-
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import {
@@ -18,7 +17,8 @@ import {
   HomeComponent,
   ProjectComponent,
   SubtaskComponent,
-  TaskComponent
+  TaskComponent,
+  BarchartComponent,
 } from '../views';
 
 import { routing } from './app.routing';
@@ -44,7 +44,8 @@ import {
     HomeComponent,
     ProjectComponent,
     SubtaskComponent,
-    TaskComponent
+    TaskComponent,
+    BarchartComponent
   ],
   imports: [
     BrowserModule,

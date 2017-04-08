@@ -130,6 +130,6 @@ export class TaskComponent implements OnInit {
   setTimeline(taskTimeline){
     this.taskTimeline = taskTimeline;
   }
-  
+
 
 }

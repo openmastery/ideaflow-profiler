@@ -49,7 +49,7 @@ export class ProjectComponent implements OnInit {
   }
 
   private setTasks(response){
-    this.tasks = this.sortTasks(response,"id");
+    this.tasks = response;
   }
 
   private sortTasks(list,property){

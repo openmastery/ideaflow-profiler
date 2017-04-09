@@ -130,17 +130,16 @@ export class TimelineComponent implements OnInit, OnChanges {
     let that = this;
     events.forEach(function (event) {
 
-      if (event.type == 'WTF' || event.type == 'AWESOME') {
-        let eventInfo = that.drawEventLine(stage, event, secondsPerUnit);
-        that.eventsById[event.id] = eventInfo;
+      let eventInfo = that.drawEventLine(stage, event, secondsPerUnit);
+      that.eventsById[event.id] = eventInfo;
 
-        eventInfo.layer.on('mouseover touchstart', function () {
-          that.highlightEventLine(eventInfo)
-        });
-        eventInfo.layer.on('mouseout touchend', function () {
-          that.restoreEventLine(eventInfo)
-        });
-      }
+      eventInfo.layer.on('mouseover touchstart', function () {
+        that.highlightEventLine(eventInfo)
+      });
+      eventInfo.layer.on('mouseout touchend', function () {
+        that.restoreEventLine(eventInfo)
+      });
+
     });
   }
 
@@ -149,15 +148,15 @@ export class TimelineComponent implements OnInit, OnChanges {
     let offset = Math.round(event.relativePositionInSeconds / secondsPerUnit) + this.sideMargin;
     let tickHeight = 15;
     let tickMargin = 3;
-    let color = 'gray';
+    let color = '#cccccc';
 
     let strokeWidth = 2;
+
 
     console.log(event.type);
 
     if (event.type == 'SUBTASK') {
-      console.log('SUBTASK!');
-      strokeWidth = 4;
+      strokeWidth = 2;
       color = 'black';
     }
 
@@ -168,29 +167,41 @@ export class TimelineComponent implements OnInit, OnChanges {
       ],
       stroke: color,
       strokeWidth: strokeWidth,
-      lineCap: 'square',
+      lineCap: 'round',
       tension: 0,
     });
 
-    var tickLabel = new Kinetic.Text({
-      x: offset,
-      y: this.height - this.bottomMargin + tickHeight + tickMargin,
-      text: this.formatShort(event.relativePositionInSeconds),
-      align: 'center',
-      fontSize: 13,
-      fontFamily: 'Calibri',
-      fill: 'black'
-    });
-    tickLabel.setOffset({x: tickLabel.getWidth() / 2});
+    if (event.type == 'CALENDAR') {
+      eventLine.dash([5, 5]);
+      eventLine.setPoints([offset, 0, offset, this.height - 10]);
+    }
+
 
     layer.add(eventLine);
-    layer.add(tickLabel);
 
-    this.drawImageAnnotation(layer, event.type, offset, this.topMargin);
+
+    if (event.type == 'SUBTASK') {
+      var tickLabel = new Kinetic.Text({
+        x: offset,
+        y: this.height - this.bottomMargin + tickHeight + tickMargin,
+        text: this.formatShort(event.relativePositionInSeconds),
+        align: 'center',
+        fontSize: 13,
+        fontFamily: 'Calibri',
+        fill: 'black'
+      });
+      tickLabel.setOffset({x: tickLabel.getWidth() / 2});
+      layer.add(tickLabel);
+    }
+
+
+    if (event.type == 'WTF' || event.type == 'AWESOME') {
+      this.drawImageAnnotation(layer, event.type, offset, this.topMargin);
+    }
 
     stage.add(layer);
 
-    return {data: event, line: eventLine, tick: tickLabel, layer: layer};
+    return {data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
 
   }
 
@@ -205,15 +216,15 @@ export class TimelineComponent implements OnInit, OnChanges {
     } else if (type == 'AWESOME') {
       imageObj.src = '/assets/awesome_flame.png';
     }
-    
-    imageObj.onload = function() {
+
+    imageObj.onload = function () {
       var image = new Kinetic.Image({
         x: xoffset,
         y: yoffset,
         image: imageObj,
         width: 18,
         height: 20
-       });
+      });
       layer.add(image);
       layer.draw();
     };
@@ -223,14 +234,18 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   highlightEventLine(eventInfo) {
     eventInfo.line.setStroke('#d3e0ff');
-    eventInfo.tick.setFill('#79a1ff');
+    if (eventInfo.tick) {
+      eventInfo.tick.setFill('#79a1ff');
+    }
     eventInfo.layer.draw();
   }
 
 
   restoreEventLine(eventInfo) {
-    eventInfo.line.setStroke('gray');
-    eventInfo.tick.setFill('black');
+    eventInfo.line.setStroke(eventInfo.color);
+    if (eventInfo.tick) {
+      eventInfo.tick.setFill('black');
+    }
     eventInfo.layer.draw();
   }
 

@@ -18,10 +18,9 @@ export class TimelineComponent implements OnInit, OnChanges {
   private width: number;
   private height: number;
   private bandMargin: any = 20;
-
-  private sideMargin: any = 40;
-  private bottomMargin: any = 30;
-  private topMargin: any = this.bottomMargin;
+  private sideMargin: any = 50;
+  private bottomMargin: any = 50;
+  private topMargin: any = 30;//this.bottomMargin;
 
 
   private xScale: any;
@@ -64,7 +63,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     this.stage = new Kinetic.Stage({container: 'timeline', width: this.width, height: this.height});
     this.drawUngroupedTimebands(this.stage, this.data, this.secondsPerUnit);
     this.drawMainTimeline(this.stage, this.formatShort(0), this.formatShort(this.endOfTimeline));
-
+    this.drawEvents(this.stage, this.data.events, this.secondsPerUnit);
   }
 
   getEndOfTimeline(timelineData) {
@@ -72,8 +71,8 @@ export class TimelineComponent implements OnInit, OnChanges {
   }
 
   getSecondsPerUnit(timelineData) {
-  return (this.getEndOfTimeline(timelineData) / (this.width - (2 * this.sideMargin)));
-}
+    return (this.getEndOfTimeline(timelineData) / (this.width - (2 * this.sideMargin)));
+  }
 
   formatShort(duration) {
     let d = Number(duration);
@@ -127,6 +126,113 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   }
 
+  drawEvents(stage, events, secondsPerUnit) {
+    let that = this;
+    events.forEach(function (event) {
+
+      if (event.type == 'WTF' || event.type == 'AWESOME') {
+        let eventInfo = that.drawEventLine(stage, event, secondsPerUnit);
+        that.eventsById[event.id] = eventInfo;
+
+        eventInfo.layer.on('mouseover touchstart', function () {
+          that.highlightEventLine(eventInfo)
+        });
+        eventInfo.layer.on('mouseout touchend', function () {
+          that.restoreEventLine(eventInfo)
+        });
+      }
+    });
+  }
+
+  drawEventLine(stage, event, secondsPerUnit) {
+    let layer = new Kinetic.Layer();
+    let offset = Math.round(event.relativePositionInSeconds / secondsPerUnit) + this.sideMargin;
+    let tickHeight = 15;
+    let tickMargin = 3;
+    let color = 'gray';
+
+    let strokeWidth = 2;
+
+    console.log(event.type);
+
+    if (event.type == 'SUBTASK') {
+      console.log('SUBTASK!');
+      strokeWidth = 4;
+      color = 'black';
+    }
+
+    var eventLine = new Kinetic.Line({
+      points: [
+        offset, this.topMargin,
+        offset, this.height - this.bottomMargin + tickHeight
+      ],
+      stroke: color,
+      strokeWidth: strokeWidth,
+      lineCap: 'square',
+      tension: 0,
+    });
+
+    var tickLabel = new Kinetic.Text({
+      x: offset,
+      y: this.height - this.bottomMargin + tickHeight + tickMargin,
+      text: this.formatShort(event.relativePositionInSeconds),
+      align: 'center',
+      fontSize: 13,
+      fontFamily: 'Calibri',
+      fill: 'black'
+    });
+    tickLabel.setOffset({x: tickLabel.getWidth() / 2});
+
+    layer.add(eventLine);
+    layer.add(tickLabel);
+
+    this.drawImageAnnotation(layer, event.type, offset, this.topMargin);
+
+    stage.add(layer);
+
+    return {data: event, line: eventLine, tick: tickLabel, layer: layer};
+
+  }
+
+  drawImageAnnotation(layer, type, x, y) {
+    let width = 18;
+    let xoffset = x - width / 2;
+    let yoffset = y - 20;
+
+    var imageObj = new Image();
+    if (type == 'WTF') {
+      imageObj.src = '/assets/pain_flame.png';
+    } else if (type == 'AWESOME') {
+      imageObj.src = '/assets/awesome_flame.png';
+    }
+    
+    imageObj.onload = function() {
+      var image = new Kinetic.Image({
+        x: xoffset,
+        y: yoffset,
+        image: imageObj,
+        width: 18,
+        height: 20
+       });
+      layer.add(image);
+      layer.draw();
+    };
+
+    //return imageObj;
+  }
+
+  highlightEventLine(eventInfo) {
+    eventInfo.line.setStroke('#d3e0ff');
+    eventInfo.tick.setFill('#79a1ff');
+    eventInfo.layer.draw();
+  }
+
+
+  restoreEventLine(eventInfo) {
+    eventInfo.line.setStroke('gray');
+    eventInfo.tick.setFill('black');
+    eventInfo.layer.draw();
+  }
 
 
   drawUngroupedTimebands(stage, timelineData, secondsPerUnit) {

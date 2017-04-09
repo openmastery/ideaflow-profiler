@@ -3,7 +3,7 @@
     <main>
       <h1>IdeaFlow Timeline</h1>
       <div class="breadcrumb flat"><a href="/#/home">Home</a><a class="active" href="#">Task
-        {{taskTimeline?.task?.name}}</a></div>
+        {{taskDetail?.task?.name}}</a></div>
 
     </main>
     <aside>
@@ -16,11 +16,10 @@
   <main>
 
     <h2>
-      {{taskTimeline?.task?.name}} - {{taskTimeline?.task?.description}}
+      {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
     </h2>
     <main>
-      <h3>Bar Chart</h3>
-      <app-barchart *ngIf="chartData" [data]="chartData"></app-barchart>
+      <app-timeline *ngIf="timelineData" [data]="timelineData"></app-timeline>
     </main>
 
     <md-card>
@@ -29,7 +28,7 @@
           Task Summary
         </main>
         <aside>
-          Duration: {{formatDuration(taskTimeline?.ideaFlowStory?.durationInSeconds)}}
+          Duration: {{formatDuration(taskDetail?.ideaFlowStory?.durationInSeconds)}}
         </aside>
       </header>
       <main>
@@ -51,17 +50,17 @@
         </legend>
 
         <figure>
-          <time *ngIf="taskTimeline?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity > 0" [style.width]="taskTimeline?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity + '%'"
+          <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity > 0" [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity + '%'"
                 class="LEARNING"
-                [attr.percent]="formatDuration(taskTimeline?.ideaFlowStory?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
+                [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
 
-          <time *ngIf="taskTimeline?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity > 0" [style.width]="taskTimeline?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
+          <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity > 0" [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
                 class="PROGRESS"
-                [attr.percent]="formatDuration(taskTimeline?.ideaFlowStory?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
+                [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
 
-          <time *ngIf="taskTimeline?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0" [style.width]="taskTimeline?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
+          <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0" [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
                 class="TROUBLESHOOTING"
-                [attr.percent]="formatDuration(taskTimeline?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
+                [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
 
         </figure>
 
@@ -74,10 +73,10 @@
               START TIME
             </td>
             <td>
-              {{taskTimeline?.ideaFlowStory?.position | date:'medium'}}
+              {{taskDetail?.ideaFlowStory?.position | date:'medium'}}
             </td>
           </tr>
-          <tr *ngFor="let metric of taskTimeline?.ideaFlowStory?.allMetrics">
+          <tr *ngFor="let metric of taskDetail?.ideaFlowStory?.allMetrics">
             <td>
               <i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>
               <i class="material-icons" *ngIf="metric.type === 'MAX_HAYSTACK_SIZE'">timelapse</i>
@@ -101,7 +100,7 @@
     </md-card>
 
 
-    <md-card *ngFor="let subtask of taskTimeline?.ideaFlowStory?.subtasks; let i = index;">
+    <md-card *ngFor="let subtask of taskDetail?.ideaFlowStory?.subtasks; let i = index;">
       <header>
         <main>
           Subtask {{i+1}}. {{subtask.description}}

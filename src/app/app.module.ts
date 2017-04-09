@@ -18,7 +18,7 @@ import {
   ProjectComponent,
   SubtaskComponent,
   TaskComponent,
-  BarchartComponent,
+  TimelineComponent,
 } from '../views';
 
 import { routing } from './app.routing';
@@ -45,7 +45,7 @@ import {
     ProjectComponent,
     SubtaskComponent,
     TaskComponent,
-    BarchartComponent
+    TimelineComponent
   ],
   imports: [
     BrowserModule,

@@ -6,11 +6,12 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { Subject } from 'rxjs/Subject';
 import { Task } from '../../models/task';
-import { TaskTimeline } from '../../models/taskTimeline';
+import { TaskFullDetail } from '../../models/taskFullDetail';
 import { TaskService } from '../../services'
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
+import {Timeline} from "../../models/taskDetail/timeline";
 
 
 @Component({
@@ -22,14 +23,13 @@ import { ChartsModule } from 'ng2-charts';
 export class TaskComponent implements OnInit {
   private id: string;
   private sub: any;
-  private taskTimeline: TaskTimeline;
+  private taskDetail: TaskFullDetail;
   private task : Task;
   private errorMessage: string;
   private taskName : string = 'US 23523423';
   private that : any = this;
 
-  private chartData: Array<any>;
-
+  private timelineData: Timeline;
 
   constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
 
@@ -40,25 +40,8 @@ export class TaskComponent implements OnInit {
       this.id = params['id'];
     });
 
-    this.getTimeline(this.id);
+    this.getTaskFullDetail(this.id);
 
-    // give everything a chance to get loaded before starting the animation to reduce choppiness
-    setTimeout(() => {
-      this.generateData();
-
-      // change the data periodically
-      setInterval(() => this.generateData(), 3000);
-    }, 1000);
-  }
-
-  generateData() {
-    this.chartData = [];
-    for (let i = 0; i < (8 + Math.floor(Math.random() * 10)); i++) {
-      this.chartData.push([
-        `Index ${i}`,
-        Math.floor(Math.random() * 100)
-      ]);
-    }
   }
 
   goToGlossary(hashTag) {
@@ -68,16 +51,17 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  getTimeline(taskId) {
-    this.taskService.getTimeline(taskId)
+  getTaskFullDetail(taskId) {
+    this.taskService.getTaskFullDetail(taskId)
     .subscribe(
-      taskTimeline => this.setTimeline(taskTimeline),
+      taskDetail => this.setTaskFullDetail(taskDetail),
       error =>  this.errorMessage = <any>error
     );
   }
 
-  setTimeline(taskTimeline){
-    this.taskTimeline = taskTimeline;
+  setTaskFullDetail(taskDetail){
+    this.taskDetail = taskDetail;
+    this.timelineData = taskDetail.timeline;
   }
 
   formatRelative(time) {

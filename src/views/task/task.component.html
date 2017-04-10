@@ -15,10 +15,10 @@
   </header>
   <main>
 
-    <h2>
-      {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
-    </h2>
     <main>
+      <h2>
+        {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
+      </h2>
       <app-timeline *ngIf="timelineData" [data]="timelineData"></app-timeline>
     </main>
 

@@ -48,6 +48,14 @@ export class TimelineComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnChanges() {
+    if (this.chart) {
+      //this.updateChart();
+    }
+  }
+
+
+
   drawTimeline(timelineData) {
     let element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth;
@@ -228,8 +236,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       layer.add(image);
       layer.draw();
     };
-
-    //return imageObj;
+    
   }
 
   highlightEventLine(eventInfo) {
@@ -358,11 +365,6 @@ export class TimelineComponent implements OnInit, OnChanges {
     this.stage.draw();
   }
 
-  ngOnChanges() {
-    if (this.chart) {
-      //this.updateChart();
-    }
-  }
 
   // createChart() {
   //   let element = this.chartContainer.nativeElement;

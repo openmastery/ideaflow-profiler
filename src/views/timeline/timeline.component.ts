@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 
 import * as Kinetic from 'Kinetic';
 import {Timeline} from "../../models/taskDetail/timeline";
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-timeline',
@@ -37,6 +38,13 @@ export class TimelineComponent implements OnInit, OnChanges {
   private bandsById: Array<any> = [];
   private eventsById: Array<any> = [];
 
+  private ideaFlowIsVisible: boolean = true;
+  private wtfIsVisible: boolean = true;
+  private distractionIsVisible: boolean = false;
+  private executionIsVisible: boolean = false;
+  private calendarIsVisible: boolean = true;
+
+  private missingId: number = 1;
 
   constructor() {
   }
@@ -49,12 +57,12 @@ export class TimelineComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.chart) {
-      //this.updateChart();
-    }
+    console.log("ngOnChanges");
   }
 
-
+  toggleOverlay() {
+    //this.toggleIdeaFlows();
+  }
 
   drawTimeline(timelineData) {
     let element = this.chartContainer.nativeElement;
@@ -139,7 +147,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     events.forEach(function (event) {
 
       let eventInfo = that.drawEventLine(stage, event, secondsPerUnit);
-      that.eventsById[event.id] = eventInfo;
+      that.eventsById[event.fullPath] = eventInfo;
 
       eventInfo.layer.on('mouseover touchstart', function () {
         that.highlightEventLine(eventInfo)
@@ -236,7 +244,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       layer.add(image);
       layer.draw();
     };
-    
+
   }
 
   highlightEventLine(eventInfo) {
@@ -278,6 +286,77 @@ export class TimelineComponent implements OnInit, OnChanges {
     });
   }
 
+  toggleIdeaFlows(isVisible) {
+    console.log("toggle flows = "+isVisible);
+    for (var key in this.bandsById) {
+      if (this.bandsById.hasOwnProperty(key)) {
+
+        let bandGroupInfo = this.bandsById[key];
+        if (isVisible) {
+          bandGroupInfo.layer.show();
+        } else {
+          bandGroupInfo.layer.hide();
+        }
+        bandGroupInfo.layer.draw();
+      }
+    }
+  }
+
+  toggleWTFs(isVisible) {
+    console.log("toggle WTFs = "+isVisible);
+    for (var key in this.eventsById) {
+      if (this.eventsById.hasOwnProperty(key)) {
+        let eventInfo = this.eventsById[key];
+        //return {data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
+        if (eventInfo.data.type == 'WTF' || eventInfo.data.type == "AWESOME") {
+          if ( isVisible) {
+            eventInfo.layer.show();
+          } else {
+            eventInfo.layer.hide();
+          }
+          eventInfo.layer.draw();
+        }
+      }
+    }
+  }
+
+  toggleCalendar(isVisible) {
+    console.log("toggle Calendar = "+isVisible);
+    for (var key in this.eventsById) {
+      if (this.eventsById.hasOwnProperty(key)) {
+        let eventInfo = this.eventsById[key];
+        //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
+        if (eventInfo.data.type == 'CALENDAR') {
+          if ( isVisible) {
+            eventInfo.layer.show();
+          } else {
+            eventInfo.layer.hide();
+          }
+          eventInfo.layer.draw();
+        }
+      }
+    }
+  }
+
+  toggleDistraction(isVisible) {
+    console.log("toggle Distraction = "+isVisible);
+    for (var key in this.eventsById) {
+      if (this.eventsById.hasOwnProperty(key)) {
+        let eventInfo = this.eventsById[key];
+        //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
+        if (eventInfo.data.type == 'DISTRACTION') {
+          if ( isVisible) {
+            eventInfo.layer.show();
+          } else {
+            eventInfo.layer.hide();
+          }
+          eventInfo.layer.draw();
+        }
+      }
+    }
+  }
+
+
   drawBandGroup(groupLayer, band, secondsPerUnit) {
     console.log('drawBandGroup');
     let bandGroup = this.createBandGroup(groupLayer, band, secondsPerUnit);
@@ -288,6 +367,11 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   createBandGroup(groupLayer, band, secondsPerUnit) {
     console.log('createBandGroup');
+    band.id = band.fullPath;
+    if (isNullOrUndefined(band.id)) {
+      band.id = '/band/' + this.missingId++;
+    }
+
     let groupInfo = {id: band.id, bandInfos: [], layer: groupLayer};
 
     let colorBand = this.drawBand(groupLayer, band, secondsPerUnit);
@@ -333,6 +417,9 @@ export class TimelineComponent implements OnInit, OnChanges {
     });
     groupInfo.layer.draw();
   }
+
+
+
 
   lookupBandColors(bandType) {
     if (bandType == 'TROUBLESHOOTING') {

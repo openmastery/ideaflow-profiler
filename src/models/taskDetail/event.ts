@@ -1,5 +1,6 @@
 export class Event {
     constructor(
+        public id: number,
         public position: Date,
         public relativePositionInSeconds: number,
         public fullPath: string,

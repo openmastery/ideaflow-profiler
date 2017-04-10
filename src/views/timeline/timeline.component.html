@@ -1,3 +1,29 @@
+<main>
+  <div class="d3-chart" #timeline id="timeline"></div>
+  <div>
+      <label>
+        <input type="checkbox" name="toggleIdeaFlow" [(ngModel)]="ideaFlowIsVisible" (ngModelChange)="toggleIdeaFlows($event)" >
+        Idea Flow
+      </label>
+    <label>
+      <input type="checkbox" name="toggleWTFs"  [(ngModel)]="wtfIsVisible" (ngModelChange)="toggleWTFs($event)">
+      WTFs
+    </label>
+    <label>
+      <input type="checkbox" name="toggleDistraction"  [(ngModel)]="distractionIsVisible" (ngModelChange)="toggleDistraction($event)">
+      Disruptions
+    </label>
+    <label>
+      <input type="checkbox" name="toggleExecution"  [(ngModel)]="executionIsVisible" (click)="toggleOverlay()">
+      Execution
+    </label>
+    <label>
+    <input type="checkbox" name="toggleCalendar"  [(ngModel)]="calendarIsVisible" (ngModelChange)="toggleCalendar($event)">
+      Calendar
+    </label>
+  </div>
+</main>
 
-<div class="d3-chart" #timeline id="timeline"></div>
+
+
 

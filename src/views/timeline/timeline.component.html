@@ -14,7 +14,7 @@
       Disruptions
     </label>
     <label>
-      <input type="checkbox" name="toggleExecution"  [(ngModel)]="executionIsVisible" (click)="toggleOverlay()">
+      <input type="checkbox" name="toggleExecution"  [(ngModel)]="executionIsVisible" (ngModelChange)="toggleExecution($event)">
       Execution
     </label>
     <label>

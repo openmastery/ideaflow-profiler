@@ -37,6 +37,7 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   private bandsById: Array<any> = [];
   private eventsById: Array<any> = [];
+  private executionEventLayer: any;
 
   private ideaFlowIsVisible: boolean = true;
   private wtfIsVisible: boolean = true;
@@ -80,6 +81,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     this.drawUngroupedTimebands(this.stage, this.data, this.secondsPerUnit);
     this.drawMainTimeline(this.stage, this.formatShort(0), this.formatShort(this.endOfTimeline));
     this.drawEvents(this.stage, this.data.events, this.secondsPerUnit);
+    this.drawExecutionEvents(this.stage, this.data.executionEvents, this.secondsPerUnit)
   }
 
   getEndOfTimeline(timelineData) {
@@ -142,6 +144,21 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   }
 
+  drawExecutionEvents(stage, executionEvents, secondsPerUnit) {
+    let that = this;
+
+    this.executionEventLayer = new Kinetic.Layer();
+    executionEvents.forEach(function (executionEvent) {
+
+      let eventInfo = that.drawExecutionEventLine(that.executionEventLayer , executionEvent, secondsPerUnit);
+      //that.executionEventsById[executionEvent.fullPath] = eventInfo;
+
+    });
+
+    this.stage.add(that.executionEventLayer);
+  }
+
+
   drawEvents(stage, events, secondsPerUnit) {
     let that = this;
     events.forEach(function (event) {
@@ -157,6 +174,34 @@ export class TimelineComponent implements OnInit, OnChanges {
       });
 
     });
+  }
+
+  drawExecutionEventLine(layer, executionEvent, secondsPerUnit) {
+
+    let offset = Math.round(executionEvent.relativePositionInSeconds / secondsPerUnit) + this.sideMargin;
+    let tickHeight = 15;
+    let tickMargin = 3;
+    let color = '#ff0000';
+
+    let strokeWidth = 1;
+
+    console.log("execution: "+offset);
+
+    var eventLine = new Kinetic.Line({
+      points: [
+        offset, this.topMargin,
+        offset, this.height - this.bottomMargin + tickHeight
+      ],
+      stroke: color,
+      strokeWidth: strokeWidth,
+      lineCap: 'round',
+      tension: 0,
+    });
+    //TODO turning this on seems to run the browser out of memory
+     //layer.add(eventLine);
+    //
+    // return {data: executionEvent, color: color, line: eventLine, tick: null, layer: layer};
+
   }
 
   drawEventLine(stage, event, secondsPerUnit) {
@@ -354,6 +399,16 @@ export class TimelineComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  toggleExecution(isVisible) {
+    console.log("toggle Execution = "+isVisible);
+    // if (isVisible) {
+    //   this.executionEventLayer.show();
+    // } else {
+    //   this.executionEventLayer.hide();
+    // }
+    // this.executionEventLayer.draw();
   }
 
 

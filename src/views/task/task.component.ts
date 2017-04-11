@@ -10,7 +10,6 @@ import { TaskFullDetail } from '../../models/taskFullDetail';
 import { TaskService } from '../../services'
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { ChartsModule } from 'ng2-charts';
 import {Timeline} from "../../models/taskDetail/timeline";
 
 

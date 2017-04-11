@@ -67,7 +67,6 @@
   "dependencies": {
     "angular2-infinite-scroll": "^0.3.4",
     "angular2-moment": "^1.1.0",
-    "angular2-nvd3": "^1.0.4",
     "chart.js": "^2.5.0",
     "d3": "^4.7.4",
     "kinetic": "^5.2.0",

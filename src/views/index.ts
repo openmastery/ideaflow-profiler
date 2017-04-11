@@ -8,3 +8,4 @@ export { ProjectComponent } from './project/project.component';
 export { SubtaskComponent } from './subtask/subtask.component';
 export { TaskComponent } from './task/task.component';
 export { TimelineComponent } from './timeline/timeline.component';
+export { JourneyComponent } from './journey/journey.component';

@@ -19,6 +19,7 @@ import {
   SubtaskComponent,
   TaskComponent,
   TimelineComponent,
+  JourneyComponent,
 } from '../views';
 
 import { routing } from './app.routing';
@@ -45,7 +46,8 @@ import {
     ProjectComponent,
     SubtaskComponent,
     TaskComponent,
-    TimelineComponent
+    TimelineComponent,
+    JourneyComponent,
   ],
   imports: [
     BrowserModule,

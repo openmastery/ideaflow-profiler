@@ -99,9 +99,7 @@
 
     </md-card>
 
-    <app-journey *ngIf="taskDetail?.ideaFlowStory?.subtasks.length > 0"
+    <app-journey *ngIf="taskDetail?.ideaFlowStory?.subtasks.length > 0" [id]="taskDetail?.task?.id"
                   [subtasks]="taskDetail?.ideaFlowStory?.subtasks"></app-journey>
-
-
   </main>
 </main>

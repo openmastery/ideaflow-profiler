@@ -25,9 +25,7 @@ import {SubTask} from "../../models/taskDetail/subTask";
 export class JourneyComponent implements OnInit {
   @ViewChild('journeys') private chartContainer: ElementRef;
   @Input() private subtasks: Array<SubTask>;
-
-  private id: string;
-  private task : Task;
+  @Input() private id: string;
 
   constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
 

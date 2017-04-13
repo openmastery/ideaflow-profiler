@@ -1,0 +1,111 @@
+@import '../../styles/palette';
+@import '../../styles/functions';
+app-metrics{
+  & > main{
+    & > main{
+      & > md-card{
+        padding: 0;
+        margin-bottom: 40px;
+        & > header{
+          padding: 20px;
+          color: md-contrast($md-deep-purple,500);
+          background: md-color($md-deep-purple,500);
+          display:flex;
+          & > main{
+            flex:1;
+          }
+          & > aside{
+            font-weight:bold;
+          }
+        }
+        & > main{
+          color: md-color($md-grey,600);
+          padding: 20px;
+
+          & > legend{
+            ul{
+              list-style: none;
+              margin:0;
+              padding:0;
+              display:flex;
+              align-items: center;
+              font-size:.8em;
+              li{
+                padding:10px 20px 10px 10px;
+                & > i{
+                  &.material-icons{
+                    font-size:inherit;
+                  }
+                }
+                &.LEARNING{
+                  & > i{
+                    &.material-icons{
+                      color:md-color($md-blue,500);
+                    }
+                  }
+                }
+                &.PROGRESS{
+                  & > i{
+                    &.material-icons{
+                      color:md-color($md-grey,100);
+                    }
+                  }
+                }
+                &.TROUBLESHOOTING{
+                  & > i{
+                    &.material-icons{
+                      color:md-color($md-red,500);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          & > figure{
+            margin:0 0 50px 0;
+            padding:0;
+            display:flex;
+            time{
+              position:relative;
+              flex:1 1 auto;
+              padding:10px;
+              &.LEARNING{
+                background:md-color($md-blue,500);
+              }
+              &.PROGRESS{
+                background:md-color($md-grey,100);
+              }
+              &.TROUBLESHOOTING{
+                background:md-color($md-red,500);
+              }
+              &::before{
+                content:attr(percent);
+                position:absolute;
+                width:50px;
+                height:40px;
+                bottom:-50px;
+                left:50%;
+                margin-left:-25px;
+                text-align:center;
+                color: md-color($md-grey,600);
+              }
+            }
+          }
+          & > table{
+            tr{
+              td{
+                &:first-child{
+                  width:10px;
+                  padding-right:0;
+                }
+                &:last-child{
+                  text-align: left;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

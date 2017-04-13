@@ -2,7 +2,11 @@
 
   <main>
 
-    <md-card *ngFor="let subtask of subtasks; let i = index;">
+    Pain!
+
+    <span *ngFor="let subtask of subtasks; let i = index;">
+       <md-card *ngIf="activeSubtask == null || activeSubtask == subtask"
+             (click)="goToSubtask(i, subtask)">
       <header>
         <main>
           Subtask {{i+1}}. {{subtask.description}}
@@ -33,14 +37,16 @@
         <figure>
           <time *ngIf="subtask?.capacityDistribution?.LEARNING.percentCapacity > 0"
                 [style.width]="subtask?.capacityDistribution?.LEARNING.percentCapacity+ '%'"
-                class="LEARNING" [attr.percent]="formatDuration(subtask?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
+                class="LEARNING"
+                [attr.percent]="formatDuration(subtask?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
 
           <time *ngIf="subtask?.capacityDistribution?.PROGRESS.percentCapacity > 0"
-            [style.width]="subtask?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
-                class="PROGRESS" [attr.percent]="formatDuration(subtask?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
+                [style.width]="subtask?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
+                class="PROGRESS"
+                [attr.percent]="formatDuration(subtask?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
 
           <time *ngIf="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0"
-            [style.width]="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
+                [style.width]="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
                 class="TROUBLESHOOTING"
                 [attr.percent]="formatDuration(subtask?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
 
@@ -224,6 +230,9 @@
 
 
       </main>
-    </md-card>
+      </md-card>
+    </span>
+
+
   </main>
 </main>

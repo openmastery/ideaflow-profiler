@@ -13,7 +13,7 @@ import {isNullOrUndefined} from "util";
 })
 export class TimelineComponent implements OnInit, OnChanges {
   @ViewChild('timeline') private chartContainer: ElementRef;
-  @Input() private data: Timeline;
+  @Input() private activeTimeline: Timeline;
   private margin: any = {top: 20, bottom: 20, left: 20, right: 20};
   private chart: any;
   private width: number;
@@ -51,14 +51,15 @@ export class TimelineComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.data) {
-      this.drawTimeline(this.data);
+    if (this.activeTimeline) {
+      this.drawTimeline(this.activeTimeline);
       //this.updateChart();
     }
   }
 
   ngOnChanges() {
     console.log("ngOnChanges");
+    this.drawTimeline(this.activeTimeline);
   }
 
   toggleOverlay() {
@@ -75,13 +76,13 @@ export class TimelineComponent implements OnInit, OnChanges {
     console.log('width =' + this.width);
     console.log('height = ' + this.height);
 
-    console.log('timeline = ' + this.data.events);
+    console.log('timeline = ' + this.activeTimeline.events);
 
     this.stage = new Kinetic.Stage({container: 'timeline', width: this.width, height: this.height});
-    this.drawUngroupedTimebands(this.stage, this.data, this.secondsPerUnit);
+    this.drawUngroupedTimebands(this.stage, this.activeTimeline, this.secondsPerUnit);
     this.drawMainTimeline(this.stage, this.formatShort(0), this.formatShort(this.endOfTimeline));
-    this.drawEvents(this.stage, this.data.events, this.secondsPerUnit);
-    this.drawExecutionEvents(this.stage, this.data.executionEvents, this.secondsPerUnit)
+    this.drawEvents(this.stage, this.activeTimeline.events, this.secondsPerUnit);
+    this.drawExecutionEvents(this.stage, this.activeTimeline.executionEvents, this.secondsPerUnit)
   }
 
   getEndOfTimeline(timelineData) {
@@ -353,7 +354,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       if (this.eventsById.hasOwnProperty(key)) {
         let eventInfo = this.eventsById[key];
         //return {data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
-        if (eventInfo.data.type == 'WTF' || eventInfo.data.type == "AWESOME") {
+        if (eventInfo.activeTimeline.type == 'WTF' || eventInfo.activeTimeline.type == "AWESOME") {
           if ( isVisible) {
             eventInfo.layer.show();
           } else {
@@ -371,7 +372,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       if (this.eventsById.hasOwnProperty(key)) {
         let eventInfo = this.eventsById[key];
         //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
-        if (eventInfo.data.type == 'CALENDAR') {
+        if (eventInfo.activeTimeline.type == 'CALENDAR') {
           if ( isVisible) {
             eventInfo.layer.show();
           } else {
@@ -389,7 +390,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       if (this.eventsById.hasOwnProperty(key)) {
         let eventInfo = this.eventsById[key];
         //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
-        if (eventInfo.data.type == 'DISTRACTION') {
+        if (eventInfo.activeTimeline.type == 'DISTRACTION') {
           if ( isVisible) {
             eventInfo.layer.show();
           } else {

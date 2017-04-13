@@ -2,22 +2,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import {HaystackComponent} from "./haystack.component";
 
-import {JourneyComponent} from "./journey.component";
 
-describe('JourneyComponent', () => {
-  let component: JourneyComponent;
-  let fixture: ComponentFixture<JourneyComponent>;
+describe('MetricsComponent', () => {
+  let component: MetricsComponent;
+  let fixture: ComponentFixture<MetricsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JourneyComponent ]
+      declarations: [ MetricsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JourneyComponent);
+    fixture = TestBed.createComponent(MetricsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

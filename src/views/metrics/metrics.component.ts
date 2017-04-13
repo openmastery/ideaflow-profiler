@@ -18,16 +18,20 @@ import {Output} from "@angular/core/src/metadata/directives";
 
 
 @Component({
-  selector: 'app-journey',
-  templateUrl: './journey.component.html',
-  styleUrls: ['./journey.component.scss'],
+  selector: 'app-metrics',
+  templateUrl: './metrics.component.html',
+  styleUrls: ['./metrics.component.scss'],
   encapsulation:  ViewEncapsulation.None
 })
-export class JourneyComponent implements OnInit {
-  @ViewChild('journeys') private chartContainer: ElementRef;
+export class MetricsComponent implements OnInit {
+  @ViewChild('metrics') private chartContainer: ElementRef;
+
+  @Input() private taskDetail: TaskFullDetail;
   @Input() private subtasks: Array<SubTask>;
-  @Input() private id: string;
   @Input() private activeSubtask: SubTask;
+
+
+  @Input() private id: string;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
 
@@ -40,8 +44,8 @@ export class JourneyComponent implements OnInit {
 
   }
 
-  goToSubtask(index, subtask) {
 
+  goToSubtask(index, subtask) {
     let selectedSubtask = { index: index, subtask: subtask };
     this.activeSubtaskUpdated.emit(selectedSubtask);
   }

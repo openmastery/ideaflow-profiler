@@ -20,6 +20,8 @@ import {
   TaskComponent,
   TimelineComponent,
   JourneyComponent,
+  HaystackComponent,
+  MetricsComponent
 } from '../views';
 
 import { routing } from './app.routing';
@@ -48,6 +50,8 @@ import {
     TaskComponent,
     TimelineComponent,
     JourneyComponent,
+    HaystackComponent,
+    MetricsComponent
   ],
   imports: [
     BrowserModule,

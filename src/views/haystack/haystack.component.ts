@@ -18,19 +18,18 @@ import {Output} from "@angular/core/src/metadata/directives";
 
 
 @Component({
-  selector: 'app-journey',
-  templateUrl: './journey.component.html',
-  styleUrls: ['./journey.component.scss'],
+  selector: 'app-haystack',
+  templateUrl: './haystack.component.html',
+  styleUrls: ['./haystack.component.scss'],
   encapsulation:  ViewEncapsulation.None
 })
-export class JourneyComponent implements OnInit {
-  @ViewChild('journeys') private chartContainer: ElementRef;
+export class HaystackComponent implements OnInit {
+  @ViewChild('haystacks') private chartContainer: ElementRef;
   @Input() private subtasks: Array<SubTask>;
   @Input() private id: string;
   @Input() private activeSubtask: SubTask;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
-
 
   constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
 
@@ -41,6 +40,7 @@ export class JourneyComponent implements OnInit {
   }
 
   goToSubtask(index, subtask) {
+    this.activeSubtask = subtask;
 
     let selectedSubtask = { index: index, subtask: subtask };
     this.activeSubtaskUpdated.emit(selectedSubtask);

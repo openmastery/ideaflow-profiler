@@ -5,13 +5,13 @@
 
       <div *ngIf="activeSubtask == null" class="breadcrumb flat">
         <a href="/#/home">Home</a>
-        <a class="active" (click)="zoomOut()">Task: {{taskDetail?.task?.name}}</a>
+        <a class="active" (click)="goToTopLevelTask()">Task: {{taskDetail?.task?.name}}</a>
       </div>
 
       <div *ngIf="activeSubtask != null" class="breadcrumb flat">
         <a href="/#/home">Home</a>
         <a (click)="goToTopLevelTask()">Task: {{taskDetail?.task?.name}}</a>
-        <a class="active" *ngIf="activeSubtask" href="#">Subtask: {{taskDetail?.task?.name}}</a>
+        <a class="active" *ngIf="activeSubtask" >Subtask: {{taskDetail?.task?.name}}</a>
       </div>
 
     </main>

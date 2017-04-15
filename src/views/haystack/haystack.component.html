@@ -1,231 +1,60 @@
 <main>
 
   <main>
-
     Haystack!
 
-    <!--<md-card *ngFor="let subtask of subtasks; let i = index;">-->
-      <!--<header>-->
-        <!--<main>-->
-          <!--Subtask {{i+1}}. {{subtask.description}}-->
-        <!--</main>-->
-        <!--<aside>-->
-          <!--Duration: {{formatDuration(subtask.durationInSeconds)}}-->
-        <!--</aside>-->
+    <md-card>
+      <header>
+        <main>
+          All Timeline Activity
+        </main>
+        <aside>
 
-      <!--</header>-->
-      <!--<main>-->
-        <!--<legend>-->
-          <!--<ul>-->
-            <!--<li class="LEARNING">-->
-              <!--<i class="material-icons">lens</i>-->
-              <!--<label>LEARNING</label>-->
-            <!--</li>-->
-            <!--<li class="PROGRESS">-->
-              <!--<i class="material-icons">lens</i>-->
-              <!--<label>PROGRESS</label>-->
-            <!--</li>-->
-            <!--<li class="TROUBLESHOOTING">-->
-              <!--<i class="material-icons">lens</i>-->
-              <!--<label>TROUBLESHOOTING</label>-->
-            <!--</li>-->
-          <!--</ul>-->
-        <!--</legend>-->
+        </aside>
+      </header>
+      <main>
+        <table>
+          <tr>
+            <th>
+              Activity Type
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+              Execution vs Human Cycle
+            </th>
+          </tr>
 
-        <!--<figure>-->
-          <!--<time *ngIf="subtask?.capacityDistribution?.LEARNING.percentCapacity > 0"-->
-                <!--[style.width]="subtask?.capacityDistribution?.LEARNING.percentCapacity+ '%'"-->
-                <!--class="LEARNING" [attr.percent]="formatDuration(subtask?.capacityDistribution?.LEARNING.durationInSeconds)"></time>-->
+          <tr *ngFor=" let history of flatHistory; let i = index;">
 
-          <!--<time *ngIf="subtask?.capacityDistribution?.PROGRESS.percentCapacity > 0"-->
-            <!--[style.width]="subtask?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"-->
-                <!--class="PROGRESS" [attr.percent]="formatDuration(subtask?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>-->
-
-          <!--<time *ngIf="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0"-->
-            <!--[style.width]="subtask?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"-->
-                <!--class="TROUBLESHOOTING"-->
-                <!--[attr.percent]="formatDuration(subtask?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>-->
-
-          <!--&lt;!&ndash;<time *ngFor="let percent of subtask?.capacityDistribution?.percentages" [style.width]="percent.value"&ndash;&gt;-->
-          <!--&lt;!&ndash;[class]="percent.name" [attr.percent]="percent.value"></time>&ndash;&gt;-->
-        <!--</figure>-->
-
-        <!--<ul>-->
-          <!--<li *ngFor="let painTag of subtask?.painTags">-->
-            <!--<label><a (click)="goToGlossary(painTag)">{{painTag}}</a></label>-->
-          <!--</li>-->
-        <!--</ul>-->
-        <!--<table>-->
-          <!--<tr>-->
-            <!--<td>-->
-              <!--<i class="material-icons">access_time</i>-->
-            <!--</td>-->
-            <!--<td>-->
-              <!--START TIME-->
-            <!--</td>-->
-            <!--<td>-->
-              <!--{{subtask.position | date:'medium'}}-->
-            <!--</td>-->
-          <!--</tr>-->
-          <!--<tr *ngFor="let metric of subtask.allMetrics">-->
-            <!--<td>-->
-              <!--<i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>-->
-              <!--<i class="material-icons" *ngIf="metric.type === 'AVG_HUMAN_CYCLE_RATIOS'">account_circle</i>-->
-              <!--<i class="material-icons" *ngIf="metric.type === 'MAX_EXPERIMENT_CYCLES'">settings_backup_restore</i>-->
-              <!--<i class="material-icons" *ngIf="metric.type === 'WTFS_PER_DAY'">error</i>-->
-            <!--</td>-->
-            <!--<td>-->
-              <!--{{metric.type}}-->
-            <!--</td>-->
-            <!--<td *ngIf="metric.valueType === 'DurationInSeconds'">-->
-              <!--{{formatDuration(metric.value)}}-->
-            <!--</td>-->
-            <!--<td *ngIf="metric.valueType === 'Double'">-->
-              <!--{{metric.value}}-->
-            <!--</td>-->
-          <!--</tr>-->
-        <!--</table>-->
-
-        <!--<md-card *ngIf="subtask.milestones.length > 0">-->
-          <!--<header>-->
-            <!--<h3>Progress Tickmarks</h3>-->
-          <!--</header>-->
-
-          <!--<main>-->
-            <!--<table>-->
-              <!--<tr *ngFor="let milestone of subtask.milestones; let k = index;">-->
-                <!--<td>-->
-                  <!--<md-icon>done</md-icon>-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--{{i+1}}.{{k+1}}. {{milestone.description}}-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--{{milestone.position | date:'EEEE hh:mm a'}}-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--{{milestone.durationInSeconds | amDuration:'seconds'}}-->
-                <!--</td>-->
-              <!--</tr>-->
-            <!--</table>-->
-          <!--</main>-->
-        <!--</md-card>-->
-
-        <!--<br/>-->
-
-        <!--<md-card *ngFor="let journey of subtask.troubleshootingJourneys;">-->
-          <!--<header>-->
-            <!--<main>-->
-              <!--<h3>Troubleshooting Session</h3>-->
-            <!--</main>-->
-            <!--<aside>-->
-              <!--<label><i>#{{journey.fullPath}}</i></label>-->
-            <!--</aside>-->
-            <!--<aside>-->
-              <!--{{journey.durationInSeconds | amDuration:'seconds'}}-->
-            <!--</aside>-->
-            <!--<aside>-->
-              <!--{{journey.position | date:'EEEE hh:mm a'}}-->
-            <!--</aside>-->
-          <!--</header>-->
-          <!--<md-card-content>-->
-            <!--<ul>-->
-              <!--<li *ngFor="let painTag of subtask?.painTags">-->
-                <!--<label><a (click)="goToGlossary(painTag)">{{painTag}}</a></label>-->
-              <!--</li>-->
-            <!--</ul>-->
-            <!--<ul>-->
-              <!--<li *ngFor="let contextTags of subtask?.contextTags">-->
-                <!--<label><a (click)="goToGlossary(painTag)">{{contextTags}}</a></label>-->
-              <!--</li>-->
-            <!--</ul>-->
-
-            <!--<table>-->
-              <!--<tr *ngFor="let metric of journey.dangerMetrics">-->
-                <!--<td>-->
-                  <!--Danger! {{metric.type}}-->
-                <!--</td>-->
-                <!--<td *ngIf="metric.valueType === 'DurationInSeconds'">-->
-                  <!--{{metric.value | amDuration:'seconds'}}-->
-                <!--</td>-->
-                <!--<td *ngIf="metric.valueType === 'Double'">-->
-                  <!--{{metric.value}}-->
-                <!--</td>-->
-              <!--</tr>-->
-            <!--</table>-->
-            <!--<table>-->
-              <!--<tr *ngFor="let metric of journey.allMetrics">-->
-                <!--<td>-->
-                  <!--{{metric.type}}-->
-                <!--</td>-->
-                <!--<td *ngIf="metric.valueType === 'DurationInSeconds'">-->
-                  <!--{{metric.value | amDuration:'seconds'}}-->
-                <!--</td>-->
-                <!--<td *ngIf="metric.valueType === 'Double'">-->
-                  <!--{{metric.value}}-->
-                <!--</td>-->
-              <!--</tr>-->
-            <!--</table>-->
-
-            <!--<md-card *ngFor="let painCycle of journey.painCycles">-->
-              <!--<header>-->
-                <!--<main>-->
-                  <!--<h3>-->
-                    <!--<span *ngIf="painCycle.eventType === 'PAIN'">[FireIcon] </span>-->
-                    <!--<span *ngIf="painCycle.eventType === 'AWESOME'">[PurpleIcon] </span>-->
-                    <!--{{painCycle.description}}</h3>-->
-                <!--</main>-->
-                <!--<aside>-->
-                  <!--<i>#{{painCycle.fullPath}}</i>-->
-                <!--</aside>-->
-                <!--<aside>-->
-                  <!--{{painCycle.durationInSeconds | amDuration:'seconds'}}-->
-                <!--</aside>-->
-              <!--</header>-->
-
-              <!--<md-card-content>-->
-
-                <!--<div *ngIf="painCycle.formattableSnippet != null">-->
-                  <!--<aside>Source: {{painCycle.formattableSnippet.source}}</aside>-->
-                  <!--<pre>-->
-<!--{{painCycle.formattableSnippet.contents}}-->
-                    <!--</pre>-->
-                <!--</div>-->
-                <!--<table *ngIf="painCycle.experimentCycles.length > 0">-->
-                  <!--<tr>-->
-                    <!--<td>History</td>-->
-                    <!--<td>Detail</td>-->
-                    <!--<td>Human Cycle vs Execution</td>-->
-                  <!--</tr>-->
-                  <!--<tr *ngFor="let experimentCycle of painCycle.experimentCycles">-->
-
-                    <!--<td><span *ngIf="experimentCycle.debug">[BugIcon]</span> {{experimentCycle.executionTaskType}}</td>-->
-                    <!--<td>{{experimentCycle.processName}}</td>-->
-                    <!--<td>{{experimentCycle.durationInSeconds }} / {{experimentCycle.executionDurationInSeconds }}</td>-->
-                  <!--</tr>-->
-                <!--</table>-->
+            <td *ngIf="history.hasOwnProperty('debug')">
+              <span *ngIf="history.debug">
+                [Bug]
+              </span>
+              {{history.executionTaskType}}
+            </td>
+            <td *ngIf="history.hasOwnProperty('debug')">
+              {{i}} {{history.processName}}
+            </td>
+            <td *ngIf="history.hasOwnProperty('debug')">
+              {{history.executionDurationInSeconds }} / {{history.durationInSeconds }}
+            </td>
 
 
-              <!--</md-card-content>-->
-            <!--</md-card>-->
+            <td *ngIf="history.hasOwnProperty('activityType')">
+              {{history.activityType | capitalize }}
+            </td>
+            <td *ngIf="history.hasOwnProperty('activityType')">
+              {{history.activityName}}
+            </td>
+            <td *ngIf="history.hasOwnProperty('activityType')">
+              {{history.durationModifiedInSeconds }} / {{history.durationInSeconds }}
+            </td>
+          </tr>
+        </table>
+      </main>
+    </md-card>
 
-          <!--</md-card-content>-->
-
-          <!--&lt;!&ndash;<md-card-subtitle>Troubleshooting Journey</md-card-subtitle>&ndash;&gt;-->
-          <!--&lt;!&ndash;<md-card-title>Card with title</md-card-title>&ndash;&gt;-->
-          <!--&lt;!&ndash;<md-card-content>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>This is supporting text.</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do&ndash;&gt;-->
-          <!--&lt;!&ndash;tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;</md-card-content>&ndash;&gt;-->
-          <!--&lt;!&ndash;<md-card-actions>&ndash;&gt;-->
-          <!--&lt;!&ndash;<button md-button>LIKE</button>&ndash;&gt;-->
-          <!--&lt;!&ndash;<button md-button>SHARE</button>&ndash;&gt;-->
-          <!--&lt;!&ndash;</md-card-actions>&ndash;&gt;-->
-        <!--</md-card>-->
-
-
-      <!--</main>-->
-    <!--</md-card>-->
   </main>
 </main>

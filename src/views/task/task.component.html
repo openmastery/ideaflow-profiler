@@ -11,7 +11,7 @@
       <div *ngIf="activeSubtask != null" class="breadcrumb flat">
         <a href="/#/home">Home</a>
         <a (click)="goToTopLevelTask()">Task: {{taskDetail?.task?.name}}</a>
-        <a class="active" *ngIf="activeSubtask" >Subtask: {{taskDetail?.task?.name}}</a>
+        <a class="active" *ngIf="activeSubtask">Subtask: {{taskDetail?.task?.name}}</a>
       </div>
 
     </main>
@@ -32,27 +32,38 @@
       </main>
     </md-card>
 
-    <div>
-      <button *ngFor="let link of panelLinks" (click)="goToPanel(link);">
-        <b>{{link}}</b>
-      </button>
-    </div>
+    <md-tab-group>
+      <md-tab label="By Haystack">
 
-    <app-haystack *ngIf="activePanel == 'haystack'" [id]="taskDetail?.task?.id"
-                  [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                  [activeSubtask]="activeSubtask"
-                  (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-haystack>
+        <app-haystack [id]="taskDetail?.task?.id"
+                      [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                      [activeSubtask]="activeSubtask"
+                      (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-haystack>
+      </md-tab>
+      <md-tab label="By Pain">
+        <app-journey [id]="taskDetail?.task?.id"
+                     [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                     [activeSubtask]="activeSubtask"
+                     (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>
+      </md-tab>
+      <md-tab label="Metrics">
+        <app-metrics [id]="taskDetail?.task?.id"
+                     [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                     [activeSubtask]="activeSubtask"
+                     [taskDetail]="taskDetail"
+                     (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
+      </md-tab>
+    </md-tab-group>
 
-    <app-journey *ngIf="activePanel == 'pain'" [id]="taskDetail?.task?.id"
-                 [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                 [activeSubtask]="activeSubtask"
-                 (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>
 
-    <app-metrics *ngIf="activePanel == 'metrics'" [id]="taskDetail?.task?.id"
-                 [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                 [activeSubtask]="activeSubtask"
-                 [taskDetail]="taskDetail"
-                 (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
+    <!--<div>-->
+      <!--<button *ngFor="let link of panelLinks" >-->
+        <!--<b>{{link}}</b>-->
+      <!--</button>-->
+    <!--</div>-->
+
+
+
 
 
 

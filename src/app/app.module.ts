@@ -34,6 +34,7 @@ import {
   TaskService,
   FaqService,
 } from '../services';
+import {CapitalizePipe} from "../pipes/capitalizePipe";
 
 
 @NgModule({
@@ -51,8 +52,9 @@ import {
     TimelineComponent,
     JourneyComponent,
     HaystackComponent,
-    MetricsComponent
-  ],
+    MetricsComponent,
+    CapitalizePipe ,
+],
   imports: [
     BrowserModule,
     FormsModule,

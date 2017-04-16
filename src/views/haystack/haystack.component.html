@@ -4,18 +4,18 @@
 
     <table class="mdl-data-table highlight">
       <thead>
-      <tr>
+      <tr class="outer-header">
         <th></th>
-        <th>
+        <th class="outer-header">
           <button md-button>Activity Type</button>
         </th>
-        <th>
+        <th class="outer-header">
           <button md-button>Description</button>
         </th>
-        <th>
-          <button md-button>Execution Time</button>
+        <th class="outer-header-notice-me" style="text-align: right">
+          <button md-button style="text-align: right"><i>Execution Time</i></button>
         </th>
-        <th>
+        <th class="outer-header">
           <button md-button>Human Cycle Time</button>
         </th>
       </tr>
@@ -24,15 +24,15 @@
 
       <ng-container *ngFor=" let haystack of allHaystacks; let i = index;">
 
-        <tr (click)="toggleExpandedHaystack(haystack)" class="haystack">
+        <tr (click)="toggleExpandedHaystack(haystack)" [class]="haystack.failed? 'haystack test-fail' : 'haystack test-pass'">
           <td>
             <i [class]="haystack.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
             <span *ngIf="haystack.debug">
-                <i class="material-icons" style="color:green">bug_report</i>
+                <i class="material-icons" >bug_report</i>
               </span>
           </td>
           <td>
-              <span [style.color]="haystack.failed? 'red' : 'green'">
+              <span>
               {{haystack.executionTaskType}}
               </span>
           </td>
@@ -49,14 +49,28 @@
         </tr>
 
         <ng-container *ngIf="haystack.isExpanded">
+          <tr class="inner-header">
+            <th></th>
+            <th class="inner-header">
+              <button md-button>Activity Type</button>
+            </th>
+            <th class="inner-header">
+              <button md-button>Description</button>
+            </th>
+            <th class="inner-header-notice-me" style="text-align: right">
+              <button md-button class="file-modified"><i>Modification Time</i></button>
+            </th>
+            <th class="inner-header">
+              <button md-button>Human Cycle Time</button>
+            </th>
+          </tr>
           <ng-container *ngFor="let activity of haystack.activitySummaries; let j = index;">
             <tr class="activity">
-
               <td></td>
               <td>
                 {{activity.activityType | capitalize}}
               </td>
-              <td>
+              <td [class]="activity.durationModifiedInSeconds > 0? 'file-modified' : ''">
                 {{activity.activityName}}
               </td>
               <td style="text-align: right">

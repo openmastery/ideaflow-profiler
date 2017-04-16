@@ -127,7 +127,7 @@ export class HaystackComponent implements OnInit {
         "activityType": "editor",
         "activityName": "FileName.java",
         "activityDetail": "/this/path/to/FileName.java",
-        "durationModifiedInSeconds" : 3,
+        "durationModifiedInSeconds" : 0,
         "durationInSeconds": 22
       },
       <ActivitySummary> {

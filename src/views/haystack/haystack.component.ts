@@ -76,6 +76,14 @@ export class HaystackComponent implements OnInit {
     }
   }
 
+  toggleExpandedHaystack(haystack) {
+    if (haystack.isExpanded == true) {
+      haystack.isExpanded = false;
+    } else {
+      haystack.isExpanded = true;
+    }
+  }
+
   formatRelative(time) {
     let d = Number(time);
     let h = Math.floor(d / 3600);
@@ -85,13 +93,19 @@ export class HaystackComponent implements OnInit {
   }
 
 
-  formatDuration(duration) {
+  formatShortDuration(duration) {
+
     let d = Number(duration);
     let h = Math.floor(d / 3600);
     let m = Math.floor(d % 3600 / 60);
-    let s = Math.floor(m % 3600 / 60);
+    let s = Math.floor(d % 3600 ) - (m * 60) - (h * 60);
 
-    return ( (h > 0 ? h + "h " : "") + (m < 10 ? "0" : "") + m + "m "); //+ (s < 10 ? "0" : "") + s + "s")
+    if (d == 0) {
+      return "";
+    }
+
+    return ( (h > 0 ? h + "h " : "") +
+    (m > 0 ? ((m < 10 ? "0" : "") + m + "m ") : "") + (s < 10 ? "0" : "") + s + "s");
   }
 
   createHaystack(relativePosition) {
@@ -104,7 +118,7 @@ export class HaystackComponent implements OnInit {
       "executionDurationInSeconds": 2,
       "processName": "TestIdeaFlowBand",
       "executionTaskType": "JUnit",
-      "failed": true,
+      "failed": false,
       "debug": false,
     };
 
@@ -113,7 +127,6 @@ export class HaystackComponent implements OnInit {
         "activityType": "editor",
         "activityName": "FileName.java",
         "activityDetail": "/this/path/to/FileName.java",
-        "isFlagged": false,
         "durationModifiedInSeconds" : 3,
         "durationInSeconds": 22
       },
@@ -121,7 +134,6 @@ export class HaystackComponent implements OnInit {
         "activityType": "editor",
         "activityName": "IdeaFlowFile.java",
         "activityDetail": "/this/path/to/another/IdeaFlowFile.java",
-        "isFlagged": true,
         "durationModifiedInSeconds" : 22,
         "durationInSeconds": 34
       }

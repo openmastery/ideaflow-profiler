@@ -1,60 +1,77 @@
 <main>
 
   <main>
-    Haystack!
 
-    <md-card>
-      <header>
-        <main>
-          All Timeline Activity
-        </main>
-        <aside>
+    <table class="mdl-data-table highlight">
+      <thead>
+      <tr>
+        <th></th>
+        <th>
+          <button md-button>Activity Type</button>
+        </th>
+        <th>
+          <button md-button>Description</button>
+        </th>
+        <th>
+          <button md-button>Execution Time</button>
+        </th>
+        <th>
+          <button md-button>Human Cycle Time</button>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
 
-        </aside>
-      </header>
-      <main>
-        <table>
-          <tr>
-            <th>
-              Activity Type
-            </th>
-            <th>
-              Description
-            </th>
-            <th>
-              Execution vs Human Cycle
-            </th>
-          </tr>
+      <ng-container *ngFor=" let haystack of allHaystacks; let i = index;">
 
-          <tr *ngFor=" let history of flatHistory; let i = index;">
-
-            <td *ngIf="history.hasOwnProperty('debug')">
-              <span *ngIf="history.debug">
-                [Bug]
+        <tr (click)="toggleExpandedHaystack(haystack)" class="haystack">
+          <td>
+            <i [class]="haystack.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
+            <span *ngIf="haystack.debug">
+                <i class="material-icons" style="color:green">bug_report</i>
               </span>
-              {{history.executionTaskType}}
-            </td>
-            <td *ngIf="history.hasOwnProperty('debug')">
-              {{i}} {{history.processName}}
-            </td>
-            <td *ngIf="history.hasOwnProperty('debug')">
-              {{history.executionDurationInSeconds }} / {{history.durationInSeconds }}
-            </td>
+          </td>
+          <td>
+              <span [style.color]="haystack.failed? 'red' : 'green'">
+              {{haystack.executionTaskType}}
+              </span>
+          </td>
+          <td>
+            {{haystack.processName}}
+          </td>
+          <td style="text-align: right">
+            {{ formatShortDuration(haystack.executionDurationInSeconds) }}
+          </td>
+          <td>
+            {{formatShortDuration(haystack.durationInSeconds) }}
+          </td>
 
+        </tr>
 
-            <td *ngIf="history.hasOwnProperty('activityType')">
-              {{history.activityType | capitalize }}
-            </td>
-            <td *ngIf="history.hasOwnProperty('activityType')">
-              {{history.activityName}}
-            </td>
-            <td *ngIf="history.hasOwnProperty('activityType')">
-              {{history.durationModifiedInSeconds }} / {{history.durationInSeconds }}
-            </td>
-          </tr>
-        </table>
-      </main>
-    </md-card>
+        <ng-container *ngIf="haystack.isExpanded">
+          <ng-container *ngFor="let activity of haystack.activitySummaries; let j = index;">
+            <tr class="activity">
+
+              <td></td>
+              <td>
+                {{activity.activityType | capitalize}}
+              </td>
+              <td>
+                {{activity.activityName}}
+              </td>
+              <td style="text-align: right">
+                {{formatShortDuration(activity.durationModifiedInSeconds) }}
+              </td>
+              <td>
+                {{formatShortDuration(activity.durationInSeconds) }}
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+
+      </ng-container>
+      </tbody>
+    </table>
 
   </main>
 </main>

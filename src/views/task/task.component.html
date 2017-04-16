@@ -2,17 +2,17 @@
   <header>
     <main>
       <h1>IdeaFlow Timeline</h1>
+      <!--<div *ngIf="activeSubtask == null" class="breadcrumb flat">-->
+      <!--<a href="/#/home">Home</a>-->
+      <!--<a class="active" (click)="goToTopLevelTask()">{{taskDetail?.task?.name}}</a>-->
+      <!--</div>-->
 
-      <div *ngIf="activeSubtask == null" class="breadcrumb flat">
-        <a href="/#/home">Home</a>
-        <a class="active" (click)="goToTopLevelTask()">Task: {{taskDetail?.task?.name}}</a>
-      </div>
+      <!--<div *ngIf="activeSubtask != null" class="breadcrumb flat">-->
+      <!--<a href="/#/home">Home</a>-->
+      <!--<a (click)="goToTopLevelTask()">{{taskDetail?.task?.name}}</a>-->
+      <!--<a class="active" *ngIf="activeSubtask">Subtask</a>-->
+      <!--</div>-->
 
-      <div *ngIf="activeSubtask != null" class="breadcrumb flat">
-        <a href="/#/home">Home</a>
-        <a (click)="goToTopLevelTask()">Task: {{taskDetail?.task?.name}}</a>
-        <a class="active" *ngIf="activeSubtask">Subtask: {{taskDetail?.task?.name}}</a>
-      </div>
 
     </main>
     <aside>
@@ -32,28 +32,33 @@
       </main>
     </md-card>
 
-    <md-tab-group>
-      <md-tab label="By Haystack">
+    <md-card>
 
-        <app-haystack [id]="taskDetail?.task?.id"
-                      [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                      [activeSubtask]="activeSubtask"
-                      (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-haystack>
-      </md-tab>
-      <md-tab label="By Pain">
-        <app-journey [id]="taskDetail?.task?.id"
-                     [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                     [activeSubtask]="activeSubtask"
-                     (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>
-      </md-tab>
-      <md-tab label="Metrics">
-        <app-metrics [id]="taskDetail?.task?.id"
-                     [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                     [activeSubtask]="activeSubtask"
-                     [taskDetail]="taskDetail"
-                     (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
-      </md-tab>
-    </md-tab-group>
+    <app-haystack [id]="taskDetail?.task?.id"
+                  [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                  [activeSubtask]="activeSubtask"
+                  (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-haystack>
+
+    </md-card>
+
+    <!--<md-tab-group>-->
+      <!--<md-tab label="Haystacks">-->
+
+      <!--</md-tab>-->
+      <!--<md-tab label="By Pain">-->
+        <!--<app-journey [id]="taskDetail?.task?.id"-->
+                     <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
+                     <!--[activeSubtask]="activeSubtask"-->
+                     <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>-->
+      <!--</md-tab>-->
+      <!--<md-tab label="Metrics">-->
+        <!--<app-metrics [id]="taskDetail?.task?.id"-->
+                     <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
+                     <!--[activeSubtask]="activeSubtask"-->
+                     <!--[taskDetail]="taskDetail"-->
+                     <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>-->
+      <!--</md-tab>-->
+    <!--</md-tab-group>-->
 
 
     <!--<div>-->

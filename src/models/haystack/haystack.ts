@@ -17,6 +17,8 @@ export class Haystack {
 
     public activitySummaries: Array<ActivitySummary>,
 
+    public isExpanded:boolean = false,
+
 ){}
 }
 

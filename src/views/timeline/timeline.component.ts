@@ -354,7 +354,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       if (this.eventsById.hasOwnProperty(key)) {
         let eventInfo = this.eventsById[key];
         //return {data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
-        if (eventInfo.activeTimeline.type == 'WTF' || eventInfo.activeTimeline.type == "AWESOME") {
+        if (eventInfo.data.type == 'WTF' || eventInfo.data.type == "AWESOME") {
           if ( isVisible) {
             eventInfo.layer.show();
           } else {
@@ -372,7 +372,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       if (this.eventsById.hasOwnProperty(key)) {
         let eventInfo = this.eventsById[key];
         //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
-        if (eventInfo.activeTimeline.type == 'CALENDAR') {
+        if (eventInfo.data.type == 'CALENDAR') {
           if ( isVisible) {
             eventInfo.layer.show();
           } else {
@@ -390,7 +390,7 @@ export class TimelineComponent implements OnInit, OnChanges {
       if (this.eventsById.hasOwnProperty(key)) {
         let eventInfo = this.eventsById[key];
         //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
-        if (eventInfo.activeTimeline.type == 'DISTRACTION') {
+        if (eventInfo.data.type == 'DISTRACTION') {
           if ( isVisible) {
             eventInfo.layer.show();
           } else {

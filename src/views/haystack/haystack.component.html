@@ -3,88 +3,104 @@
   <main>
 
     <table class="mdl-data-table highlight">
-      <thead>
-      <tr class="outer-header">
+
+      <tr class="haystack-header">
         <th></th>
-        <th class="outer-header">
-          <button md-button>Activity Type</button>
+        <th>
+          <button md-button (click)="sortAllHaystacksByProperty('relativePositionInSeconds', 'haystack')">Time
+          </button>
         </th>
-        <th class="outer-header">
-          <button md-button>Description</button>
+        <th>
+          <button md-button (click)="sortAllHaystacksByProperty('executionTaskType', 'haystack')">Activity Type
+          </button>
         </th>
-        <th class="outer-header-notice-me" style="text-align: right">
-          <button md-button style="text-align: right"><i>Execution Time</i></button>
+        <th>
+          <button md-button (click)="sortAllHaystacksByProperty('processName', 'haystack')">Description</button>
         </th>
-        <th class="outer-header">
-          <button md-button>Human Cycle Time</button>
+        <th class="haystack-header-notice-me" style="text-align: right">
+          <button md-button (click)="sortAllHaystacksByProperty('executionDurationInSeconds', 'haystack')"
+                  style="text-align: right"><i>Execution Time</i></button>
+        </th>
+        <th>
+          <button md-button (click)="sortAllHaystacksByProperty('durationInSeconds', 'haystack')">Human Cycle Time
+          </button>
         </th>
       </tr>
-      </thead>
-      <tbody>
 
-      <ng-container *ngFor=" let haystack of allHaystacks; let i = index;">
 
-        <tr (click)="toggleExpandedHaystack(haystack)" [class]="haystack.failed? 'haystack test-fail' : 'haystack test-pass'">
+      <ng-container *ngFor=" let subtask of subtasks; let i = index;">
+
+        <tr class="subtask-header" (click)="toggleExpanded(subtask, subtask.haystacks)"
+            (mouseover)="updateCursorPosition(subtask.relativePositionInSeconds, subtask.relativePath)">
           <td>
-            <i [class]="haystack.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
-            <span *ngIf="haystack.debug">
-                <i class="material-icons" >bug_report</i>
-              </span>
+            <i *ngIf="subtask.haystacks.length > 0"
+              [class]="subtask.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
           </td>
-          <td>
+          <td colspan="4" style="text-align: left">{{i}}. {{subtask.description}}</td>
+          <td>{{formatShortDuration(subtask.durationInSeconds)}}</td>
+        </tr>
+
+        <ng-container *ngIf="subtask.isExpanded">
+
+
+          <ng-container *ngFor=" let haystack of subtask.haystacks; let j = index;">
+
+            <tr (click)="toggleExpanded(haystack, haystack.activitySummaries)"
+                (mouseover)="updateCursorPosition(haystack.relativePositionInSeconds, haystack.relativePath)"
+                [class]="haystack.failed? 'haystack test-fail' : 'haystack test-pass'">
+              <td>
+                <i *ngIf="haystack.activitySummaries.length > 0"
+                  [class]="haystack.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
+                <span *ngIf="haystack.debug">
+                <i class="material-icons">bug_report</i>
+              </span>
+              </td>
+              <td>{{formatRelative(haystack.relativePositionInSeconds)}}</td>
+              <td>
               <span>
               {{haystack.executionTaskType}}
               </span>
-          </td>
-          <td>
-            {{haystack.processName}}
-          </td>
-          <td style="text-align: right">
-            {{ formatShortDuration(haystack.executionDurationInSeconds) }}
-          </td>
-          <td>
-            {{formatShortDuration(haystack.durationInSeconds) }}
-          </td>
 
-        </tr>
-
-        <ng-container *ngIf="haystack.isExpanded">
-          <tr class="inner-header">
-            <th></th>
-            <th class="inner-header">
-              <button md-button>Activity Type</button>
-            </th>
-            <th class="inner-header">
-              <button md-button>Description</button>
-            </th>
-            <th class="inner-header-notice-me" style="text-align: right">
-              <button md-button class="file-modified"><i>Modification Time</i></button>
-            </th>
-            <th class="inner-header">
-              <button md-button>Human Cycle Time</button>
-            </th>
-          </tr>
-          <ng-container *ngFor="let activity of haystack.activitySummaries; let j = index;">
-            <tr class="activity">
-              <td></td>
-              <td>
-                {{activity.activityType | capitalize}}
               </td>
-              <td [class]="activity.durationModifiedInSeconds > 0? 'file-modified' : ''">
-                {{activity.activityName}}
+              <td>
+                {{haystack.processName}}
               </td>
               <td style="text-align: right">
-                {{formatShortDuration(activity.durationModifiedInSeconds) }}
+                {{ formatShortDuration(haystack.executionDurationInSeconds) }}
               </td>
               <td>
-                {{formatShortDuration(activity.durationInSeconds) }}
+                {{formatShortDuration(haystack.durationInSeconds) }}
               </td>
             </tr>
+
+            <ng-container *ngIf="haystack.isExpanded">
+              <ng-container *ngFor="let activity of haystack.activitySummaries; let j = index;">
+                <tr class="activity">
+                  <td></td>
+                  <td></td>
+                  <td>
+                    {{activity.activityType | capitalize}}
+                  </td>
+                  <td [class]="activity.modifiedDurationInSeconds > 0? 'file-modified' : ''">
+                    {{activity.activityName}}
+                  </td>
+                  <td style="text-align: right">
+                    {{formatShortDuration(activity.modifiedDurationInSeconds) }}
+                  </td>
+                  <td>
+                    {{formatShortDuration(activity.totalDurationInSeconds) }}
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+
           </ng-container>
+
         </ng-container>
 
       </ng-container>
-      </tbody>
+
+
     </table>
 
   </main>

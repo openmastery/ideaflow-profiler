@@ -29,10 +29,15 @@ export class HaystackComponent implements OnInit {
   @Input() private subtasks: Array<SubTask>;
   @Input() private id: string;
   @Input() private activeSubtask: SubTask;
+  @Input() private haystacks: Array<Haystack>;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
+  @Output() positionUpdated = new EventEmitter();
 
-  private allHaystacks: Array<Haystack>;
+
+
+  private sortKeys: any = { 'haystack-relativePositionInSeconds': true };
+  private subtaskHaystackLists: Array<Array<Haystack>> = [];
 
   private flatHistory: Array<any> = [];
 
@@ -41,26 +46,93 @@ export class HaystackComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("haystacks!");
+    console.log('haystack init!');
+  }
 
-    let haystack1 = this.createHaystack(500);
-    haystack1.debug = true;
-    let haystack2 = this.createHaystack(550);
-    haystack2.failed = true;
-    let haystack3 = this.createHaystack(550);
-
-    this.allHaystacks = [haystack1, haystack2, haystack3];
-
-    for (let haystack of this.allHaystacks) {
-      this.flatHistory.push(haystack);
-
-      for (let activity of haystack.activitySummaries ) {
-        console.log('activity!');
-        this.flatHistory.push(activity);
+  ngOnChanges() {
+    console.log('haystack change!');
+    if (this.subtasks && this.haystacks) {
+      for (let subtask of this.subtasks) {
+         let start = subtask.relativePositionInSeconds;
+         let end = subtask.relativePositionInSeconds + subtask.durationInSeconds;
+         subtask.haystacks = this.findHaystacksWithinRange(start, end);
+         this.subtaskHaystackLists.push(subtask.haystacks)
       }
     }
+  }
+
+  updateCursorPosition(relativePosition, relativePath) {
+    let currentPosition = { relativeTime: relativePosition, relativePath: relativePath };
+    this.positionUpdated.emit(currentPosition);
+  }
+
+  findHaystacksWithinRange(relativeStart, relativeEnd) {
+    let matchingHaystacks = [];
+
+    for (let haystack of this.haystacks) {
+      if (this.isHaystackWithinRange(haystack, relativeStart, relativeEnd)) {
+        console.log("Adding haystack!");
+        matchingHaystacks.push(haystack);
+      }
+    }
+    console.log("matching ="+matchingHaystacks);
+    return matchingHaystacks;
+  }
+
+  isHaystackWithinRange(haystack, relativeStart, relativeEnd) {
+    let haystackStart = haystack.relativePositionInSeconds;
+    let haystackEnd = haystack.relativePositionInSeconds + haystack.durationInSeconds;
+    console.log("end = "+haystackEnd);
+    return (haystackStart >= relativeStart && haystackStart < relativeEnd);
 
   }
+
+  sortAllHaystacksByProperty(property, sortkeyPrefix) {
+    this.subtaskHaystackLists.forEach((haystacks, index) => {
+      this.sortByProperty(haystacks, property, sortkeyPrefix + index);
+    });
+
+
+  }
+
+  sortByProperty(list,property, sortkeyPrefix){
+
+    list.sort(function(a, b) {
+      var sortValue;
+      var nameA = a[property];
+      var nameB = b[property];
+      nameA = (typeof nameA === 'string') ? nameA.toUpperCase() : nameA;
+      nameB = (typeof nameB === 'string') ? nameB.toUpperCase() : nameB;
+      if (nameA < nameB) {
+        sortValue = -1;
+      }
+      if (nameA > nameB) {
+        sortValue = 1;
+      }
+      if (nameA == nameB) {
+        sortValue = 0;
+      }
+      return sortValue;
+    });
+
+    let sortkey = sortkeyPrefix + '-' + property;
+
+    if (this.sortKeys[sortkey]) {
+      list.reverse();
+      this.sortKeys[sortkey] = false;
+    } else {
+      this.sortKeys[sortkey] = true;
+    }
+
+    console.log(this.sortKeys);
+    return list;
+  }
+
+  // collapseAllHaystacks() {
+  //   for (let haystack of this.allHaystacks) {
+  //     haystack.isExpanded = false;
+  //   }
+  // }
 
   goToSubtask(index, subtask) {
     this.activeSubtask = subtask;
@@ -76,12 +148,21 @@ export class HaystackComponent implements OnInit {
     }
   }
 
-  toggleExpandedHaystack(haystack) {
-    if (haystack.isExpanded == true) {
-      haystack.isExpanded = false;
-    } else {
-      haystack.isExpanded = true;
-    }
+  activateTimeline(index, subtask) {
+    let selectedSubtask = { index: index, subtask: subtask };
+    this.activeSubtaskUpdated.emit(selectedSubtask);
+
+    console.log('activated!');
+  }
+
+  toggleExpanded(toggleable, children) {
+    //if (children.length > 0) {
+      if (toggleable.isExpanded == true) {
+        toggleable.isExpanded = false;
+      } else {
+        toggleable.isExpanded = true;
+      }
+    //}
   }
 
   formatRelative(time) {
@@ -98,7 +179,7 @@ export class HaystackComponent implements OnInit {
     let d = Number(duration);
     let h = Math.floor(d / 3600);
     let m = Math.floor(d % 3600 / 60);
-    let s = Math.floor(d % 3600 ) - (m * 60) - (h * 60);
+    let s = Math.floor(d % 3600) - (m * 60);
 
     if (d == 0) {
       return "";
@@ -108,39 +189,39 @@ export class HaystackComponent implements OnInit {
     (m > 0 ? ((m < 10 ? "0" : "") + m + "m ") : "") + (s < 10 ? "0" : "") + s + "s");
   }
 
-  createHaystack(relativePosition) {
-
-    let haystack = <Haystack> {
-      "position": null,
-      "relativePath": "/haystack/5",
-      "relativePositionInSeconds": relativePosition,
-      "durationInSeconds": 140,
-      "executionDurationInSeconds": 2,
-      "processName": "TestIdeaFlowBand",
-      "executionTaskType": "JUnit",
-      "failed": false,
-      "debug": false,
-    };
-
-    haystack.activitySummaries = [
-      <ActivitySummary> {
-        "activityType": "editor",
-        "activityName": "FileName.java",
-        "activityDetail": "/this/path/to/FileName.java",
-        "durationModifiedInSeconds" : 0,
-        "durationInSeconds": 22
-      },
-      <ActivitySummary> {
-        "activityType": "editor",
-        "activityName": "IdeaFlowFile.java",
-        "activityDetail": "/this/path/to/another/IdeaFlowFile.java",
-        "durationModifiedInSeconds" : 22,
-        "durationInSeconds": 34
-      }
-    ];
-
-    return haystack;
-  }
+  // createHaystack(processName, relativePosition) {
+  //
+  //   let haystack = <Haystack> {
+  //     "position": null,
+  //     "relativePath": "/haystack/5",
+  //     "relativePositionInSeconds": relativePosition,
+  //     "durationInSeconds": 140,
+  //     "executionDurationInSeconds": 2,
+  //     "processName": processName,
+  //     "executionTaskType": "JUnit",
+  //     "failed": false,
+  //     "debug": false,
+  //   };
+  //
+  //   haystack.activitySummaries = [
+  //     <ActivitySummary> {
+  //       "activityType": "editor",
+  //       "activityName": "FileName.java",
+  //       "activityDetail": "/this/path/to/FileName.java",
+  //       "durationModifiedInSeconds" : 0,
+  //       "durationInSeconds": 22
+  //     },
+  //     <ActivitySummary> {
+  //       "activityType": "editor",
+  //       "activityName": "IdeaFlowFile.java",
+  //       "activityDetail": "/this/path/to/another/IdeaFlowFile.java",
+  //       "durationModifiedInSeconds" : 22,
+  //       "durationInSeconds": 34
+  //     }
+  //   ];
+  //
+  //   return haystack;
+  // }
 
 
 }

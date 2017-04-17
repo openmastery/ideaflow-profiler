@@ -1,6 +1,7 @@
 import { CapacityDistribution } from './capacityDistribution';
 import { Metric } from './metric';
 import { TroubleShootingJourney } from './troubleshootingJourney';
+import {Haystack} from "../haystack/haystack";
 
 export class SubTask {
     constructor(
@@ -18,5 +19,8 @@ export class SubTask {
 
         public allMetrics: Array<Metric>,
         public dangerMetrics: Array<Metric>,
+
+        public haystacks: Array<Haystack>,
+        public isExpanded: boolean
     ){}
 }

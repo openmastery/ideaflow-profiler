@@ -5,8 +5,8 @@ export class ActivitySummary {
     public activityName: string, //fileName or External
     public activityDetail: string, //filePath (tooltip contents, null for external)
 
-    public durationModifiedInSeconds: number,
-    public durationInSeconds: number,
+    public modifiedDurationInSeconds: number,
+    public totalDurationInSeconds: number,
 
 ){}
 }

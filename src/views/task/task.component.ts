@@ -87,6 +87,11 @@ export class TaskComponent implements OnInit {
     console.log('Nav to panel:' + panelName);
   }
 
+  handlePositionUpdated(currentPosition) {
+    console.log("Position changed" + currentPosition.relativeTime);
+  }
+
+
   handleActiveSubtaskUpdated(selectedSubtask) {
     console.log("Selection changed!" + selectedSubtask.index);
     this.activeSubtask = selectedSubtask.subtask;

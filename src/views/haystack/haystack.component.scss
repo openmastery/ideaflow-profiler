@@ -10,25 +10,37 @@ app-haystack{
     transform: rotate(90deg);
   }
 
+
+
+  .subtask-header {
+    color: md-contrast($md-deep-purple,500);
+    background: md-color($md-deep-purple,500);
+    border: solid 1px;
+  }
+
   .haystack {
     border: solid 1px;
   }
 
-  .outer-header {
+  .haystack-header {
     font-weight:bold;
   }
 
-  .outer-header-notice-me {
+  .haystack-header-notice-me {
     font-weight:bold;
     font-style: italic;
   }
 
-  .inner-header {
+  .activity-header tr {
+    background: grey;
+  }
+
+  .activity-header {
     border-bottom: solid 1px;
     border-bottom-color: darkgray;
   }
 
-  .inner-header-notice-me {
+  .activity-header-notice-me {
     font-weight:bold;
     font-style: italic;
   }

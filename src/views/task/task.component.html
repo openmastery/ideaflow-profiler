@@ -2,19 +2,7 @@
   <header>
     <main>
       <h1>IdeaFlow Timeline</h1>
-      <!--<div *ngIf="activeSubtask == null" class="breadcrumb flat">-->
-      <!--<a href="/#/home">Home</a>-->
-      <!--<a class="active" (click)="goToTopLevelTask()">{{taskDetail?.task?.name}}</a>-->
-      <!--</div>-->
-
-      <!--<div *ngIf="activeSubtask != null" class="breadcrumb flat">-->
-      <!--<a href="/#/home">Home</a>-->
-      <!--<a (click)="goToTopLevelTask()">{{taskDetail?.task?.name}}</a>-->
-      <!--<a class="active" *ngIf="activeSubtask">Subtask</a>-->
-      <!--</div>-->
-
-
-    </main>
+     </main>
     <aside>
       <md-input-container>
         <input md-input type="search"/>
@@ -32,12 +20,14 @@
       </main>
     </md-card>
 
-    <md-card>
+    <md-card style="height:400px; overflow-y: auto">
 
     <app-haystack [id]="taskDetail?.task?.id"
                   [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                  [haystacks]="taskDetail?.haystacks"
                   [activeSubtask]="activeSubtask"
-                  (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-haystack>
+                  (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
+                  (positionUpdated)="handlePositionUpdated($event)"></app-haystack>
 
     </md-card>
 

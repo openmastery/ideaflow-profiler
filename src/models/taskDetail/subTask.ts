@@ -14,13 +14,14 @@ export class SubTask {
         public painTags: Array<any>,
         public frequency: number,
         public capacityDistribution:CapacityDistribution,
-        public milestones: Array<any>,
+        public progressTicks: Array<any>,
         public troubleshootingJourneys: Array<TroubleShootingJourney>,
 
         public allMetrics: Array<Metric>,
         public dangerMetrics: Array<Metric>,
 
         public haystacks: Array<Haystack>,
+        public flatHistory: Array<any>,
         public isExpanded: boolean
     ){}
 }

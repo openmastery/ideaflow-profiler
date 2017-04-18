@@ -14,6 +14,11 @@ import {isNullOrUndefined} from "util";
 export class TimelineComponent implements OnInit, OnChanges {
   @ViewChild('timeline') private chartContainer: ElementRef;
   @Input() private activeTimeline: Timeline;
+  @Input() private cursorPosition: any;
+
+  private oldTimeline: Timeline;
+
+
   private margin: any = {top: 20, bottom: 20, left: 20, right: 20};
   private chart: any;
   private width: number;
@@ -35,6 +40,7 @@ export class TimelineComponent implements OnInit, OnChanges {
   private endOfTimeline: any;
   private secondsPerUnit: any;
 
+  private cursorInfo: any;
   private bandsById: Array<any> = [];
   private eventsById: Array<any> = [];
   private executionEventLayer: any;
@@ -51,15 +57,24 @@ export class TimelineComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.activeTimeline) {
-      this.drawTimeline(this.activeTimeline);
-      //this.updateChart();
-    }
   }
 
   ngOnChanges() {
-    console.log("ngOnChanges");
-    this.drawTimeline(this.activeTimeline);
+
+    if (this.oldTimeline == null || this.oldTimeline != this.activeTimeline) {
+      console.log("updateTimeline");
+      this.drawTimeline(this.activeTimeline);
+      this.oldTimeline = this.activeTimeline;
+    }
+
+    if (this.cursorPosition) {
+      this.updateCursor(this.cursorPosition.relativeTime);
+    }
+
+    if (this.cursorPosition == null) {
+      this.removeCursor();
+    }
+
   }
 
   toggleOverlay() {
@@ -205,6 +220,68 @@ export class TimelineComponent implements OnInit, OnChanges {
 
   }
 
+
+  removeCursor() {
+    if (this.cursorInfo) {
+      this.cursorInfo.cursor.remove();
+      this.cursorInfo.layer.clear();
+      this.cursorInfo.layer.draw();
+      this.cursorInfo = null;
+    }
+  }
+
+  updateCursor(relativePosition) {
+
+    let layer = null;
+    let offset = Math.round(relativePosition / this.secondsPerUnit) + this.sideMargin;
+    let tickHeight = 15;
+    let tickMargin = 3;
+    let color = '#00FF00';
+    let strokeWidth = 2;
+
+    if (this.cursorInfo) {
+
+      layer = this.cursorInfo.layer;
+
+      var tween = new Kinetic.Tween({
+        node: this.cursorInfo.cursor,
+        duration: .7,
+        easing: Kinetic.Easings.EaseOut,
+        points: [
+          offset, this.topMargin,
+          offset, this.height - this.bottomMargin + tickHeight
+        ],
+      });
+
+      tween.play();
+
+    } else {
+      layer = new Kinetic.Layer();
+      this.stage.add(layer);
+
+
+      var cursorLine = new Kinetic.Line({
+        points: [
+          offset, this.topMargin,
+          offset, this.height - this.bottomMargin + tickHeight
+        ],
+        stroke: color,
+        strokeWidth: strokeWidth,
+        lineCap: 'round',
+        tension: 0,
+      });
+
+      layer.add(cursorLine);
+      layer.draw();
+
+      this.cursorInfo = { cursor: cursorLine, layer: layer };
+    }
+
+
+
+
+  }
+
   drawEventLine(stage, event, secondsPerUnit) {
     let layer = new Kinetic.Layer();
     let offset = Math.round(event.relativePositionInSeconds / secondsPerUnit) + this.sideMargin;
@@ -215,7 +292,6 @@ export class TimelineComponent implements OnInit, OnChanges {
     let strokeWidth = 2;
 
 
-    console.log(event.type);
 
     if (event.type == 'SUBTASK') {
       strokeWidth = 2;
@@ -234,6 +310,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     });
 
     if (event.type == 'CALENDAR') {
+      console.log("Calendar! " + event.fullPath);
       eventLine.dash([5, 5]);
       eventLine.setPoints([offset, 0, offset, this.height - 10]);
     }
@@ -317,7 +394,6 @@ export class TimelineComponent implements OnInit, OnChanges {
     let that = this;
 
     timelineData.ideaFlowBands.forEach(function (band) {
-      console.log('each');
       if (band.type != "PROGRESS") {
         let groupLayer = new Kinetic.Layer();
         let bandGroup = that.drawBandGroup(groupLayer, band, secondsPerUnit);
@@ -373,6 +449,7 @@ export class TimelineComponent implements OnInit, OnChanges {
         let eventInfo = this.eventsById[key];
         //{data: event, color: color, line: eventLine, tick: tickLabel, layer: layer};
         if (eventInfo.data.type == 'CALENDAR') {
+          console.log("Found!");
           if ( isVisible) {
             eventInfo.layer.show();
           } else {

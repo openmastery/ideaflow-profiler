@@ -16,7 +16,7 @@
     </h2>
     <md-card>
       <main>
-        <app-timeline *ngIf="activeTimeline" [activeTimeline]="activeTimeline"></app-timeline>
+        <app-timeline *ngIf="activeTimeline" [activeTimeline]="activeTimeline" [cursorPosition]="activeCursor"></app-timeline>
       </main>
     </md-card>
 
@@ -27,7 +27,7 @@
                   [haystacks]="taskDetail?.haystacks"
                   [activeSubtask]="activeSubtask"
                   (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
-                  (positionUpdated)="handlePositionUpdated($event)"></app-haystack>
+                  (cursorUpdated)="handleCursorUpdated($event)"></app-haystack>
 
     </md-card>
 

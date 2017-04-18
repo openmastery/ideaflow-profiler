@@ -32,6 +32,7 @@ export class TaskComponent implements OnInit {
 
   private activeSubtask: SubTask;
   private activeTimeline: Timeline;
+  private activeCursor: any;
 
 
   // <!--//nav here, that sets a ng model object with a flag based on the active selection-->
@@ -87,10 +88,15 @@ export class TaskComponent implements OnInit {
     console.log('Nav to panel:' + panelName);
   }
 
-  handlePositionUpdated(currentPosition) {
-    console.log("Position changed" + currentPosition.relativeTime);
-  }
+  handleCursorUpdated(currentPosition) {
 
+    if (currentPosition.relativeTime != null) {
+      this.activeCursor = currentPosition;
+    } else {
+      this.activeCursor = null;
+    }
+
+  }
 
   handleActiveSubtaskUpdated(selectedSubtask) {
     console.log("Selection changed!" + selectedSubtask.index);

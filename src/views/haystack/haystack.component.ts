@@ -32,7 +32,7 @@ export class HaystackComponent implements OnInit {
   @Input() private haystacks: Array<Haystack>;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
-  @Output() positionUpdated = new EventEmitter();
+  @Output() cursorUpdated = new EventEmitter();
 
 
 
@@ -55,15 +55,32 @@ export class HaystackComponent implements OnInit {
       for (let subtask of this.subtasks) {
          let start = subtask.relativePositionInSeconds;
          let end = subtask.relativePositionInSeconds + subtask.durationInSeconds;
-         subtask.haystacks = this.findHaystacksWithinRange(start, end);
-         this.subtaskHaystackLists.push(subtask.haystacks)
+
+
+         let flatHistory = this.findHaystacksWithinRange(start, end);
+
+         for (let journey of subtask.troubleshootingJourneys) {
+           for (let painCycle of journey.painCycles) {
+
+             flatHistory.push(painCycle);
+           }
+         }
+
+         for (let progressTick of subtask.progressTicks) {
+           flatHistory.push(progressTick);
+         }
+        subtask.flatHistory = flatHistory;
+        this.sortByProperty(flatHistory, 'relativePositionInSeconds', subtask.relativePath);
+
+         //faciliate sort by keeping track of child lists to sort
+         this.subtaskHaystackLists.push(flatHistory)
       }
     }
   }
 
   updateCursorPosition(relativePosition, relativePath) {
     let currentPosition = { relativeTime: relativePosition, relativePath: relativePath };
-    this.positionUpdated.emit(currentPosition);
+    this.cursorUpdated.emit(currentPosition);
   }
 
   findHaystacksWithinRange(relativeStart, relativeEnd) {
@@ -75,14 +92,12 @@ export class HaystackComponent implements OnInit {
         matchingHaystacks.push(haystack);
       }
     }
-    console.log("matching ="+matchingHaystacks);
     return matchingHaystacks;
   }
 
   isHaystackWithinRange(haystack, relativeStart, relativeEnd) {
     let haystackStart = haystack.relativePositionInSeconds;
     let haystackEnd = haystack.relativePositionInSeconds + haystack.durationInSeconds;
-    console.log("end = "+haystackEnd);
     return (haystackStart >= relativeStart && haystackStart < relativeEnd);
 
   }

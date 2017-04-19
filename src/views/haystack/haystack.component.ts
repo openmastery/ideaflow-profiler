@@ -30,6 +30,7 @@ export class HaystackComponent implements OnInit {
   @Input() private id: string;
   @Input() private activeSubtask: SubTask;
   @Input() private haystacks: Array<Haystack>;
+  @Input() private timelineBreakdown: string;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
   @Output() cursorUpdated = new EventEmitter();
@@ -52,29 +53,51 @@ export class HaystackComponent implements OnInit {
   ngOnChanges() {
     console.log('haystack change!');
     if (this.subtasks && this.haystacks) {
-      for (let subtask of this.subtasks) {
-         let start = subtask.relativePositionInSeconds;
-         let end = subtask.relativePositionInSeconds + subtask.durationInSeconds;
 
-
-         let flatHistory = this.findHaystacksWithinRange(start, end);
-
-         for (let journey of subtask.troubleshootingJourneys) {
-           for (let painCycle of journey.painCycles) {
-
-             flatHistory.push(painCycle);
-           }
-         }
-
-         for (let progressTick of subtask.progressTicks) {
-           flatHistory.push(progressTick);
-         }
-        subtask.flatHistory = flatHistory;
-        this.sortByProperty(flatHistory, 'relativePositionInSeconds', subtask.relativePath);
-
-         //faciliate sort by keeping track of child lists to sort
-         this.subtaskHaystackLists.push(flatHistory)
+      if (this.timelineBreakdown == 'haystacks') {
+        console.log('haystacks!');
+        this.initializeByHaystack();
+      } else if (this.timelineBreakdown == 'wtfs') {
+        console.log('wtfs!');
+        this.initializeByWTF();
       }
+
+    }
+  }
+
+  initializeByHaystack() {
+    for (let subtask of this.subtasks) {
+      let start = subtask.relativePositionInSeconds;
+      let end = subtask.relativePositionInSeconds + subtask.durationInSeconds;
+
+      let flatHistory = this.findHaystacksWithinRange(start, end);
+      subtask.flatHistory = flatHistory;
+      //faciliate sort by keeping track of child lists to sort
+      this.subtaskHaystackLists.push(flatHistory)
+    }
+  }
+
+  initializeByWTF() {
+    for (let subtask of this.subtasks) {
+      let start = subtask.relativePositionInSeconds;
+      let end = subtask.relativePositionInSeconds + subtask.durationInSeconds;
+
+      let flatHistory = [];
+      for (let journey of subtask.troubleshootingJourneys) {
+        for (let painCycle of journey.painCycles) {
+
+          flatHistory.push(painCycle);
+        }
+      }
+
+      for (let progressTick of subtask.progressTicks) {
+        flatHistory.push(progressTick);
+      }
+      subtask.flatHistory = flatHistory;
+      this.sortByProperty(flatHistory, 'relativePositionInSeconds', subtask.relativePath);
+
+      //faciliate sort by keeping track of child lists to sort
+      this.subtaskHaystackLists.push(flatHistory)
     }
   }
 
@@ -88,7 +111,6 @@ export class HaystackComponent implements OnInit {
 
     for (let haystack of this.haystacks) {
       if (this.isHaystackWithinRange(haystack, relativeStart, relativeEnd)) {
-        console.log("Adding haystack!");
         matchingHaystacks.push(haystack);
       }
     }

@@ -2,7 +2,7 @@
   <header>
     <main>
       <h1>IdeaFlow Timeline</h1>
-     </main>
+    </main>
     <aside>
       <md-input-container>
         <input md-input type="search"/>
@@ -11,55 +11,65 @@
     </aside>
   </header>
   <main>
-    <h2>
-      {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
-    </h2>
+    <table style="margin:0; padding:0;">
+      <tr>
+        <td style="margin:0; padding:0;">
+          <h2>
+            {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
+          </h2>
+        </td>
+        <td style="text-align: right; margin:0; padding:0;">
+          <md-select [(ngModel)]="timelineBreakdown" (ngModelChange)="switchBreakdownType($event)">
+            <md-option value="haystacks">Haystacks</md-option>
+            <md-option value="wtfs">WTFs</md-option>
+          </md-select>
+        </td>
+      </tr>
+    </table>
     <md-card>
       <main>
-        <app-timeline *ngIf="activeTimeline" [activeTimeline]="activeTimeline" [cursorPosition]="activeCursor"></app-timeline>
+        <app-timeline *ngIf="activeTimeline" [activeTimeline]="activeTimeline"
+                      [cursorPosition]="activeCursor"></app-timeline>
       </main>
     </md-card>
 
     <md-card style="height:400px; overflow-y: auto">
 
-    <app-haystack [id]="taskDetail?.task?.id"
-                  [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                  [haystacks]="taskDetail?.haystacks"
-                  [activeSubtask]="activeSubtask"
-                  (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
-                  (cursorUpdated)="handleCursorUpdated($event)"></app-haystack>
+      <app-haystack [id]="taskDetail?.task?.id"
+                    [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                    [haystacks]="taskDetail?.haystacks"
+                    [activeSubtask]="activeSubtask"
+                    [timelineBreakdown]="timelineBreakdown"
+                    (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
+                    (cursorUpdated)="handleCursorUpdated($event)"></app-haystack>
 
     </md-card>
 
     <!--<md-tab-group>-->
-      <!--<md-tab label="Haystacks">-->
+    <!--<md-tab label="Haystacks">-->
 
-      <!--</md-tab>-->
-      <!--<md-tab label="By Pain">-->
-        <!--<app-journey [id]="taskDetail?.task?.id"-->
-                     <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
-                     <!--[activeSubtask]="activeSubtask"-->
-                     <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>-->
-      <!--</md-tab>-->
-      <!--<md-tab label="Metrics">-->
-        <!--<app-metrics [id]="taskDetail?.task?.id"-->
-                     <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
-                     <!--[activeSubtask]="activeSubtask"-->
-                     <!--[taskDetail]="taskDetail"-->
-                     <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>-->
-      <!--</md-tab>-->
+    <!--</md-tab>-->
+    <!--<md-tab label="WTFs">-->
+    <!--<app-journey [id]="taskDetail?.task?.id"-->
+    <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
+    <!--[activeSubtask]="activeSubtask"-->
+    <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>-->
+    <!--</md-tab>-->
+    <!--<md-tab label="Metrics">-->
+    <!--<app-metrics [id]="taskDetail?.task?.id"-->
+    <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
+    <!--[activeSubtask]="activeSubtask"-->
+    <!--[taskDetail]="taskDetail"-->
+    <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>-->
+    <!--</md-tab>-->
     <!--</md-tab-group>-->
 
 
     <!--<div>-->
-      <!--<button *ngFor="let link of panelLinks" >-->
-        <!--<b>{{link}}</b>-->
-      <!--</button>-->
+    <!--<button *ngFor="let link of panelLinks" >-->
+    <!--<b>{{link}}</b>-->
+    <!--</button>-->
     <!--</div>-->
-
-
-
-
 
 
     <!--//nav here, that sets a ng model object with a flag based on the active selection-->

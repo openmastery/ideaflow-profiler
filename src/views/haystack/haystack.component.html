@@ -4,6 +4,8 @@
 
     <table class="mdl-data-table highlight" (mouseleave)="updateCursorPosition(null, null)">
 
+      <ng-container *ngIf="timelineBreakdown == 'haystacks'">
+
       <tr class="haystack-header">
         <th></th>
         <th>
@@ -26,6 +28,26 @@
           </button>
         </th>
       </tr>
+      </ng-container>
+
+      <ng-container *ngIf="timelineBreakdown == 'wtfs'">
+
+        <tr class="haystack-header">
+          <th></th>
+          <th>
+            <button md-button (click)="sortAllHaystacksByProperty('relativePositionInSeconds', 'haystack')">Time
+            </button>
+          </th>
+          <th colspan="3">
+            <button md-button (click)="sortAllHaystacksByProperty('description', 'haystack')">Description
+            </button>
+          </th>
+          <th>
+            <button md-button (click)="sortAllHaystacksByProperty('durationInSeconds', 'haystack')">Human Cycle Time
+            </button>
+          </th>
+        </tr>
+      </ng-container>
 
 
       <ng-container *ngFor=" let subtask of subtasks; let i = index;">
@@ -56,7 +78,7 @@
                 </td>
                 <td>{{formatRelative(history.relativePositionInSeconds)}}</td>
                 <td colspan="3" style="text-align: left"> {{history.description}}</td>
-                <td></td>
+                <td>{{formatShortDuration(history.durationInSeconds) }}</td>
               </tr>
 
             </ng-container>

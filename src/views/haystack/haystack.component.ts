@@ -55,10 +55,10 @@ export class HaystackComponent implements OnInit {
     if (this.subtasks && this.haystacks) {
 
       if (this.timelineBreakdown == 'haystacks') {
-        console.log('haystacks!');
+        console.log('initialize haystacks!');
         this.initializeByHaystack();
       } else if (this.timelineBreakdown == 'wtfs') {
-        console.log('wtfs!');
+        console.log('initialize wtfs!');
         this.initializeByWTF();
       }
 
@@ -72,6 +72,7 @@ export class HaystackComponent implements OnInit {
 
       let flatHistory = this.findHaystacksWithinRange(start, end);
       subtask.flatHistory = flatHistory;
+      console.log("history = "+subtask.flatHistory);
       //faciliate sort by keeping track of child lists to sort
       this.subtaskHaystackLists.push(flatHistory)
     }
@@ -107,6 +108,7 @@ export class HaystackComponent implements OnInit {
   }
 
   findHaystacksWithinRange(relativeStart, relativeEnd) {
+
     let matchingHaystacks = [];
 
     for (let haystack of this.haystacks) {
@@ -114,6 +116,7 @@ export class HaystackComponent implements OnInit {
         matchingHaystacks.push(haystack);
       }
     }
+    console.log('matching haystacks' + matchingHaystacks);
     return matchingHaystacks;
   }
 

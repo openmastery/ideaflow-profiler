@@ -55,7 +55,7 @@
         <tr class="subtask-header" (click)="toggleExpanded(subtask, subtask.flatHistory)"
             (mouseover)="updateCursorPosition(subtask.relativePositionInSeconds, subtask.relativePath)">
           <td>
-            <i *ngIf="subtask.flatHistory.length > 0"
+            <i *ngIf="subtask.flatHistory?.length > 0"
                [class]="subtask.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
           </td>
           <td>{{formatRelative(subtask.relativePositionInSeconds)}}</td>

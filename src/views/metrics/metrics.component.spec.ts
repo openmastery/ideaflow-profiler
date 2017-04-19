@@ -2,8 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import {HaystackComponent} from "./haystack.component";
-
+import { MetricsComponent } from './metrics.component';
 
 describe('MetricsComponent', () => {
   let component: MetricsComponent;

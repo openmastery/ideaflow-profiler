@@ -35,7 +35,7 @@ export class WtfsComponent implements OnInit {
   @Output() activeSubtaskUpdated = new EventEmitter();
   @Output() cursorUpdated = new EventEmitter();
 
-
+  private faqDefaultText: string = "FAQ Notes";
 
   private sortKeys: any = { 'haystack-relativePositionInSeconds': true };
   private subtaskHaystackLists: Array<Array<Haystack>> = [];
@@ -177,6 +177,17 @@ export class WtfsComponent implements OnInit {
   onSave(eventPath, editValue) {
     console.log("Handle save!" +eventPath+':'+ editValue);
     let eventPatch = { description : editValue };
+
+    this.taskService.updateEvent(eventPath, eventPatch)
+      .subscribe(
+        taskDetail => console.log('happiness!'),
+        error => console.log(error)
+      );
+  }
+
+  onSaveFaq(eventPath, editValue) {
+    console.log("Handle save faq!" +eventPath+':'+ editValue);
+    let eventPatch = { faq : editValue };
 
     this.taskService.updateEvent(eventPath, eventPatch)
       .subscribe(

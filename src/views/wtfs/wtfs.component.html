@@ -52,7 +52,7 @@
                     <tr class="journey-header"
                         (mouseover)="updateCursorPosition(journey.relativePositionInSeconds, journey.relativePath)">
                       <th colspan="5" style="text-align: left; padding: 0%">
-                        <h3>Troubleshooting Journey</h3>
+                        <h3>Troubleshooting Session</h3>
                       </th>
                       <th style="text-align: right; padding: 0%">
                         <i (click)="toggleSnippets(journey)" class="material-icons" >code</i>
@@ -85,9 +85,12 @@
 
                         <tr>
                           <td colspan="6" style="text-align: left">
-<textarea rows="4" cols="100">
-{{painCycle.faqAnnotation }}
-</textarea>
+
+                            <md-textarea rows="4" cols="100" [(ngModel)]="painCycle.faqAnnotation"
+                                         [placeholder]="faqDefaultText"
+                                         (blur)="onSaveFaq(painCycle.fullPath, $event)">
+                              {{faqDefaultText}}
+                            </md-textarea>
                           </td>
                         </tr>
 

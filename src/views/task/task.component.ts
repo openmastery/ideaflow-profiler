@@ -33,7 +33,7 @@ export class TaskComponent implements OnInit {
   private activeSubtask: SubTask;
   private activeTimeline: Timeline;
   private activeCursor: any;
-  private timelineBreakdown: string = 'haystacks';
+  private timelineBreakdown: string = 'wtfs';
 
 
 

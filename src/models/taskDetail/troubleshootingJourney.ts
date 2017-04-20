@@ -15,6 +15,8 @@ export class TroubleShootingJourney {
         public dangerMetrics: Array<Metric>,
 
         public painCycles: Array<PainCycle>,
+
+        public isExpanded: boolean,
     ){}
 }
 

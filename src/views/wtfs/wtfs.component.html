@@ -4,65 +4,37 @@
 
     <table class="mdl-data-table highlight" (mouseleave)="updateCursorPosition(null, null)">
 
-      <ng-container *ngIf="timelineBreakdown == 'haystacks'">
-
       <tr class="haystack-header">
         <th></th>
         <th>
           <button md-button (click)="sortAllHaystacksByProperty('relativePositionInSeconds', 'haystack')">Time
           </button>
         </th>
-        <th>
-          <button md-button (click)="sortAllHaystacksByProperty('executionTaskType', 'haystack')">Activity Type
+        <th colspan="3">
+          <button md-button (click)="sortAllHaystacksByProperty('description', 'haystack')">Description
           </button>
         </th>
         <th>
-          <button md-button (click)="sortAllHaystacksByProperty('processName', 'haystack')">Description</button>
-        </th>
-        <th class="haystack-header-notice-me" style="text-align: right">
-          <button md-button (click)="sortAllHaystacksByProperty('executionDurationInSeconds', 'haystack')"
-                  style="text-align: right"><i>Execution Time</i></button>
-        </th>
-        <th>
-          <button md-button (click)="sortAllHaystacksByProperty('durationInSeconds', 'haystack')">Human Cycle Time
+          <button md-button (click)="sortAllHaystacksByProperty('durationInSeconds', 'haystack')">Duration
           </button>
         </th>
       </tr>
-      </ng-container>
-
-      <ng-container *ngIf="timelineBreakdown == 'wtfs'">
-
-        <tr class="haystack-header">
-          <th></th>
-          <th>
-            <button md-button (click)="sortAllHaystacksByProperty('relativePositionInSeconds', 'haystack')">Time
-            </button>
-          </th>
-          <th colspan="3">
-            <button md-button (click)="sortAllHaystacksByProperty('description', 'haystack')">Description
-            </button>
-          </th>
-          <th>
-            <button md-button (click)="sortAllHaystacksByProperty('durationInSeconds', 'haystack')">Human Cycle Time
-            </button>
-          </th>
-        </tr>
-      </ng-container>
 
 
       <ng-container *ngFor=" let subtask of subtasks; let i = index;">
 
-        <tr class="subtask-header" (click)="toggleExpanded(subtask, subtask.flatHistory)"
+        <tr class="subtask-header" (click)="toggleExpanded(subtask, subtask.troubleshootingJourneys)"
             (mouseover)="updateCursorPosition(subtask.relativePositionInSeconds, subtask.relativePath)">
           <td>
-            <i *ngIf="subtask.flatHistory?.length > 0"
+            <i *ngIf="subtask.troubleshootingJourneys?.length > 0"
                [class]="subtask.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
           </td>
           <td>
             {{formatRelative(subtask.relativePositionInSeconds)}}
           </td>
-          <td colspan="3" style="text-align: left; white-space:nowrap; overflow: hidden" >
-            {{i}}. <inline-edit (onSave)="onSave(subtask.fullPath, $event)"
+          <td colspan="3" style="text-align: left; white-space:nowrap; overflow: hidden">
+            {{i}}.
+            <inline-edit (onSave)="onSave(subtask.fullPath, $event)"
                          [(ngModel)]="subtask.description" [required]="true" type="text">
             </inline-edit>
             <!--{{subtask.description}}-->
@@ -71,81 +43,197 @@
         </tr>
 
         <ng-container *ngIf="subtask.isExpanded">
+          <tr>
+            <td colspan="6">
+              <ng-container *ngFor=" let journey of subtask.troubleshootingJourneys; let j = index;">
 
-          <ng-container *ngFor=" let history of subtask.flatHistory; let j = index;">
+                <md-card class="journey-card">
+                  <table >
+                    <tr class="journey-header"
+                        (mouseover)="updateCursorPosition(journey.relativePositionInSeconds, journey.relativePath)">
+                      <th colspan="5" style="text-align: left; padding: 0%"><h3>Troubleshooting Journey</h3></th>
+                      <th style="text-align: right; padding: 0%"><b>{{formatShortDuration(journey.durationInSeconds)}}</b></th>
+                    </tr>
 
+                    <ng-container *ngFor=" let painCycle of journey.painCycles; let k = index;">
+                      <tr class="pain-event"  (mouseover)="updateCursorPosition(painCycle.relativePositionInSeconds, painCycle.relativePath)">
+                        <td style="text-align: right">
+                          <img *ngIf="painCycle.eventType == 'PAIN'" [src]="'/assets/pain_flame.png'"
+                               style="height: 20px"/>
+                          <img *ngIf="painCycle.eventType == 'AWESOME'" [src]="'/assets/awesome_flame.png'"
+                               style="height: 20px"/>
+                        </td>
+                        <td>
+                          {{formatRelative(painCycle.relativePositionInSeconds)}}
+                        </td>
+                        <td colspan="3">
+                          <inline-edit (onSave)="onSave(painCycle.fullPath, $event)"
+                                       [(ngModel)]="painCycle.description" [required]="true" type="text">
+                          </inline-edit>
+                        </td>
+                        <td style="text-align: right">
+                          {{formatShortDuration(painCycle.durationInSeconds) }}
+                        </td>
+                      </tr>
 
-            <ng-container *ngIf="history.hasOwnProperty('formattableSnippet')">
+                    </ng-container>
 
-              <tr [class]="history.eventType == 'PAIN'? 'pain-event' : 'awesome-event'"
-                  (mouseover)="updateCursorPosition(history.relativePositionInSeconds, history.relativePath)">
-                <td>
-                  <img *ngIf="history.eventType == 'PAIN'" [src]="'/assets/pain_flame.png'" />
-                  <img *ngIf="history.eventType == 'AWESOME'" [src]="'/assets/awesome_flame.png'" />
-                </td>
-                <td>{{formatRelative(history.relativePositionInSeconds)}}</td>
-                <td colspan="3" style="text-align: left"> {{history.description}}</td>
-                <td>{{formatShortDuration(history.durationInSeconds) }}</td>
-              </tr>
-
-            </ng-container>
-
-            <ng-container *ngIf="history.hasOwnProperty('failed')">
-
-              <tr (click)="toggleExpanded(history, history.activitySummaries)"
-                  (mouseover)="updateCursorPosition(history.relativePositionInSeconds, history.relativePath)"
-                  [class]="history.failed? 'haystack test-fail' : 'haystack test-pass'">
-                <td>
-                  <i *ngIf="history.activitySummaries.length > 0"
-                     [class]="history.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
-                  <span *ngIf="history.debug">
-                <i class="material-icons">bug_report</i>
-              </span>
-                </td>
-                <td>{{formatRelative(history.relativePositionInSeconds)}}</td>
-                <td>
-              <span>
-              {{history.executionTaskType}}
-              </span>
-
-                </td>
-                <td>
-                  {{history.processName}}
-                </td>
-                <td style="text-align: right">
-                  {{ formatShortDuration(history.executionDurationInSeconds) }}
-                </td>
-                <td>
-                  {{formatShortDuration(history.durationInSeconds) }}
-                </td>
-              </tr>
-
-              <ng-container *ngIf="history.isExpanded">
-                <ng-container *ngFor="let activity of history.activitySummaries; let j = index;">
-                  <tr class="activity">
-                    <td></td>
-                    <td></td>
-                    <td>
-                      {{activity.activityType | capitalize}}
-                    </td>
-                    <td [class]="activity.modifiedDurationInSeconds > 0? 'file-modified' : ''">
-                      {{activity.activityName}}
-                    </td>
-                    <td style="text-align: right">
-                      {{formatShortDuration(activity.modifiedDurationInSeconds) }}
-                    </td>
-                    <td>
-                      {{formatShortDuration(activity.totalDurationInSeconds) }}
-                    </td>
-                  </tr>
-                </ng-container>
+                  </table>
+                </md-card>
               </ng-container>
-            </ng-container>
-          </ng-container>
-
+            </td>
+          </tr>
         </ng-container>
 
+        <!--<tr class="journey" (click)="toggleExpanded(journey, journey.painCycles)">-->
+        <!--<td>-->
+        <!--<i *ngIf="journey.painCycles?.length > 0"-->
+        <!--[class]="journey.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>-->
+        <!--<img [src]="'/assets/pain_flame.png'" style="height: 20px"/>-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--{{formatRelative(journey.relativePositionInSeconds)}}-->
+        <!--</td>-->
+        <!--<td colspan="3">-->
+        <!--{{journey.description}}-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--{{formatShortDuration(journey.durationInSeconds) }}-->
+        <!--</td>-->
+        <!--</tr>-->
+
+
+        <!--<tr>-->
+        <!--<td colspan="6">-->
+        <!--<md-card>-->
+        <!--<table>-->
+        <!--<tr>-->
+        <!--<td colspan="6"><h3>Troubleshooting Journey</h3></td>-->
+        <!--</tr>-->
+        <!--<ng-container *ngFor=" let painCycle of journey.painCycles; let k = index;">-->
+        <!--<tr>-->
+        <!--<td>-->
+        <!--<img *ngIf="painCycle.eventType == 'PAIN'" [src]="'/assets/pain_flame.png'"  style="height: 20px"/>-->
+        <!--<img *ngIf="painCycle.eventType == 'AWESOME'" [src]="'/assets/awesome_flame.png'"  style="height: 20px"/>-->
+        <!--</td>-->
+        <!--<td>{{formatRelative(painCycle.relativePositionInSeconds)}}</td>-->
+        <!--<td colspan="3" style="text-align: left"> {{painCycle.description}}</td>-->
+        <!--<td>{{formatShortDuration(painCycle.durationInSeconds) }}</td>-->
+        <!--</tr>-->
+        <!--</ng-container>-->
+        <!--</table>-->
+        <!--</md-card>-->
+        <!--</td>-->
+        <!--</tr>-->
+
       </ng-container>
+      <!---->
+      <!---->
+
+
+      <!--<tr [class]="painCycle.eventType == 'PAIN'? 'pain-event' : 'awesome-event'"-->
+      <!--(mouseover)="updateCursorPosition(painCycle.relativePositionInSeconds, painCycle.relativePath)">-->
+      <!--<td>-->
+      <!--<img *ngIf="painCycle.eventType == 'PAIN'" [src]="'/assets/pain_flame.png'" />-->
+      <!--<img *ngIf="painCycle.eventType == 'AWESOME'" [src]="'/assets/awesome_flame.png'" />-->
+      <!--</td>-->
+      <!--<td>{{formatRelative(painCycle.relativePositionInSeconds)}}</td>-->
+      <!--<td colspan="3" style="text-align: left"> {{painCycle.description}}</td>-->
+      <!--<td>{{formatShortDuration(painCycle.durationInSeconds) }}</td>-->
+      <!--</tr>-->
+      <!--<tr *ngIf="painCycle.formattableSnippet" class="formattableSnippet"-->
+      <!--(mouseover)="updateCursorPosition(painCycle.relativePositionInSeconds, painCycle.relativePath)">-->
+
+      <!--<td colspan="6">-->
+      <!--<md-card>-->
+      <!--<header>-->
+      <!--<aside style="text-align: right">{{painCycle.formattableSnippet.source}}</aside>-->
+      <!--</header>-->
+      <!--<main  style="text-align: left">-->
+      <!--<pre>-->
+      <!--{{painCycle.formattableSnippet.contents}}-->
+      <!--</pre>-->
+      <!--</main>-->
+      <!--</md-card>-->
+      <!--</td>-->
+      <!--</tr>-->
+
+
+      <!---->
+      <!---->
+      <!---->
+      <!--<ng-container *ngIf="history.hasOwnProperty('formattableSnippet')">-->
+
+      <!--<tr [class]="history.eventType == 'PAIN'? 'pain-event' : 'awesome-event'"-->
+      <!--(mouseover)="updateCursorPosition(history.relativePositionInSeconds, history.relativePath)">-->
+      <!--<td>-->
+      <!--<img *ngIf="history.eventType == 'PAIN'" [src]="'/assets/pain_flame.png'" />-->
+      <!--<img *ngIf="history.eventType == 'AWESOME'" [src]="'/assets/awesome_flame.png'" />-->
+      <!--</td>-->
+      <!--<td>{{formatRelative(history.relativePositionInSeconds)}}</td>-->
+      <!--<td colspan="3" style="text-align: left"> {{history.description}}</td>-->
+      <!--<td>{{formatShortDuration(history.durationInSeconds) }}</td>-->
+      <!--</tr>-->
+
+
+      <!--</ng-container>-->
+
+      <!--<ng-container *ngIf="history.hasOwnProperty('failed')">-->
+
+      <!--<tr (click)="toggleExpanded(history, history.activitySummaries)"-->
+      <!--(mouseover)="updateCursorPosition(history.relativePositionInSeconds, history.relativePath)"-->
+      <!--[class]="history.failed? 'haystack test-fail' : 'haystack test-pass'">-->
+      <!--<td>-->
+      <!--<i *ngIf="history.activitySummaries.length > 0"-->
+      <!--[class]="history.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>-->
+      <!--<span *ngIf="history.debug">-->
+      <!--<i class="material-icons">bug_report</i>-->
+      <!--</span>-->
+      <!--</td>-->
+      <!--<td>{{formatRelative(history.relativePositionInSeconds)}}</td>-->
+      <!--<td>-->
+      <!--<span>-->
+      <!--{{history.executionTaskType}}-->
+      <!--</span>-->
+
+      <!--</td>-->
+      <!--<td>-->
+      <!--{{history.processName}}-->
+      <!--</td>-->
+      <!--<td style="text-align: right">-->
+      <!--{{ formatShortDuration(history.executionDurationInSeconds) }}-->
+      <!--</td>-->
+      <!--<td>-->
+      <!--{{formatShortDuration(history.durationInSeconds) }}-->
+      <!--</td>-->
+      <!--</tr>-->
+
+      <!--<ng-container *ngIf="history.isExpanded">-->
+      <!--<ng-container *ngFor="let activity of history.activitySummaries; let j = index;">-->
+      <!--<tr class="activity">-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td>-->
+      <!--{{activity.activityType | capitalize}}-->
+      <!--</td>-->
+      <!--<td [class]="activity.modifiedDurationInSeconds > 0? 'file-modified' : ''">-->
+      <!--{{activity.activityName}}-->
+      <!--</td>-->
+      <!--<td style="text-align: right">-->
+      <!--{{formatShortDuration(activity.modifiedDurationInSeconds) }}-->
+      <!--</td>-->
+      <!--<td>-->
+      <!--{{formatShortDuration(activity.totalDurationInSeconds) }}-->
+      <!--</td>-->
+      <!--</tr>-->
+      <!--</ng-container>-->
+      <!--</ng-container>-->
+      <!--</ng-container>-->
+      <!--</ng-container>-->
+
+      <!--</ng-container>-->
+
+      <!--</ng-container>-->
 
 
     </table>

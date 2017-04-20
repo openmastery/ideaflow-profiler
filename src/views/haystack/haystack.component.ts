@@ -195,6 +195,17 @@ export class HaystackComponent implements OnInit {
     console.log('activated!');
   }
 
+  onSave(eventPath, editValue) {
+    console.log("Handle save!" +eventPath+':'+ editValue);
+    let eventPatch = { description : editValue };
+
+    this.taskService.updateEvent(eventPath, eventPatch)
+      .subscribe(
+        taskDetail => console.log('happiness!'),
+        error => console.log(error)
+      );
+  }
+
   toggleExpanded(toggleable, children) {
     //if (children.length > 0) {
       if (toggleable.isExpanded == true) {

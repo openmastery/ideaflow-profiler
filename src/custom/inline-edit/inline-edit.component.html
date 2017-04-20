@@ -1,0 +1,8 @@
+
+  <ng-container *ngIf="editing">
+    <input #inlineEditControl [required]="required" (keyup.enter)="onBlur($event)" (blur)="onBlur($event)"
+           [name]="value" [(ngModel)]="value" [type]="type" [placeholder]="label" size="60"/>
+  </ng-container>
+  <ng-container *ngIf="!editing">
+    <span title="Click to edit" (click)="edit(value)" (focus)="edit(value);" tabindex="0" class="inline-edit">{{value}}&nbsp;</span>
+  </ng-container>

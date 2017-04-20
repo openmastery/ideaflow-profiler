@@ -58,8 +58,15 @@
             <i *ngIf="subtask.flatHistory?.length > 0"
                [class]="subtask.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
           </td>
-          <td>{{formatRelative(subtask.relativePositionInSeconds)}}</td>
-          <td colspan="3" style="text-align: left">{{i}}. {{subtask.description}}</td>
+          <td>
+            {{formatRelative(subtask.relativePositionInSeconds)}}
+          </td>
+          <td colspan="3" style="text-align: left; white-space:nowrap; overflow: hidden" >
+            {{i}}. <inline-edit (onSave)="onSave(subtask.fullPath, $event)"
+                         [(ngModel)]="subtask.description" [required]="true" type="text">
+            </inline-edit>
+            <!--{{subtask.description}}-->
+          </td>
           <td>{{formatShortDuration(subtask.durationInSeconds)}}</td>
         </tr>
 

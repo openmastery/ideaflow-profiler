@@ -35,6 +35,7 @@ import {
   FaqService,
 } from '../services';
 import {CapitalizePipe} from "../pipes/capitalizePipe";
+import {InlineEditComponent} from "../custom/inline-edit/inline-edit.component";
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {CapitalizePipe} from "../pipes/capitalizePipe";
     HaystackComponent,
     MetricsComponent,
     CapitalizePipe ,
+    InlineEditComponent
 ],
   imports: [
     BrowserModule,

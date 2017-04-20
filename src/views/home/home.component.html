@@ -38,7 +38,7 @@
           <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
           <td>{{task.name}}</td>
           <td>{{task.description}}</td>
-          <td>{{task?.modifyDate | amUtc | amCalendar:nextDay }}</td>
+          <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
         </tr>
       </tbody>
     </table>

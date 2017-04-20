@@ -6,6 +6,7 @@ import {Haystack} from "../haystack/haystack";
 export class SubTask {
     constructor(
         public relativePath: string,
+        public fullPath: string,
         public description: string,
         public relativePositionInSeconds: number,
         public durationInSeconds: number,

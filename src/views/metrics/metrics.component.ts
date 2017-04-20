@@ -31,7 +31,7 @@ export class MetricsComponent implements OnInit {
   @Input() private activeSubtask: SubTask;
 
 
-  @Input() private id: string;
+  @Input() private taskId: string;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
 
@@ -53,7 +53,7 @@ export class MetricsComponent implements OnInit {
   goToGlossary(hashTag) {
     if(hashTag){
       let hashTagWithoutPound = hashTag.substring(1, hashTag.length);
-      this.router.navigate(['/glossary/task/'+this.id+'/tag/'+hashTagWithoutPound]);
+      this.router.navigate(['/glossary/task/'+this.taskId+'/tag/'+hashTagWithoutPound]);
     }
   }
 

@@ -1,0 +1,182 @@
+@import '../../styles/palette';
+@import '../../styles/functions';
+app-wtfs{
+
+  .rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+
+
+  .subtask-header {
+    color: md-contrast($md-deep-purple,500);
+    background: md-color($md-deep-purple,500);
+    border: solid 1px;
+  }
+
+  .pain-event {
+    color: md-contrast($md-grey,100);
+    background: #ffffff;
+    border: solid 1px;
+  }
+
+  .awesome-event {
+    color: md-contrast($md-grey,100);
+    background: #ffffff;
+    border: solid 1px;
+  }
+
+
+  .haystack {
+    border: solid 1px;
+  }
+
+  .haystack-header {
+    font-weight:bold;
+  }
+
+  .haystack-header-notice-me {
+    font-weight:bold;
+    font-style: italic;
+  }
+
+  .activity-header tr {
+    background: grey;
+  }
+
+  .activity-header {
+    border-bottom: solid 1px;
+    border-bottom-color: darkgray;
+  }
+
+  .activity-header-notice-me {
+    font-weight:bold;
+    font-style: italic;
+  }
+
+  .test-pass {
+    color:green;
+  }
+
+  .test-fail {
+    color:red;
+  }
+
+  .file-modified {
+    color:blue;
+    font-style: italic;
+  }
+
+
+  & > main{
+    & > main{
+      & > md-card{
+        padding: 0;
+        margin-bottom: 40px;
+        & > header{
+          padding: 20px;
+          color: md-contrast($md-deep-purple,500);
+          background: md-color($md-deep-purple,500);
+          display:flex;
+          & > main{
+            flex:1;
+          }
+          & > aside{
+            font-weight:bold;
+          }
+        }
+        & > main{
+          color: md-color($md-grey,600);
+          padding: 20px;
+
+          & > legend{
+            ul{
+              list-style: none;
+              margin:0;
+              padding:0;
+              display:flex;
+              align-items: center;
+              font-size:.8em;
+              li{
+                padding:10px 20px 10px 10px;
+                & > i{
+                  &.material-icons{
+                    font-size:inherit;
+                  }
+                }
+                &.LEARNING{
+                  & > i{
+                    &.material-icons{
+                      color:md-color($md-blue,500);
+                    }
+                  }
+                }
+                &.PROGRESS{
+                  & > i{
+                    &.material-icons{
+                      color:md-color($md-grey,100);
+                    }
+                  }
+                }
+                &.TROUBLESHOOTING{
+                  & > i{
+                    &.material-icons{
+                      color:md-color($md-red,500);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          & > figure{
+            margin:0 0 50px 0;
+            padding:0;
+            display:flex;
+            time{
+              position:relative;
+              flex:1 1 auto;
+              padding:10px;
+              &.LEARNING{
+                background:md-color($md-blue,500);
+              }
+              &.PROGRESS{
+                background:md-color($md-grey,100);
+              }
+              &.TROUBLESHOOTING{
+                background:md-color($md-red,500);
+              }
+              &::before{
+                content:attr(percent);
+                position:absolute;
+                width:50px;
+                height:40px;
+                bottom:-50px;
+                left:50%;
+                margin-left:-25px;
+                text-align:center;
+                color: md-color($md-grey,600);
+              }
+            }
+          }
+          & > table{
+            tr{
+              td{
+                &:first-child{
+                  width:10px;
+                  padding-right:0;
+                }
+                &:last-child{
+                  text-align: left;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

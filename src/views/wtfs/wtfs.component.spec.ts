@@ -3,21 +3,22 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import {HaystackComponent} from "./haystack.component";
+import {WtfsComponent} from "./wtfs.component";
 
 
 describe('WtfsComponent', () => {
-  let component: HaystackComponent;
-  let fixture: ComponentFixture<HaystackComponent>;
+  let component: WtfsComponent;
+  let fixture: ComponentFixture<WtfsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HaystackComponent ]
+      declarations: [ WtfsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HaystackComponent);
+    fixture = TestBed.createComponent(WtfsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

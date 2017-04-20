@@ -22,6 +22,8 @@
           <md-select [(ngModel)]="timelineBreakdown" (ngModelChange)="switchBreakdownType($event)">
             <md-option value="haystacks">Haystacks</md-option>
             <md-option value="wtfs">WTFs</md-option>
+            <md-option value="metrics">Metrics</md-option>
+
           </md-select>
         </td>
       </tr>
@@ -35,13 +37,30 @@
 
     <md-card style="height:400px; overflow-y: auto">
 
-      <app-haystack [id]="taskDetail?.task?.id"
+      <app-haystack *ngIf="timelineBreakdown == 'haystacks'"
+                    [taskId]="taskDetail?.task?.id"
                     [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
                     [haystacks]="taskDetail?.haystacks"
                     [activeSubtask]="activeSubtask"
                     [timelineBreakdown]="timelineBreakdown"
                     (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
                     (cursorUpdated)="handleCursorUpdated($event)"></app-haystack>
+
+      <app-wtfs *ngIf="timelineBreakdown == 'wtfs'"
+                    [taskId]="taskDetail?.task?.id"
+                    [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                    [haystacks]="taskDetail?.haystacks"
+                    [activeSubtask]="activeSubtask"
+                    [timelineBreakdown]="timelineBreakdown"
+                    (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
+                    (cursorUpdated)="handleCursorUpdated($event)"></app-wtfs>
+
+      <app-metrics *ngIf="timelineBreakdown == 'metrics'"
+                    [taskId]="taskDetail?.task?.id"
+                    [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                    [activeSubtask]="activeSubtask"
+                    [taskDetail]="taskDetail"
+                    (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
 
     </md-card>
 

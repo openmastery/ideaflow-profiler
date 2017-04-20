@@ -19,13 +19,13 @@ import {Haystack} from "../../models/haystack/haystack";
 import {ActivitySummary} from "../../models/haystack/activitySummary";
 
 @Component({
-  selector: 'app-haystack',
-  templateUrl: './haystack.component.html',
-  styleUrls: ['./haystack.component.scss'],
+  selector: 'app-wtfs',
+  templateUrl: './wtfs.component.html',
+  styleUrls: ['./wtfs.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HaystackComponent implements OnInit {
-  @ViewChild('haystacks') private chartContainer: ElementRef;
+export class WtfsComponent implements OnInit {
+  @ViewChild('wtfs') private chartContainer: ElementRef;
   @Input() private subtasks: Array<SubTask>;
   @Input() private taskId: string;
   @Input() private activeSubtask: SubTask;
@@ -47,24 +47,35 @@ export class HaystackComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('haystack init!');
+    console.log('wtfs init!');
   }
 
   ngOnChanges() {
-    console.log('haystack change!');
+    console.log('wtfs change!');
     if (this.subtasks && this.haystacks) {
-      this.initializeByHaystack();
+      this.initializeByWTF();
     }
   }
 
-  initializeByHaystack() {
+  initializeByWTF() {
     for (let subtask of this.subtasks) {
       let start = subtask.relativePositionInSeconds;
       let end = subtask.relativePositionInSeconds + subtask.durationInSeconds;
 
-      let flatHistory = this.findHaystacksWithinRange(start, end);
+      let flatHistory = [];
+      for (let journey of subtask.troubleshootingJourneys) {
+        for (let painCycle of journey.painCycles) {
+
+          flatHistory.push(painCycle);
+        }
+      }
+
+      for (let progressTick of subtask.progressTicks) {
+        flatHistory.push(progressTick);
+      }
       subtask.flatHistory = flatHistory;
-      console.log("history = "+subtask.flatHistory);
+      this.sortByProperty(flatHistory, 'relativePositionInSeconds', subtask.relativePath);
+
       //faciliate sort by keeping track of child lists to sort
       this.subtaskHaystackLists.push(flatHistory)
     }

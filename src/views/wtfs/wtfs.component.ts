@@ -195,6 +195,29 @@ export class WtfsComponent implements OnInit {
     //}
   }
 
+  toggleSnippets(toggleable) {
+    //if (children.length > 0) {
+    if (toggleable.showSnippets == true) {
+      toggleable.showSnippets = false;
+    } else {
+      toggleable.showSnippets = true;
+    }
+    //}
+  }
+
+  toggleFaqs(toggleable) {
+    if (toggleable.showFaqs == true) {
+      toggleable.showFaqs = false;
+    } else {
+      toggleable.showFaqs = true;
+    }
+  }
+
+  cleanUpCode(codeSnippet) {
+    return codeSnippet.trim();
+  }
+
+
   formatRelative(time) {
     let d = Number(time);
     let h = Math.floor(d / 3600);

@@ -17,6 +17,8 @@ export class TroubleShootingJourney {
         public painCycles: Array<PainCycle>,
 
         public isExpanded: boolean,
+        public showFaqs: boolean,
+        public showSnippets: boolean,
     ){}
 }
 

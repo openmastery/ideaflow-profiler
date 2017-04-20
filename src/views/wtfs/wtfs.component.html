@@ -51,8 +51,13 @@
                   <table >
                     <tr class="journey-header"
                         (mouseover)="updateCursorPosition(journey.relativePositionInSeconds, journey.relativePath)">
-                      <th colspan="5" style="text-align: left; padding: 0%"><h3>Troubleshooting Journey</h3></th>
-                      <th style="text-align: right; padding: 0%"><b>{{formatShortDuration(journey.durationInSeconds)}}</b></th>
+                      <th colspan="5" style="text-align: left; padding: 0%">
+                        <h3>Troubleshooting Journey</h3>
+                      </th>
+                      <th style="text-align: right; padding: 0%">
+                        <i (click)="toggleSnippets(journey)" class="material-icons" >code</i>
+                        <i (click)="toggleFaqs(journey)" class="material-icons" >assignment</i>
+                        <b>{{formatShortDuration(journey.durationInSeconds)}}</b></th>
                     </tr>
 
                     <ng-container *ngFor=" let painCycle of journey.painCycles; let k = index;">
@@ -75,6 +80,29 @@
                           {{formatShortDuration(painCycle.durationInSeconds) }}
                         </td>
                       </tr>
+
+                      <ng-container *ngIf="journey.showFaqs">
+
+                        <tr>
+                          <td colspan="6" style="text-align: left">
+<textarea rows="4" cols="100">
+{{painCycle.faqAnnotation }}
+</textarea>
+                          </td>
+                        </tr>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="journey.showSnippets">
+                        <tr>
+                          <td colspan="6" style="text-align: left">
+<pre><code>
+{{ painCycle.formattableSnippet.contents }}
+</code></pre>
+
+                          </td>
+                        </tr>
+                      </ng-container>
 
                     </ng-container>
 

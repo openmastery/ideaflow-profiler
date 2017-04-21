@@ -9,7 +9,7 @@ import { TaskFullDetail } from '../../models/taskFullDetail';
 
 @Injectable()
 export class TaskService {
-  private apiUrl = 'http://ideaflowdx.openmastery.org';
+  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: Http ){
 

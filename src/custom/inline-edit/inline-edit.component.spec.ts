@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import {InlineEditComponent, InlineEdit} from './inline-edit.component';
+import {InlineEditComponent} from './inline-edit.component';
 
-describe('InlineEdit', () => {
-  let component: InlineEdit;
-  let fixture: ComponentFixture<InlineEdit>;
+describe('InlineEditComponent', () => {
+  let component: InlineEditComponent;
+  let fixture: ComponentFixture<InlineEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InlineEdit ]
+      declarations: [ InlineEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InlineEdit);
+    fixture = TestBed.createComponent(InlineEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

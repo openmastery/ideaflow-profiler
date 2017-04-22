@@ -32,6 +32,7 @@ import {
   RequestOptionsProvider,
   GlossaryService,
   TaskService,
+  SearchService,
   FaqService,
 } from '../services';
 import {CapitalizePipe} from "../pipes/capitalizePipe";
@@ -73,7 +74,7 @@ import {TermsComponent} from "../views/terms/terms.component";
     Ng2GoogleChartsModule,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider, TaskService, GlossaryService, FaqService],
+  providers: [FaqService, GlossaryService, RequestOptionsProvider, SearchService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 import {Subject} from 'rxjs/Subject';
 import {Task} from '../../models/task';
 import {TaskFullDetail} from '../../models/taskFullDetail';
-import {TaskService} from '../../services'
+import {TaskService, SearchService} from '../../services'
 import {ActivatedRoute} from '@angular/router';
 import {Router} from '@angular/router';
 import {Timeline} from "../../models/taskDetail/timeline";
@@ -36,14 +36,17 @@ export class TaskComponent implements OnInit {
   private timelineBreakdown: string = 'haystacks';
 
 
+  private query: string;
+  private searchResults: Task[];
+  private searchError: string;
 
   // <!--//nav here, that sets a ng model object with a flag based on the active selection-->
   //   <!--//the activeFullPath will be the zoom in coordinate, active on all views-->
   //     <!--//toggling across the different views will show group: [Haystacks], [Pain], [Metrics]-->
   //       <!--//if only one, zoom in automatically to the subtask.-->
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
-
+  constructor(private taskService: TaskService, private searchService: SearchService,
+              private route: ActivatedRoute, public router: Router) {
   }
 
   ngOnInit() {
@@ -126,6 +129,14 @@ export class TaskComponent implements OnInit {
     let s = Math.floor(m % 3600 / 60);
 
     return ( (h > 0 ? h + "h " : "") + (m < 10 ? "0" : "") + m + "m "); //+ (s < 10 ? "0" : "") + s + "s")
+  }
+
+  search(query: string) {
+    this.searchService.searchTasks(query.split(' '))
+      .subscribe(
+        tasks => this.searchResults = tasks,
+        error => this.searchError = error,
+      );
   }
 
 }

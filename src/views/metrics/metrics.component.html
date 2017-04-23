@@ -1,87 +1,121 @@
 <main>
+<main>
 
-  <main>
 
-    <md-card>
-      <header>
-        <main>
-          Task Summary
-        </main>
-        <aside>
-          Duration: {{formatDuration(taskDetail?.timeline?.durationInSeconds)}}
-        </aside>
-      </header>
+  <md-card>
+    <header>
       <main>
-
-        <legend>
-          <ul>
-            <li class="LEARNING">
-              <i class="material-icons">lens</i>
-              <label>LEARNING</label>
-            </li>
-            <li class="PROGRESS">
-              <i class="material-icons">lens</i>
-              <label>PROGRESS</label>
-            </li>
-            <li class="TROUBLESHOOTING">
-              <i class="material-icons">lens</i>
-              <label>TROUBLESHOOTING</label>
-            </li>
-          </ul>
-        </legend>
-
-        <figure>
-          <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity > 0"
-                [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity + '%'"
-                class="LEARNING"
-                [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
-
-          <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity > 0"
-                [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
-                class="PROGRESS"
-                [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
-
-          <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0"
-                [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
-                class="TROUBLESHOOTING"
-                [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
-
-        </figure>
-
-        <table>
-          <tr>
-            <td>
-              <i class="material-icons">access_time</i>
-            </td>
-            <td>
-              START TIME
-            </td>
-            <td>
-              {{taskDetail?.ideaFlowStory?.position | date:'medium'}}
-            </td>
-          </tr>
-          <tr *ngFor="let metric of taskDetail?.ideaFlowStory?.allMetrics">
-            <td>
-              <i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>
-              <i class="material-icons" *ngIf="metric.type === 'MAX_HAYSTACK_SIZE'">timelapse</i>
-              <i class="material-icons" *ngIf="metric.type === 'AVG_HUMAN_CYCLE_RATIOS'">account_circle</i>
-              <i class="material-icons" *ngIf="metric.type === 'MAX_EXPERIMENT_CYCLES'">settings_backup_restore</i>
-              <i class="material-icons" *ngIf="metric.type === 'WTFS_PER_DAY'">error</i>
-            </td>
-            <td>
-              {{metric.type}}
-            </td>
-            <td *ngIf="metric.valueType === 'DurationInSeconds'">
-              {{formatDuration(metric.value)}}
-            </td>
-            <td *ngIf="metric.valueType === 'Double'">
-              {{metric.value}}
-            </td>
-          </tr>
-        </table>
-
+        Task Summary Metrics
       </main>
-    </md-card>
+      <aside>
+        Duration: {{formatDuration(taskDetail?.timeline?.durationInSeconds)}}
+      </aside>
+    </header>
+    <main>
 
-  </main>
+      <legend>
+        <ul>
+          <li class="LEARNING">
+            <i class="material-icons">lens</i>
+            <label>LEARNING</label>
+          </li>
+          <li class="PROGRESS">
+            <i class="material-icons">lens</i>
+            <label>PROGRESS</label>
+          </li>
+          <li class="TROUBLESHOOTING">
+            <i class="material-icons">lens</i>
+            <label>TROUBLESHOOTING</label>
+          </li>
+        </ul>
+      </legend>
+
+      <figure>
+        <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity > 0"
+              [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.percentCapacity + '%'"
+              class="LEARNING"
+              [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.LEARNING.durationInSeconds)"></time>
+
+        <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity > 0"
+              [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.percentCapacity+ '%'"
+              class="PROGRESS"
+              [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.PROGRESS.durationInSeconds)"></time>
+
+        <time *ngIf="taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity > 0"
+              [style.width]="taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.percentCapacity+ '%'"
+              class="TROUBLESHOOTING"
+              [attr.percent]="formatDuration(taskDetail?.ideaFlowStory?.capacityDistribution?.TROUBLESHOOTING.durationInSeconds)"></time>
+
+      </figure>
+
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons">access_time</i>
+          </td>
+          <td>
+            START TIME
+          </td>
+          <td>
+            {{taskDetail?.ideaFlowStory?.position | date:'medium'}}
+          </td>
+        </tr>
+        <tr *ngFor="let metric of taskDetail?.ideaFlowStory?.allMetrics">
+          <td>
+            <i class="material-icons" *ngIf="metric.type === 'MAX_RESOLUTION_TIME'">timelapse</i>
+            <i class="material-icons" *ngIf="metric.type === 'MAX_HAYSTACK_SIZE'">timelapse</i>
+            <i class="material-icons" *ngIf="metric.type === 'AVG_HUMAN_CYCLE_RATIOS'">account_circle</i>
+            <i class="material-icons" *ngIf="metric.type === 'MAX_EXPERIMENT_CYCLES'">settings_backup_restore</i>
+            <i class="material-icons" *ngIf="metric.type === 'WTFS_PER_DAY'">error</i>
+          </td>
+          <td>
+            {{metric.type}}
+          </td>
+          <td *ngIf="metric.valueType === 'DurationInSeconds'">
+            {{formatDuration(metric.value)}}
+          </td>
+          <td *ngIf="metric.valueType === 'Double'">
+            {{metric.value}}
+          </td>
+        </tr>
+      </table>
+
+    </main>
+  </md-card>
+
+  <md-card *ngIf="painChartData">
+    <header>
+      <main>
+        Pain Metrics
+      </main>
+      <aside>
+        Total: {{formatDuration(totalPain)}}
+      </aside>
+    </header>
+    <main>
+
+      <google-chart [data]="painChartData"></google-chart>
+
+
+    </main>
+  </md-card>
+
+  <md-card *ngIf="learningChartData">
+    <header>
+      <main>
+        Learning Metrics
+      </main>
+      <aside>
+        Total: {{formatDuration(totalLearning)}}
+      </aside>
+    </header>
+    <main>
+
+      <google-chart [data]="learningChartData"></google-chart>
+
+
+    </main>
+  </md-card>
+
+</main>
 </main>

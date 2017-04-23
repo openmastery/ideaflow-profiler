@@ -9,12 +9,11 @@ import { TaskFullDetail } from '../../models/taskFullDetail';
 
 @Injectable()
 export class TaskService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'http://ideaflowdx.openmastery.org';
 
   constructor(private http: Http ){
 
   }
-
 
   updateEvent(eventPath, jsonPatch) {
     let headers = new Headers({'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef', 'Content-Type': 'application/json'});

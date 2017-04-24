@@ -27,7 +27,7 @@
             (mouseover)="updateCursorPosition(subtask.relativePositionInSeconds, subtask.relativePath)">
           <td>
             <i *ngIf="subtask.troubleshootingJourneys?.length > 0"
-               [class]="subtask.isExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
+               [class]="subtask.wtfsExpanded? 'material-icons rotate-90': 'material-icons'">play_arrow</i>
           </td>
           <td>
             {{formatRelative(subtask.relativePositionInSeconds)}}
@@ -42,7 +42,7 @@
           <td>{{formatShortDuration(subtask.durationInSeconds)}}</td>
         </tr>
 
-        <ng-container *ngIf="subtask.isExpanded">
+        <ng-container *ngIf="subtask.wtfsExpanded && subtask.troubleshootingJourneys?.length > 0">
           <tr>
             <td colspan="6">
               <ng-container *ngFor=" let journey of subtask.troubleshootingJourneys; let j = index;">

@@ -23,6 +23,8 @@ export class SubTask {
 
         public haystacks: Array<Haystack>,
         public flatHistory: Array<any>,
+        public wtfsExpanded: boolean,
         public isExpanded: boolean
-    ){}
+
+){}
 }

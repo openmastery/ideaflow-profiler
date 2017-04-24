@@ -187,7 +187,9 @@ export class WtfsComponent implements OnInit {
 
   onSaveFaq(eventPath, editValue) {
     console.log("Handle save faq!" +eventPath+':'+ editValue);
-    let eventPatch = { faq : editValue };
+    let eventPatch = { faq : editValue.srcElement.value };
+
+    console.log(eventPatch);
 
     this.taskService.updateEvent(eventPath, eventPatch)
       .subscribe(
@@ -198,10 +200,10 @@ export class WtfsComponent implements OnInit {
 
   toggleExpanded(toggleable, children) {
     //if (children.length > 0) {
-      if (toggleable.isExpanded == true) {
-        toggleable.isExpanded = false;
+      if (toggleable.wtfsExpanded == true) {
+        toggleable.wtfsExpanded = false;
       } else {
-        toggleable.isExpanded = true;
+        toggleable.wtfsExpanded = true;
       }
     //}
   }

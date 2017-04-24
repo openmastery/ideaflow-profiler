@@ -90,7 +90,7 @@ export class MetricsComponent implements OnInit {
 
         let hashtags = this.extractHashTagsFromJourney(journey);
         console.log("hashtags!"+hashtags);
-        
+
         if (hashtags.size > 0) {
           this.totalPain += journey.durationInSeconds;
         }

@@ -35,7 +35,8 @@
       </main>
     </md-card>
 
-    <md-card style="height:400px; overflow-y: auto">
+    <md-card style="height:400px; overflow-y: auto"
+             *ngIf="timelineBreakdown == 'haystacks' || timelineBreakdown == 'wtfs'">
 
       <app-haystack *ngIf="timelineBreakdown == 'haystacks'"
                     [taskId]="taskDetail?.task?.id"
@@ -55,14 +56,15 @@
                     (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
                     (cursorUpdated)="handleCursorUpdated($event)"></app-wtfs>
 
-      <app-metrics *ngIf="timelineBreakdown == 'metrics'"
-                    [taskId]="taskDetail?.task?.id"
-                    [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                    [activeSubtask]="activeSubtask"
-                    [taskDetail]="taskDetail"
-                    (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
-
     </md-card>
+
+    <app-metrics *ngIf="timelineBreakdown == 'metrics'"
+                 [taskId]="taskDetail?.task?.id"
+                 [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
+                 [activeSubtask]="activeSubtask"
+                 [taskDetail]="taskDetail"
+                 (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
+
 
     <!--<md-tab-group>-->
     <!--<md-tab label="Haystacks">-->

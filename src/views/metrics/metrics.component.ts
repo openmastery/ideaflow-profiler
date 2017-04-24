@@ -84,11 +84,16 @@ export class MetricsComponent implements OnInit {
   drawPainTable() {
     let durationByTag: Map<string, number> = new Map<string, number>();
 
+    this.totalPain = 0;
     for (let subtask of this.taskDetail.ideaFlowStory.subtasks) {
       for (let journey of subtask.troubleshootingJourneys) {
 
         let hashtags = this.extractHashTagsFromJourney(journey);
         console.log("hashtags!"+hashtags);
+        
+        if (hashtags.size > 0) {
+          this.totalPain += journey.durationInSeconds;
+        }
 
         hashtags.forEach((hashtag: string) => {
           console.log("hashtag" + hashtag);
@@ -101,14 +106,13 @@ export class MetricsComponent implements OnInit {
           durationByTag.set(hashtag, painDuration);
         });
 
-        this.totalPain = 0;
+
         let painTable = [];
 
         painTable.push(['ContextTag', 'Pain (minutes)']);
 
         durationByTag.forEach((value: number, key: string) => {
           painTable.push([key, value / 60]);
-          this.totalPain += value;
         });
 
         this.sortTableDescending(painTable);
@@ -129,22 +133,6 @@ export class MetricsComponent implements OnInit {
           this.painChartData = null;
         }
 
-        // this.taskDetail.subtaskTimelines.forEach((timeline, index) => {
-        //   console.log("hello!");
-        //   for (let band of timeline.ideaFlowBands) {
-        //     if (band.type == "LEARNING") {
-        //       let learningDuration = durationBySubtask.get(index);
-        //       if (learningDuration) {
-        //         learningDuration += band.durationInSeconds;
-        //       } else {
-        //         learningDuration = band.durationInSeconds;
-        //       }
-        //       console.log("durationBySubtask [" + index + ", " + learningDuration + "]");
-        //       durationBySubtask.set(index, learningDuration);
-        //     }
-        //   }
-        //
-        // });
       }
     }
   }

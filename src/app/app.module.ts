@@ -37,6 +37,7 @@ import {
 import {CapitalizePipe} from "../pipes/capitalizePipe";
 import {InlineEditComponent} from "../custom/inline-edit/inline-edit.component";
 import {WtfsComponent} from "../views/wtfs/wtfs.component";
+import {TermsComponent} from "../views/terms/terms.component";
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import {WtfsComponent} from "../views/wtfs/wtfs.component";
     HaystackComponent,
     MetricsComponent,
     WtfsComponent,
+    TermsComponent,
     CapitalizePipe ,
     InlineEditComponent
 ],

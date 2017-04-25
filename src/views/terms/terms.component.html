@@ -1,0 +1,17 @@
+
+    <table #terms class="mdl-data-table highlight" *ngIf="glossary">
+        <tr *ngFor="let definition of glossary; let i = index;">
+          <td>{{definition.name}}</td>
+
+          <td style="text-align: left">
+            <md-input-container class="example-full-width">
+
+
+              <input md-input (blur)="onSaveTerm(definition)" [(ngModel)]="definition.description"
+                     placeholder="" value="{{definition.description}}" size="70">
+
+            </md-input-container>
+          </td>
+        </tr>
+    </table>
+

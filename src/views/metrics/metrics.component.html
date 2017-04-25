@@ -96,6 +96,9 @@
 
       <google-chart [data]="painChartData"></google-chart>
 
+      <h2>Pain Tags</h2>
+
+      <app-terms [taskId]="taskId" [hashtags]="painTags"></app-terms>
 
     </main>
   </md-card>
@@ -113,7 +116,9 @@
 
       <google-chart [data]="learningChartData"></google-chart>
 
+      <h2>Context Tags</h2>
 
+      <app-terms [taskId]="taskId" [hashtags]="contextTags"></app-terms>
     </main>
   </md-card>
 

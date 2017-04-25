@@ -30,7 +30,7 @@ export class MetricsComponent implements OnInit {
   @Input() private subtasks: Array<SubTask>;
   @Input() private activeSubtask: SubTask;
 
-  @Input() private taskId: string;
+  @Input() private taskId: number;
 
   @Output() activeSubtaskUpdated = new EventEmitter();
 
@@ -45,6 +45,9 @@ export class MetricsComponent implements OnInit {
   public painChartData;
 
   private learningChartData;
+
+  private painTags: Array<string>;
+  private contextTags: Array<string>;
 
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
@@ -108,11 +111,13 @@ export class MetricsComponent implements OnInit {
 
 
         let painTable = [];
+        this.painTags = [];
 
         painTable.push(['ContextTag', 'Pain (minutes)']);
 
         durationByTag.forEach((value: number, key: string) => {
           painTable.push([key, value / 60]);
+          this.painTags.push(key.toLowerCase());
         });
 
         this.sortTableDescending(painTable);
@@ -158,6 +163,7 @@ export class MetricsComponent implements OnInit {
     let durationByTag = this.totalDurationsByTag(durationBySubtask);
 
     let learningTable = [];
+    this.contextTags = [];
 
     learningTable.push(['ContextTag', 'Learning (minutes)']);
 
@@ -165,6 +171,7 @@ export class MetricsComponent implements OnInit {
 
     durationByTag.forEach((value: number, key: string) => {
       learningTable.push([key, value / 60]);
+      this.contextTags.push(key.toLowerCase());
       this.totalLearning += value;
     });
 

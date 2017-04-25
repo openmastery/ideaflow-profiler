@@ -30,6 +30,7 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
   @Input() type: string = 'text'; // The type of input element
   @Input() required: boolean = false; // Is input requried?
   @Input() disabled: boolean = false; // Is input disabled?
+  @Input() forceEdit: boolean;
 
   @Output() onSave: EventEmitter<any> = new EventEmitter();
 
@@ -38,6 +39,7 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
   private editing: boolean = false; // Is Component in edit mode?
   public onChange: any = Function.prototype; // Trascend the onChange event
   public onTouched: any = Function.prototype; // Trascend the onTouch event
+
 
   // Control Value Accessors for ngModel
   get value(): any {
@@ -52,6 +54,16 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
   }
 
   constructor(element: ElementRef, private _renderer: Renderer) {
+  }
+
+
+  ngOnChanges() {
+    console.log("inline-edit");
+    if (this.forceEdit) {
+      console.log("force edit");
+      this.editing = true;
+      this.forceEdit = false;
+    }
   }
 
   // Required for ControlValueAccessor interface

@@ -9,7 +9,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class AppComponent {
   public navLinks = [
     "home",
-    "glossary",
-    "faq"
+    "glossary"
   ]
 }

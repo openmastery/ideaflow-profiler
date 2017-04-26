@@ -34,6 +34,19 @@ export class GlossaryComponent implements OnInit {
       });
   }
 
+  onSaveTerm(definition) {
+    console.log("Handle save!" +definition.description);
+    if (definition.description) {
+      this.glossaryService.updateTerm(definition)
+        .subscribe(
+          taskDetail => console.log('happiness!'),
+          error => console.log(error)
+        );
+    }
+
+  }
+
+
   private getTaskDefinitions(taskId, tag) {
     this.glossaryService.getTaskDefinitions(taskId)
       .subscribe(

@@ -8,7 +8,7 @@ import {isNullOrUndefined} from "util";
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css'],
+  styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class TimelineComponent implements OnInit, OnChanges {

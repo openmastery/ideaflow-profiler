@@ -16,6 +16,10 @@ app-haystack{
     color: md-contrast($md-deep-purple,500);
     background: md-color($md-deep-purple,500);
     border: solid 1px;
+    &:hover{
+        color: md-contrast($md-deep-purple,300) !important;
+        background: md-color($md-deep-purple,300) !important;
+    }
   }
 
   .pain-event {

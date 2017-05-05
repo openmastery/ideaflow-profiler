@@ -9,47 +9,54 @@
       </nav>
     </main>
     <aside>
-      <md-input-container>
-        <input md-input type="search"/><md-icon>search</md-icon>
-      </md-input-container>
+      <form (keydown.enter)="search(query)">
+        <md-input-container>
+          <input md-input type="search" name="query" [(ngModel)]="query" ngModelOptions="{standalone: true}" placeholder="Search FAQs">
+          <md-icon>search</md-icon>
+        </md-input-container>
+      </form>
     </aside>
   </header>
   <main>
+    <div *ngIf="searchError != null">
+      Error while searching: {{searchError}}.
+      <br> Please try again.
+    </div>
+    <div *ngIf="searchError == null">
+      <table class="mdl-data-table highlight">
+        <thead>
+          <tr>
+            <th colspan="2" (click)="sortGlossary(glossary,'description')"><button md-button>Story Point</button></th>
+            <th (click)="sortGlossary(glossary,'taskPainInSeconds')"><button md-button>Task Pain</button></th>
+            <th (click)="sortGlossary(glossary,'journeyPainInSeconds')"><button md-button>Session Pain</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let faq of faqs; let i = index;" (click)="goToFaq(faq.fullPath)">
+            <td>
+              <i class="material-icons" style="background-color: red" *ngIf="faq.faqType === 'PAIN'">timelapse</i>
+              <i class="material-icons" style="background-color: blueviolet" *ngIf="faq.faqType === 'AWESOME'">timelapse</i>
+            </td>
+            <td>
+              <h4>{{faq.faqType === 'PAIN'? 'WTF?!' : 'YAY!'}}: {{faq.eventDescription}}</h4>
+              <p> {{faq.faqAnnotation}}</p>
+
+              <p><i> {{faq.position | date: 'MMM dd yyyy'}} </i>
+                <span *ngFor="let contextTag of faq.contextTags">
+                <label>{{contextTag}}</label>
+              </span>
+                <span color="red" *ngFor="let painTag of faq.painTags">
+                <label>{{painTag}}</label>
+              </span>
+              </p>
 
 
-    <table class="mdl-data-table highlight">
-      <thead>
-      <tr>
-        <th colspan="2" (click)="sortGlossary(glossary,'description')"><button md-button>Story Point</button></th>
-        <th (click)="sortGlossary(glossary,'taskPainInSeconds')"><button md-button>Task Pain</button></th>
-        <th (click)="sortGlossary(glossary,'journeyPainInSeconds')"><button md-button>Session Pain</button></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let faq of faqs; let i = index;" (click)="goToFaq(faq.fullPath)">
-        <td>
-          <i class="material-icons" style="background-color: red" *ngIf="faq.faqType === 'PAIN'">timelapse</i>
-          <i class="material-icons" style="background-color: blueviolet"*ngIf="faq.faqType === 'AWESOME'">timelapse</i>
-        </td>
-        <td>
-          <h4>{{faq.faqType === 'PAIN'? 'WTF?!' : 'YAY!'}}: {{faq.eventDescription}}</h4>
-          <p> {{faq.faqAnnotation}}</p>
+              <td>{{faq.taskPainInSeconds | amDuration:'seconds'}}</td>
 
-          <p><i> {{faq.position | date: 'MMM dd yyyy'}} </i>
-            <span *ngFor="let contextTag of faq.contextTags">
-              <label>{{contextTag}}</label>
-            </span>
-            <span color="red" *ngFor="let painTag of faq.painTags">
-              <label>{{painTag}}</label>
-            </span>
-          </p>
-
-
-        <td>{{faq.taskPainInSeconds | amDuration:'seconds'}}</td>
-
-        <td>{{faq.journeyPainInSeconds | amDuration:'seconds' }}</td>
-      </tr>
-      </tbody>
-    </table>
+              <td>{{faq.journeyPainInSeconds | amDuration:'seconds' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </main>

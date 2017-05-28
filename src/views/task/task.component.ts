@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 import {Subject} from 'rxjs/Subject';
 import {Task} from '../../models/task';
 import {TaskFullDetail} from '../../models/taskFullDetail';
-import {TaskService} from '../../services'
+import {TaskService, SearchService} from '../../services'
 import {ActivatedRoute} from '@angular/router';
 import {Router} from '@angular/router';
 import {Timeline} from "../../models/taskDetail/timeline";
@@ -35,15 +35,18 @@ export class TaskComponent implements OnInit {
   private activeCursor: any;
   private timelineBreakdown: string = 'haystacks';
 
-
+  private searchResults: Task[];
+  private query = '';
+  private lastQuery = '';
+  private searchError: string;
 
   // <!--//nav here, that sets a ng model object with a flag based on the active selection-->
   //   <!--//the activeFullPath will be the zoom in coordinate, active on all views-->
   //     <!--//toggling across the different views will show group: [Haystacks], [Pain], [Metrics]-->
   //       <!--//if only one, zoom in automatically to the subtask.-->
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
-
+  constructor(private taskService: TaskService, private searchService: SearchService,
+              private route: ActivatedRoute, public router: Router) {
   }
 
   ngOnInit() {
@@ -53,6 +56,41 @@ export class TaskComponent implements OnInit {
 
     this.initTaskDetails(this.id);
 
+  }
+
+  getMore(){
+    console.log("getMore()");
+    // this.taskService.getMoreTasks(this.project, this.pageNumber)
+    //   .subscribe(
+    //     tasks => this.setTasks(tasks),
+    //     error =>  this.errorMessage = <any>error);
+  }
+
+  private sortTasks(list,property){
+    list.sort(function(a, b) {
+      var nameA = a[property];
+      var nameB = b[property];
+      nameA = (typeof nameA === 'string') ? nameA.toUpperCase() : nameA;
+      nameB = (typeof nameB === 'string') ? nameB.toUpperCase() : nameB;
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+    return list;
+  }
+
+  goToTask(task) {
+    this.searchResults = null;
+
+    if(task.hasOwnProperty('id')){
+      this.router.navigate(['/task/'+task.id]);
+    }
   }
 
   initTaskDetails(taskId) {
@@ -126,6 +164,32 @@ export class TaskComponent implements OnInit {
     let s = Math.floor(m % 3600 / 60);
 
     return ( (h > 0 ? h + "h " : "") + (m < 10 ? "0" : "") + m + "m "); //+ (s < 10 ? "0" : "") + s + "s")
+  }
+
+  private search(query: string) {
+    this.lastQuery = String(query);
+    this.searchError = null;
+
+    if (query.trim().length === 0) {
+      this.searchResults = null;
+      return;
+    }
+
+    this.searchService.searchTasks(query.split(' '))
+      .subscribe(
+        tasks => this.searchResults = tasks,
+        error => {
+          this.searchError = error;
+          this.searchResults = null;
+        },
+      );
+  }
+
+  private showAllIfEmpty(query) {
+    if (query.trim().length === 0) {
+      this.searchError = null;
+      this.searchResults = null;
+    }
   }
 
 }

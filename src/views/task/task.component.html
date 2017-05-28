@@ -4,66 +4,79 @@
       <h1>IdeaFlow Timeline</h1>
     </main>
     <aside>
-      <md-input-container>
-        <input md-input type="search"/>
-        <md-icon>search</md-icon>
-      </md-input-container>
+      <form (keyup.enter)="search(query)" (keyup)="showAllIfEmpty(query)">
+        <md-input-container>
+          <input md-input type="search" name="query" [(ngModel)]="query" ngModelOptions="{standalone: true}" placeholder="Search Tasks by #tag">
+          <md-icon>search</md-icon>
+        </md-input-container>
+      </form>
     </aside>
   </header>
   <main>
-    <table style="margin:0; padding:0;">
-      <tr>
-        <td style="margin:0; padding:0;">
-          <h2>
-            {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
-          </h2>
-        </td>
-        <td style="text-align: right; margin:0; padding:0;">
-          <md-select [(ngModel)]="timelineBreakdown" (ngModelChange)="switchBreakdownType($event)">
-            <md-option value="haystacks">Haystacks</md-option>
-            <md-option value="wtfs">WTFs</md-option>
-            <md-option value="metrics">Metrics</md-option>
+    <div *ngIf="searchResults && searchResults.length === 0">
+      No results found for "{{lastQuery}}".
+    </div>
+    <div *ngIf="searchError">
+      Error while searching: {{searchError}}.
+      <br> Please try again.
+    </div>
+    <div *ngIf="searchResults && searchResults.length > 0">
+      <table class="mdl-data-table highlight" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="getMore()" *ngIf="searchResults">
+        <thead>
+          <tr>
+            <th (click)="sortTasks(searchResults, 'id')"><button md-button>IFM</button></th>
+            <th (click)="sortTasks(searchResults, 'project')"><button md-button>Project</button></th>
+            <th (click)="sortTasks(searchResults, 'name')"><button md-button>TaskId</button></th>
+            <th (click)="sortTasks(searchResults, 'description')"><button md-button>Description</button></th>
+            <th (click)="sortTasks(searchResults, 'modifyDate')"><button md-button>Most Recent Activity</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of searchResults; let i = index;" (click)="goToTask(task)">
+            <td>{{task.id}}</td>
+            <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
+            <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
+            <td>{{task.name}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!searchResults || searchResults.length === 0">
+      <table style="margin:0; padding:0;">
+        <tr>
+          <td style="margin:0; padding:0;">
+            <h2>
+              {{taskDetail?.task?.name}} - {{taskDetail?.task?.description}}
+            </h2>
+          </td>
+          <td style="text-align: right; margin:0; padding:0;">
+            <md-select [(ngModel)]="timelineBreakdown" (ngModelChange)="switchBreakdownType($event)">
+              <md-option value="haystacks">Haystacks</md-option>
+              <md-option value="wtfs">WTFs</md-option>
+              <md-option value="metrics">Metrics</md-option>
 
-          </md-select>
-        </td>
-      </tr>
-    </table>
-    <md-card>
-      <main>
-        <app-timeline *ngIf="activeTimeline" [activeTimeline]="activeTimeline"
-                      [cursorPosition]="activeCursor"></app-timeline>
-      </main>
-    </md-card>
+            </md-select>
+          </td>
+        </tr>
+      </table>
+      <md-card>
+        <main>
+          <app-timeline *ngIf="activeTimeline" [activeTimeline]="activeTimeline" [cursorPosition]="activeCursor"></app-timeline>
+        </main>
+      </md-card>
 
-    <md-card style="height:400px; overflow-y: auto"
-             *ngIf="timelineBreakdown == 'haystacks' || timelineBreakdown == 'wtfs'">
+      <md-card style="height:400px; overflow-y: auto" *ngIf="timelineBreakdown == 'haystacks' || timelineBreakdown == 'wtfs'">
 
-      <app-haystack *ngIf="timelineBreakdown == 'haystacks'"
-                    [taskId]="taskDetail?.task?.id"
-                    [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                    [haystacks]="taskDetail?.haystacks"
-                    [activeSubtask]="activeSubtask"
-                    [timelineBreakdown]="timelineBreakdown"
-                    (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
-                    (cursorUpdated)="handleCursorUpdated($event)"></app-haystack>
+        <app-haystack *ngIf="timelineBreakdown == 'haystacks'" [taskId]="taskDetail?.task?.id" [subtasks]="taskDetail?.ideaFlowStory?.subtasks" [haystacks]="taskDetail?.haystacks" [activeSubtask]="activeSubtask" [timelineBreakdown]="timelineBreakdown" (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)" (cursorUpdated)="handleCursorUpdated($event)"></app-haystack>
 
-      <app-wtfs *ngIf="timelineBreakdown == 'wtfs'"
-                    [taskId]="taskDetail?.task?.id"
-                    [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                    [haystacks]="taskDetail?.haystacks"
-                    [activeSubtask]="activeSubtask"
-                    [timelineBreakdown]="timelineBreakdown"
-                    (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"
-                    (cursorUpdated)="handleCursorUpdated($event)"></app-wtfs>
+        <app-wtfs *ngIf="timelineBreakdown == 'wtfs'" [taskId]="taskDetail?.task?.id" [subtasks]="taskDetail?.ideaFlowStory?.subtasks" [haystacks]="taskDetail?.haystacks" [activeSubtask]="activeSubtask" [timelineBreakdown]="timelineBreakdown" (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)" (cursorUpdated)="handleCursorUpdated($event)"></app-wtfs>
 
-    </md-card>
+      </md-card>
 
-    <app-metrics *ngIf="timelineBreakdown == 'metrics'"
-                 [taskId]="taskDetail?.task?.id"
-                 [subtasks]="taskDetail?.ideaFlowStory?.subtasks"
-                 [activeSubtask]="activeSubtask"
-                 [taskDetail]="taskDetail"
-                 (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
+      <app-metrics *ngIf="timelineBreakdown == 'metrics'" [taskId]="taskDetail?.task?.id" [subtasks]="taskDetail?.ideaFlowStory?.subtasks" [activeSubtask]="activeSubtask" [taskDetail]="taskDetail" (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
+    </div>
 
 
     <!--<md-tab-group>-->
@@ -102,4 +115,3 @@
     <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"></app-journey>-->
   </main>
 </main>
-

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MomentModule } from 'angular2-moment/moment.module';
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { AppComponent } from './app.component';
@@ -32,6 +32,7 @@ import {
   RequestOptionsProvider,
   GlossaryService,
   TaskService,
+  SearchService,
   FaqService,
 } from '../services';
 import {CapitalizePipe} from "../pipes/capitalizePipe";
@@ -73,7 +74,7 @@ import {TermsComponent} from "../views/terms/terms.component";
     Ng2GoogleChartsModule,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider, TaskService, GlossaryService, FaqService],
+  providers: [FaqService, GlossaryService, RequestOptionsProvider, SearchService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

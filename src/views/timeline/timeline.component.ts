@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation} from '@angular/core';
 import * as d3 from 'd3';
 
-import * as Kinetic from 'Kinetic';
+import * as Kinetic from 'kinetic';
 import {Timeline} from "../../models/taskDetail/timeline";
 import {isNullOrUndefined} from "util";
 

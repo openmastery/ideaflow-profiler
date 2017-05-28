@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Task } from '../../models/task';
-import { TaskService } from '../../services';
+import { TaskService, SearchService } from '../../services';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +22,14 @@ export class HomeComponent implements OnInit {
   pageNumber: number;
   project: string;
 
-  constructor(private taskService: TaskService,public router: Router) {
-     this.pageNumber = 1;
+  private searchResults: Task[];
+  private query = '';
+  private lastQuery = '';
+  private searchError: string;
+
+  constructor(private taskService: TaskService, private searchService: SearchService,
+              public router: Router) {
+    this.pageNumber = 1;
   }
 
   ngOnInit() {
@@ -78,5 +84,31 @@ export class HomeComponent implements OnInit {
       return 0;
     });
     return list;
+  }
+
+  private search(query: string) {
+    this.lastQuery = String(query);
+    this.searchError = null;
+
+    if (query.trim().length === 0) {
+      this.searchResults = null;
+      return;
+    }
+
+    this.searchService.searchTasks(query.split(' '))
+      .subscribe(
+        tasks => this.searchResults = tasks,
+        error => {
+          this.searchError = error;
+          this.searchResults = null;
+        },
+      );
+  }
+
+  private showAllIfEmpty(query) {
+    if (query.trim().length === 0) {
+      this.searchError = null;
+      this.searchResults = null;
+    }
   }
 }

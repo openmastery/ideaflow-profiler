@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Definition } from '../../models/definition';
-import { GlossaryService } from '../../services';
+import { GlossaryService, SearchService } from '../../services';
 
 @Component({
   selector: 'app-glossary',
@@ -20,8 +20,13 @@ export class GlossaryComponent implements OnInit {
   private glossary: Definition[];
   private errorMessage: string;
 
-  constructor( private glossaryService: GlossaryService, private route: ActivatedRoute, public router: Router ) {
+  private searchResults: Definition[];
+  private query = '';
+  private lastQuery = '';
+  private searchError: string;
 
+  constructor(private glossaryService: GlossaryService, private searchService: SearchService,
+              private route: ActivatedRoute, public router: Router) {
   }
 
   ngOnInit() {
@@ -82,5 +87,31 @@ export class GlossaryComponent implements OnInit {
       return 0;
     });
     return list;
+  }
+
+  private search(query: string) {
+    this.lastQuery = String(query);
+    this.searchError = null;
+
+    if (query.trim().length === 0) {
+      this.searchResults = null;
+      return;
+    }
+
+    this.searchService.searchGlossaryDefinitions(query.split(' '))
+      .subscribe(
+        definitions => this.searchResults = definitions,
+        error => {
+          this.searchError = error;
+          this.searchResults = null;
+        },
+      );
+  }
+
+  private showAllIfEmpty(query) {
+    if (query.trim().length === 0) {
+      this.searchError = null;
+      this.searchResults = null;
+    }
   }
 }

@@ -35,9 +35,9 @@ export class TaskComponent implements OnInit {
   private activeCursor: any;
   private timelineBreakdown: string = 'haystacks';
 
-
-  private query: string;
   private searchResults: Task[];
+  private query = '';
+  private lastQuery = '';
   private searchError: string;
 
   // <!--//nav here, that sets a ng model object with a flag based on the active selection-->
@@ -56,6 +56,41 @@ export class TaskComponent implements OnInit {
 
     this.initTaskDetails(this.id);
 
+  }
+
+  getMore(){
+    console.log("getMore()");
+    // this.taskService.getMoreTasks(this.project, this.pageNumber)
+    //   .subscribe(
+    //     tasks => this.setTasks(tasks),
+    //     error =>  this.errorMessage = <any>error);
+  }
+
+  private sortTasks(list,property){
+    list.sort(function(a, b) {
+      var nameA = a[property];
+      var nameB = b[property];
+      nameA = (typeof nameA === 'string') ? nameA.toUpperCase() : nameA;
+      nameB = (typeof nameB === 'string') ? nameB.toUpperCase() : nameB;
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+    return list;
+  }
+
+  goToTask(task) {
+    this.searchResults = null;
+
+    if(task.hasOwnProperty('id')){
+      this.router.navigate(['/task/'+task.id]);
+    }
   }
 
   initTaskDetails(taskId) {
@@ -131,12 +166,30 @@ export class TaskComponent implements OnInit {
     return ( (h > 0 ? h + "h " : "") + (m < 10 ? "0" : "") + m + "m "); //+ (s < 10 ? "0" : "") + s + "s")
   }
 
-  search(query: string) {
+  private search(query: string) {
+    this.lastQuery = String(query);
+    this.searchError = null;
+
+    if (query.trim().length === 0) {
+      this.searchResults = null;
+      return;
+    }
+
     this.searchService.searchTasks(query.split(' '))
       .subscribe(
         tasks => this.searchResults = tasks,
-        error => this.searchError = error,
+        error => {
+          this.searchError = error;
+          this.searchResults = null;
+        },
       );
+  }
+
+  private showAllIfEmpty(query) {
+    if (query.trim().length === 0) {
+      this.searchError = null;
+      this.searchResults = null;
+    }
   }
 
 }

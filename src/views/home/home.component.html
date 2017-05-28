@@ -9,37 +9,68 @@
       </nav>
     </main>
     <aside>
-      <md-input-container>
-        <input md-input type="search"/><md-icon>search</md-icon>
-      </md-input-container>
+      <form (keyup.enter)="search(query)" (keyup)="showAllIfEmpty(query)">
+        <md-input-container>
+          <input md-input type="search" name="query" [(ngModel)]="query" ngModelOptions="{standalone: true}" placeholder="Search Tasks by #tag">
+          <md-icon>search</md-icon>
+        </md-input-container>
+      </form>
     </aside>
   </header>
   <main>
+    <div *ngIf="searchResults && searchResults.length === 0">
+      No results found for "{{lastQuery}}".
+    </div>
+    <div *ngIf="searchError">
+      Error while searching: {{searchError}}.
+      <br> Please try again.
+    </div>
+    <div *ngIf="searchResults && searchResults.length > 0">
+      <table class="mdl-data-table highlight" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="getMore()" *ngIf="searchResults">
 
-    <table class="mdl-data-table highlight"
-      infinite-scroll
-      [infiniteScrollDistance]="2"
-      [infiniteScrollThrottle]="300"
-      (scrolled)="getMore()" *ngIf="tasks">
+        <thead>
+          <tr>
+            <th (click)="sortTasks(searchResults, 'id')"><button md-button>IFM</button></th>
+            <th (click)="sortTasks(searchResults, 'project')"><button md-button>Project</button></th>
+            <th (click)="sortTasks(searchResults, 'name')"><button md-button>TaskId</button></th>
+            <th (click)="sortTasks(searchResults, 'description')"><button md-button>Description</button></th>
+            <th (click)="sortTasks(searchResults, 'modifyDate')"><button md-button>Most Recent Activity</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of searchResults; let i = index;" (click)="goToTask(task)">
+            <td>{{task.id}}</td>
+            <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
+            <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
+            <td>{{task.name}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!searchResults">
+      <table class="mdl-data-table highlight" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="getMore()" *ngIf="tasks">
 
-      <thead>
-        <tr>
-          <th (click)="sortTasks(tasks,'id')"><button md-button>IFM</button></th>
-          <th (click)="sortTasks(tasks,'project')"><button md-button>Project</button></th>
-          <th (click)="sortTasks(tasks,'name')"><button md-button>TaskId</button></th>
-          <th (click)="sortTasks(tasks,'description')"><button md-button>Description</button></th>
-          <th (click)="sortTasks(tasks,'modifyDate')"><button md-button>Most Recent Activity</button></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
-          <td>{{task.id}}</td>
-          <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
-          <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
-          <td>{{task.name}}</td>
-          <td>{{task.description}}</td>
-          <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
-        </tr>
-      </tbody>
-    </table>
+        <thead>
+          <tr>
+            <th (click)="sortTasks(tasks,'id')"><button md-button>IFM</button></th>
+            <th (click)="sortTasks(tasks,'project')"><button md-button>Project</button></th>
+            <th (click)="sortTasks(tasks,'name')"><button md-button>TaskId</button></th>
+            <th (click)="sortTasks(tasks,'description')"><button md-button>Description</button></th>
+            <th (click)="sortTasks(tasks,'modifyDate')"><button md-button>Most Recent Activity</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
+            <td>{{task.id}}</td>
+            <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
+            <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
+            <td>{{task.name}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>

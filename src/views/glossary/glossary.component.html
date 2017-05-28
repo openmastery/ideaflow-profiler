@@ -9,36 +9,65 @@
       </nav>
     </main>
     <aside>
-      <md-input-container>
-        <input md-input type="search"/><md-icon>search</md-icon>
-      </md-input-container>
+      <form (keyup.enter)="search(query)" (keyup)="showAllIfEmpty(query)">
+        <md-input-container>
+          <input md-input type="search" name="query" [(ngModel)]="query" ngModelOptions="{standalone: true}" placeholder="Search Definitions by #tag">
+          <md-icon>search</md-icon>
+        </md-input-container>
+      </form>
     </aside>
   </header>
   <main>
-    <table class="mdl-data-table highlight" *ngIf="glossary">
-      <thead>
-        <tr>
-          <th (click)="sortGlossary(glossary,'id')"><button md-button>Id</button></th>
-          <th (click)="sortGlossary(glossary,'name')"><button md-button>Name</button></th>
-          <th (click)="sortGlossary(glossary,'description')"><button md-button>Description</button></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let definition of glossary; let i = index;">
-          <td>{{definition.id}}</td>
-          <td>{{definition.name}}</td>
-          <td>
-
-            <md-input-container class="example-full-width">
-
-
-            <input md-input (blur)="onSaveTerm(definition)" [(ngModel)]="definition.description"
-                   placeholder="" value="{{definition.description}}" size="70">
-
-          </md-input-container></td>
-
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="searchResults && searchResults.length === 0">
+      No results found for "{{lastQuery}}".
+    </div>
+    <div *ngIf="searchError">
+      Error while searching: {{searchError}}.
+      <br> Please try again.
+    </div>
+    <div *ngIf="searchResults && searchResults.length > 0">
+      <table class="mdl-data-table highlight" *ngIf="glossary">
+        <thead>
+          <tr>
+            <th (click)="sortGlossary(searchResults, 'id')"><button md-button>Id</button></th>
+            <th (click)="sortGlossary(searchResults, 'name')"><button md-button>Name</button></th>
+            <th (click)="sortGlossary(searchResults, 'description')"><button md-button>Description</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let definition of searchResults; let i = index;">
+            <td>{{definition.id}}</td>
+            <td>{{definition.name}}</td>
+            <td>
+              <md-input-container class="example-full-width">
+                <input md-input (blur)="onSaveTerm(definition)" [(ngModel)]="definition.description" placeholder="" value="{{definition.description}}" size="70">
+              </md-input-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!searchResults">
+      <table class="mdl-data-table highlight" *ngIf="glossary">
+        <thead>
+          <tr>
+            <th (click)="sortGlossary(glossary, 'id')"><button md-button>Id</button></th>
+            <th (click)="sortGlossary(glossary, 'name')"><button md-button>Name</button></th>
+            <th (click)="sortGlossary(glossary, 'description')"><button md-button>Description</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let definition of glossary; let i = index;">
+            <td>{{definition.id}}</td>
+            <td>{{definition.name}}</td>
+            <td>
+              <md-input-container class="example-full-width">
+                <input md-input (blur)="onSaveTerm(definition)" [(ngModel)]="definition.description" placeholder="" value="{{definition.description}}" size="70">
+              </md-input-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </main>

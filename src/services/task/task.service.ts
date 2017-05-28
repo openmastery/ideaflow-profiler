@@ -34,7 +34,7 @@ export class TaskService {
         let params = (projectParam) ? '?project='+projectParam:'';
 
         return this.http
-            .get(this.apiUrl + '/ideaflow/task' + params, options)
+            .get(this.apiUrl + 'ideaflow/task' + params, options)
             .map( response => <Task[]>response.json().contents );
     }
 
@@ -44,7 +44,7 @@ export class TaskService {
         let options = new RequestOptions({headers: headers});
 
         return this.http
-            .get(this.apiUrl + '/ideaflow/timeline/task/' + taskId + '/full', options)
+            .get(this.apiUrl + 'ideaflow/timeline/task/' + taskId + '/full', options)
             .map( response => <TaskFullDetail>response.json());
     }
 

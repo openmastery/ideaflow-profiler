@@ -5,6 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Task } from '../../models/task';
 import { FaqSummary } from '../../models/faqSummary';
+import { Definition } from '../../models/definition';
 
 @Injectable()
 export class SearchService {
@@ -40,5 +41,20 @@ export class SearchService {
 
         return this.http.get(this.apiUrl + 'ideaflow/task', options)
             .map(response => <Task[]>response.json().contents);
+    }
+
+    searchGlossaryDefinitions(searchTerms: string[]): Observable<Definition[]> {
+        const headers = new Headers({ 'X-API-Key': '57f533ed-cafa-494b-8d41-6ef68ef955bb' });
+        const queryString = new URLSearchParams();
+        queryString.paramsMap = new Map();
+        queryString.paramsMap.set('tag', searchTerms);
+
+        const options = new RequestOptions({
+            headers: headers,
+            search: queryString,
+        });
+
+        return this.http.get(this.apiUrl + 'storyweb/glossary', options)
+            .map(response => <Task[]>response.json().definitions);
     }
 }

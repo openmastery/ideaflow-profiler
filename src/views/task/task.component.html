@@ -4,16 +4,23 @@
       <h1>IdeaFlow Timeline</h1>
     </main>
     <aside>
-      <form (keydown.enter)="search(query)">
+      <form (keyup.enter)="search(query)" (keyup)="showAllIfEmpty(query)">
         <md-input-container>
-          <input md-input type="search" name="query" [(ngModel)]="query" ngModelOptions="{standalone: true}" placeholder="Search Tasks">
+          <input md-input type="search" name="query" [(ngModel)]="query" ngModelOptions="{standalone: true}" placeholder="Search Tasks by #tag">
           <md-icon>search</md-icon>
         </md-input-container>
       </form>
     </aside>
   </header>
   <main>
-    <div *ngIf="searchResults != null">
+    <div *ngIf="searchResults && searchResults.length === 0">
+      No results found for "{{lastQuery}}".
+    </div>
+    <div *ngIf="searchError">
+      Error while searching: {{searchError}}.
+      <br> Please try again.
+    </div>
+    <div *ngIf="searchResults && searchResults.length > 0">
       <table class="mdl-data-table highlight" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="getMore()" *ngIf="searchResults">
         <thead>
           <tr>
@@ -27,19 +34,16 @@
         <tbody>
           <tr *ngFor="let task of searchResults; let i = index;" (click)="goToTask(task)">
             <td>{{task.id}}</td>
+            <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
             <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
             <td>{{task.name}}</td>
             <td>{{task.description}}</td>
-            <td>{{task?.modifyDate | amUtc | amCalendar:nextDay }}</td>
+            <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div *ngIf="searchError != null">
-      Error while searching: {{searchError}}.
-      <br> Please try again.
-    </div>
-    <div *ngIf="searchResults == null && searchError == null">
+    <div *ngIf="!searchResults || searchResults.length === 0">
       <table style="margin:0; padding:0;">
         <tr>
           <td style="margin:0; padding:0;">
@@ -72,33 +76,42 @@
       </md-card>
 
       <app-metrics *ngIf="timelineBreakdown == 'metrics'" [taskId]="taskDetail?.task?.id" [subtasks]="taskDetail?.ideaFlowStory?.subtasks" [activeSubtask]="activeSubtask" [taskDetail]="taskDetail" (activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>
-
-
-      <!--<md-tab-group>-->
-      <!--<md-tab label="Haystacks">-->
-
-      <!--</md-tab>-->
-      <!--<md-tab label="WTFs">-->
-      <!--<app-journey [id]="taskDetail?.task?.id"-->
-      <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
-      <!--[activeSubtask]="activeSubtask"-->
-      <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>-->
-      <!--</md-tab>-->
-      <!--<md-tab label="Metrics">-->
-      <!--<app-metrics [id]="taskDetail?.task?.id"-->
-      <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
-      <!--[activeSubtask]="activeSubtask"-->
-      <!--[taskDetail]="taskDetail"-->
-      <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>-->
-      <!--</md-tab>-->
-      <!--</md-tab-group>-->
-
-
-      <!--<div>-->
-      <!--<button *ngFor="let link of panelLinks" >-->
-      <!--<b>{{link}}</b>-->
-      <!--</button>-->
-      <!--</div>-->
     </div>
+
+
+    <!--<md-tab-group>-->
+    <!--<md-tab label="Haystacks">-->
+
+    <!--</md-tab>-->
+    <!--<md-tab label="WTFs">-->
+    <!--<app-journey [id]="taskDetail?.task?.id"-->
+    <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
+    <!--[activeSubtask]="activeSubtask"-->
+    <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-journey>-->
+    <!--</md-tab>-->
+    <!--<md-tab label="Metrics">-->
+    <!--<app-metrics [id]="taskDetail?.task?.id"-->
+    <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"-->
+    <!--[activeSubtask]="activeSubtask"-->
+    <!--[taskDetail]="taskDetail"-->
+    <!--(activeSubtaskUpdated)="handleActiveSubtaskUpdated($event)"></app-metrics>-->
+    <!--</md-tab>-->
+    <!--</md-tab-group>-->
+
+
+    <!--<div>-->
+    <!--<button *ngFor="let link of panelLinks" >-->
+    <!--<b>{{link}}</b>-->
+    <!--</button>-->
+    <!--</div>-->
+
+
+    <!--//nav here, that sets a ng model object with a flag based on the active selection-->
+    <!--//the activeFullPath will be the zoom in coordinate, active on all views-->
+    <!--//toggling across the different views will show group: [Haystacks], [Pain], [Metrics]-->
+    <!--//if only one, zoom in automatically to the subtask.-->
+
+    <!--<app-journey *ngIf="taskDetail?.ideaFlowStory?.subtasks.length > 0" [id]="taskDetail?.task?.id"-->
+    <!--[subtasks]="taskDetail?.ideaFlowStory?.subtasks"></app-journey>-->
   </main>
 </main>

@@ -15,7 +15,9 @@ export class FaqComponent implements OnInit {
   private faqs: FaqSummary[];
   private errorMessage: string;
 
-  private query: string;
+  private searchResults: FaqSummary[];
+  private query = '';
+  private lastQuery = '';
   private searchError: string;
 
   constructor(private faqService: FaqService, private searchService: SearchService,
@@ -43,12 +45,30 @@ export class FaqComponent implements OnInit {
     }
   }
 
-  search(query: string) {
+  private search(query: string) {
+    this.lastQuery = String(query);
+    this.searchError = null;
+
+    if (query.trim().length === 0) {
+      this.searchResults = null;
+      return;
+    }
+
     this.searchService.searchFaqSummaries(query.split(' '))
       .subscribe(
-        faqs => this.faqs = faqs,
-        error => this.searchError = error,
+        faqs => this.searchResults = faqs,
+        error => {
+          this.searchError = error;
+          this.searchResults = null;
+        },
       );
+  }
+
+  private showAllIfEmpty(query) {
+    if (query.trim().length === 0) {
+      this.searchError = null;
+      this.searchResults = null;
+    }
   }
 
 }

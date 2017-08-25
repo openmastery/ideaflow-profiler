@@ -2,3 +2,4 @@ export { RequestOptionsProvider } from './default-request-options/default-reques
 export { TaskService } from './task/task.service';
 export { GlossaryService } from './glossary/glossary.service';
 export { FaqService } from './faq/faq.service';
+export { AccountService } from './account/account.service';

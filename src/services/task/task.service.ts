@@ -16,7 +16,7 @@ export class TaskService {
   }
 
   updateEvent(eventPath, jsonPatch) {
-    let headers = new Headers({'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef', 'Content-Type': 'application/json'});
+    let headers = new Headers({'X-API-Key': '2fe730cb-7b7b-4cf6-8228-0698c457cda8', 'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
     let url = this.apiUrl + "/ideaflow" + eventPath;
@@ -28,7 +28,7 @@ export class TaskService {
 
   getTasks (project): Observable<Task[]> {
     let projectParam = (project) ? project:'';
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': '2fe730cb-7b7b-4cf6-8228-0698c457cda8' });
     let options = new RequestOptions({headers: headers});
     let params = (projectParam) ? '?project='+projectParam:'';
 
@@ -39,7 +39,7 @@ export class TaskService {
 
   getTaskFullDetail (taskId): Observable<TaskFullDetail> {
     let projectParam = (taskId) ? taskId:'';
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': '2fe730cb-7b7b-4cf6-8228-0698c457cda8' });
     let options = new RequestOptions({headers: headers});
 
     return this.http

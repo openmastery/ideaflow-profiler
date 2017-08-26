@@ -3,6 +3,7 @@ import { Headers, Http, BaseRequestOptions, RequestOptions } from '@angular/http
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import Constants from '../../Constants';
 import { FaqSummary } from '../../models/faqSummary';
 
 
@@ -15,7 +16,7 @@ export class FaqService {
   }
 
   getFaqs (): Observable<FaqSummary[]> {
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     let options = new RequestOptions({headers: headers});
 
     return this.http

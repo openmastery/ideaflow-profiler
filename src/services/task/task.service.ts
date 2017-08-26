@@ -3,6 +3,7 @@ import { Headers, Http, BaseRequestOptions, RequestOptions } from '@angular/http
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import Constants from '../../Constants';
 import { Task } from '../../models/task';
 import { TaskFullDetail } from '../../models/taskFullDetail';
 
@@ -16,7 +17,7 @@ export class TaskService {
   }
 
   updateEvent(eventPath, jsonPatch) {
-    let headers = new Headers({'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef', 'Content-Type': 'application/json'});
+    let headers = new Headers({'X-API-Key': Constants.X_API_Key, 'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
     let url = this.apiUrl + "/ideaflow" + eventPath;
@@ -28,7 +29,7 @@ export class TaskService {
 
   getTasks (project): Observable<Task[]> {
     let projectParam = (project) ? project:'';
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     let options = new RequestOptions({headers: headers});
     let params = (projectParam) ? '?project='+projectParam:'';
 
@@ -39,7 +40,7 @@ export class TaskService {
 
   getTaskFullDetail (taskId): Observable<TaskFullDetail> {
     let projectParam = (taskId) ? taskId:'';
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     let options = new RequestOptions({headers: headers});
 
     return this.http

@@ -3,6 +3,7 @@ import { Headers, Http, BaseRequestOptions, RequestOptions } from '@angular/http
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import Constants from '../../Constants';
 import { Definition } from '../../models/definition';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class GlossaryService {
   }
 
   getDefinitions (): Observable<Definition[]> {
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     let options = new RequestOptions({headers: headers});
 
     return this.http.get(this.apiUrl + 'storyweb/glossary', options)
@@ -23,7 +24,7 @@ export class GlossaryService {
 
 
   getTaskDefinitions (taskId): Observable<Definition[]> {
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     let options = new RequestOptions({headers: headers});
 
     return this.http.get(this.apiUrl + 'storyweb/glossary/task/'+taskId, options)
@@ -31,7 +32,7 @@ export class GlossaryService {
   }
 
   updateTerm(definition: Definition) {
-    let headers = new Headers({'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef', 'Content-Type': 'application/json'});
+    let headers = new Headers({'X-API-Key': Constants.X_API_Key, 'Content-Type': 'application/json'});
     var myOptions = new RequestOptions({headers: headers});
 
     let url = this.apiUrl + 'storyweb/glossary/term/id/'+definition.id;
@@ -43,7 +44,7 @@ export class GlossaryService {
 
 
   getAllDefinitions (): Observable<Definition[]> {
-    let headers = new Headers({ 'X-API-Key': 'b4e02226-f96c-4ebc-8c2f-2d2c639948ef' });
+    let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     let options = new RequestOptions({headers: headers});
 
     return this.http.get(this.apiUrl + 'storyweb/glossary', options)

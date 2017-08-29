@@ -26,12 +26,12 @@ import {
 
 import { routing } from './app.routing';
 
-import { Task } from '../models/task';
 
 import {
   RequestOptionsProvider,
   GlossaryService,
   TaskService,
+  UserService,
   FaqService,
 } from '../services';
 import {CapitalizePipe} from "../pipes/capitalizePipe";
@@ -73,7 +73,7 @@ import {TermsComponent} from "../views/terms/terms.component";
     Ng2GoogleChartsModule,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider, TaskService, GlossaryService, FaqService],
+  providers: [RequestOptionsProvider, TaskService, UserService, GlossaryService, FaqService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

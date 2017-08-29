@@ -1,6 +1,6 @@
-import {Developer} from './developer';
+import {User} from './user';
 
-export class TeamLead extends Developer {
+export class TeamLead extends User {
   teamId: number;
 
   constructor(readonly id: number,

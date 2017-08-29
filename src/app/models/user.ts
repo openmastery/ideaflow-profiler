@@ -1,6 +1,6 @@
 import {BaseIdentifiableAuditable} from './base-identifiable-auditable';
 
-export class Developer extends BaseIdentifiableAuditable {
+export class User extends BaseIdentifiableAuditable {
   apiKey: string;
 
   constructor(readonly id: number,

@@ -1,9 +1,9 @@
 import {BaseIdentifiableAuditable} from './base-identifiable-auditable';
-import {Developer} from './developer';
+import {User} from './developer';
 import {TeamLead} from './team-lead';
 
 export class Team extends BaseIdentifiableAuditable {
-  developers: Developer[];
+  developers: User[];
   tealLead: TeamLead;
 
   constructor(readonly id: number,

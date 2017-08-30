@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import Constants from '../../Constants';
-import {Task} from '../../models/task';
-import {TaskFullDetail} from '../../models/taskFullDetail';
 import {User} from '../../app/models/user';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -37,4 +35,5 @@ export class UserService {
       .get(this.apiUrl + '/ideaflow/user', options)
       .map(response => <User[]>response.json().contents);
   }
+
 }

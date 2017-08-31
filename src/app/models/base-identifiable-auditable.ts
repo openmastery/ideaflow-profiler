@@ -1,9 +1,9 @@
 export class BaseIdentifiableAuditable {
-  readonly id: number;
+  readonly id?: number;
   readonly creationDate: Date;
   modificationDate: Date;
 
-  constructor(id: number) {
+  constructor(id?: number) {
     this.creationDate = new Date();
   }
 }

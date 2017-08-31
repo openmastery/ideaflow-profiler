@@ -1,5 +1,5 @@
 import {BaseIdentifiableAuditable} from './base-identifiable-auditable';
-import {User} from './developer';
+import {User} from './user';
 import {TeamLead} from './team-lead';
 
 export class Team extends BaseIdentifiableAuditable {

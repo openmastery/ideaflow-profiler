@@ -10,29 +10,31 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UserService {
   private apiUrl = 'http://ideaflowdx.openmastery.org';
+  private headers = new Headers({'X-API-Key': Constants.X_API_Key, 'Content-Type': 'application/json'});
+  private options = new RequestOptions({headers: this.headers});
 
   constructor(private http: Http) {
 
   }
 
-  newUser(user: User) {
-    const headers = new Headers({'X-API-Key': Constants.X_API_Key, 'Content-Type': 'application/json'});
-    const options = new RequestOptions({headers: headers});
-
-    const url = this.apiUrl + `/ideaflow/user`;
-
+  create(user: User) {
     return this.http
-      .post(url,
+      .post(this.apiUrl + `/ideaflow/user`,
         JSON.stringify(user),
-        options);
+        this.options);
+  }
+
+  save(user: User) {
+    const url = this.apiUrl + `/ideaflow/user/${user.id}`;
+    return this.http
+      .put(url,
+        JSON.stringify(user),
+        this.options);
   }
 
   getUsers(): Observable<User[]> {
-    const headers = new Headers({'X-API-Key': Constants.X_API_Key});
-    const options = new RequestOptions({headers: headers});
-
     return this.http
-      .get(this.apiUrl + '/ideaflow/user', options)
+      .get(this.apiUrl + '/ideaflow/user', this.options)
       .map(response => <User[]>response.json().contents);
   }
 

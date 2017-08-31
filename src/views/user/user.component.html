@@ -1,6 +1,44 @@
-<main>
-  <md-sidenav-container>
-    <md-sidenav mode="side" opened="true">Drawer content</md-sidenav>
-    <div class="my-content">Main content</div>
-  </md-sidenav-container></main>
+<div class="user-form">
+  <md-input-container class="md-icon-float md-block" flex-gt-sm>
+    <label>Name</label>
+    <input md-input
+           id="user-name"
+           type="text"
+           ng-model="user.name"
+           required
+           minlength="2"
+           pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$">
+    <!-- from https://stackoverflow.com/questions/275160/regex-for-names -->
 
+    <div class="md-errors-spacer" [hidden]="name.valid || name.untouched">
+      <div class="md-char-counter" *ngIf="name.errors && name.errors.required">
+        Name is required
+      </div>
+      <div class="md-char-counter" *ngIf="email.errors && email.errors.pattern">
+        Name is invalid
+      </div>
+    </div>
+  </md-input-container>
+
+  <md-input-container class="md-icon-float md-block" flex-gt-sm>
+    <label>Email</label>
+    <input md-input
+           id="user-email"
+           type="text"
+           ng-model=="user.email"
+           required
+           pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$">
+
+    <div class="md-errors-spacer" [hidden]="email.valid || email.untouched">
+      <div class="md-char-counter" *ngIf="email.errors && email.errors.required">
+        Email is required
+      </div>
+      <div class="md-char-counter" *ngIf="email.errors && email.errors.pattern">
+        Email is invalid
+      </div>
+    </div>
+  </md-input-container>
+
+  <button md-raised-button color="primary" *ngIf="isNew" (click)="create()">Create</button>
+  <button md-raised-button color="primary" *ngIf="notNew" (click)="save()">Save</button>
+</div>

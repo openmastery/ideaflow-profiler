@@ -21,7 +21,8 @@ import {
   TimelineComponent,
   JourneyComponent,
   HaystackComponent,
-  MetricsComponent
+  MetricsComponent,
+  UserComponent
 } from '../views';
 
 import { routing } from './app.routing';
@@ -56,6 +57,7 @@ import {TermsComponent} from "../views/terms/terms.component";
     JourneyComponent,
     HaystackComponent,
     MetricsComponent,
+    UserComponent,
     WtfsComponent,
     TermsComponent,
     CapitalizePipe ,

@@ -19,13 +19,13 @@ export class UserService {
 
   create(user: User) {
     return this.http
-      .post(this.apiUrl + `/ideaflow/user`,
+      .post(this.apiUrl + `/user`,
         JSON.stringify(user),
         this.options);
   }
 
   save(user: User) {
-    const url = this.apiUrl + `/ideaflow/user/${user.id}`;
+    const url = this.apiUrl + `/user/${user.id}`;
     return this.http
       .put(url,
         JSON.stringify(user),
@@ -34,8 +34,14 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     return this.http
-      .get(this.apiUrl + '/ideaflow/user', this.options)
+      .get(this.apiUrl + '/user', this.options)
       .map(response => <User[]>response.json().contents);
+  }
+
+  load(id: string): Observable<User> {
+    return this.http
+      .get(this.apiUrl + `/user/${id}`, this.options)
+      .map(response => <User>response.json().contents);
   }
 
 }

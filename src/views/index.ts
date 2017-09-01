@@ -11,4 +11,5 @@ export { TimelineComponent } from './timeline/timeline.component';
 export { JourneyComponent } from './journey/journey.component';
 export { HaystackComponent } from './haystack/haystack.component';
 export { MetricsComponent } from './metrics/metrics.component';
+export { UserComponent } from './user/user.component';
 

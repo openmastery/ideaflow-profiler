@@ -1,42 +1,42 @@
-<div class="user-form">
-  <input mdInput
-         id="user-name"
-         placeholder="name"
-         type="text"
-         [(ngModel)]="user.name"
-         required
-         minlength="2"
-         pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$">
-  <!-- from https://stackoverflow.com/questions/275160/regex-for-names -->
+<form (ngSubmit)="create()" #newUserForm="ngForm">
+  <div class="user-form">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text"
+             class="form-control"
+             id="name"
+             required
+             pattern="[a-zA-Z][a-zA-Z ]+"
+             [(ngModel)]="user.name"
+             name="name"
+             #name="ngModel">
+      <div [hidden]="name.valid || name.pristine"
+           class="alert alert-danger">
+        <div [hidden]="!name.hasError('required')">Name is required</div>
+        <div [hidden]="!name.hasError('pattern')">Only alphabetical characters allowed</div>
+      </div>
+    </div>
 
-  <div class="md-errors-spacer" [hidden]="name.valid || name.untouched">
-    <div class="md-char-counter" *ngIf="name.errors && name.errors.required">
-      Name is required
+    <div class="form-group">
+      <label for="emailaddress">Email</label>
+      <input type="text"
+             class="form-control"
+             id="emailaddress"
+             required
+             [(ngModel)]="user.email"
+             name="email"
+             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+             #email="ngModel">
+      <div [hidden]="email.valid || email.pristine"
+           class="alert alert-danger">
+        <div [hidden]="!email.hasError('required')">Email is required</div>
+        <div [hidden]="!email.hasError('pattern')">Email format should be
+          <small><b>joe@abc.com</b></small>
+        </div>
+      </div>
     </div>
-    <div class="md-char-counter" *ngIf="email.errors && email.errors.pattern">
-      Name is invalid
-    </div>
+
+    <button md-raised-button color="primary" *ngIf="isNew" [disabled]="!newUserForm.form.valid">Create</button>
+    <button md-raised-button color="primary" *ngIf="notNew" (click)="save()">Save</button>
   </div>
-
-  <input mdInput
-         id="user-email"
-         placeholder="email"
-         type="text"
-         [(ngModel)]="user.email"
-         required
-         pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$">
-  <!-- from https://stackoverflow.com/questions/34072092/generic-mail-validator-in-angular2 -->
-
-
-  <div class="md-errors-spacer" [hidden]="email.valid || email.untouched">
-    <div class="md-char-counter" *ngIf="email.errors && email.errors.required">
-      Email is required
-    </div>
-    <div class="md-char-counter" *ngIf="email.errors && email.errors.pattern">
-      Email is invalid
-    </div>
-  </div>
-
-  <button md-raised-button color="primary" *ngIf="isNew" (click)="create()">Create</button>
-  <button md-raised-button color="primary" *ngIf="notNew" (click)="save()">Save</button>
-</div>
+</form>

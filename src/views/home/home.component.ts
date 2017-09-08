@@ -36,16 +36,16 @@ export class HomeComponent implements OnInit {
   getUsers() {
     this.userService.getUsers()
       .subscribe(
-      users => this.setUsers(users),
-      error => {
-        // Remove once the user endpoint is live
-        const users: User[] = [];
-        for (let i = 0; i < 5; i++) {
-          const username = `User ${i}`;
-          users[i] = new User(i, username, username + '@openmastery.org');
-        }
-        this.users = users;
-      });
+        users => this.setUsers(users),
+        error => {
+          // Remove once the user endpoint is live
+          const users: User[] = [];
+          for (let i = 0; i < 5; i++) {
+            const username = `User ${i}`;
+            users[i] = new User(i, username, username + '@openmastery.org');
+          }
+          this.users = users;
+        });
   }
 
   getTasks(project) {
@@ -57,9 +57,12 @@ export class HomeComponent implements OnInit {
   }
 
   goToUserIfms(user) {
-    // TODO: Toast not yet implemented
-    // this.router.navigate([`/task/user???/${user.id}`]);
-  }
+    this.taskService.getTasksForApiKey(user.apiKey)
+      .subscribe(
+        tasks => this.setTasks(tasks),
+        error => this.errorMessage = <any>error
+      );
+  };
 
   goToTask(task) {
     if (task.hasOwnProperty('id')) {
@@ -68,7 +71,7 @@ export class HomeComponent implements OnInit {
   }
 
   private setUsers(response) {
-    this.users = response;
+    this.users = <User[]>response.filter(user => (user.name !== null) && (user.email !== null));
   }
 
   private setTasks(response) {

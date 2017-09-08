@@ -27,6 +27,15 @@ export class TaskService {
       .map(res => res.json());
   }
 
+  getTasksForApiKey (apiKey: string): Observable<Task[]> {
+    const headers = new Headers({ 'X-API-Key': apiKey });
+    const options = new RequestOptions({headers: headers});
+
+    return this.http
+      .get(this.apiUrl + '/ideaflow/task', options)
+      .map( response => <Task[]>response.json().contents );
+  }
+
   getTasks (project): Observable<Task[]> {
     let projectParam = (project) ? project:'';
     let headers = new Headers({ 'X-API-Key': Constants.X_API_Key });

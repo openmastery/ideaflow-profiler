@@ -70,6 +70,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getMore(){
+    console.log('getMore()');
+    // this.taskService.getMoreTasks(this.project, this.pageNumber)
+    //   .subscribe(
+    //     tasks => this.setTasks(tasks),
+    //     error =>  this.errorMessage = <any>error);
+  }
+
   private setUsers(response) {
     this.users = <User[]>response.filter(user => (user.name !== null) && (user.email !== null));
   }

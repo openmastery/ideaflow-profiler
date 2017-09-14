@@ -1,0 +1,10 @@
+$lightPurple: #e0c1fc;
+
+.user {
+  padding: 20px;
+
+  :hover {
+    cursor: pointer;
+    background-color: $lightPurple;
+  }
+}

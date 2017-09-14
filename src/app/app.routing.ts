@@ -26,7 +26,7 @@ const routes: Routes = [
     component: FaqComponent
   },
   {
-    path: 'glossary',
+    path: 'Glossary',
     component: GlossaryComponent
   },
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     component: GlossaryComponent
   },
   {
-    path: 'home',
+    path: 'IdeaFlow',
     component: HomeComponent
   },
   {

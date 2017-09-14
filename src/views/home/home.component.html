@@ -14,7 +14,10 @@
     <md-sidenav-container>
       <md-sidenav class="md-sidenav-left" mode="side" opened="true">
         <ul style="list-style: none;">
-          <li *ngFor="let user of users; let i = index;" (click)="goToUserIfms(user)">
+          <li class="user" (click)="showAllFlows()">
+            <span>All flows</span>
+          </li>
+          <li class="user" *ngFor="let user of users; let i = index;" (click)="goToUserIfms(user)">
             <span>{{user.name}}</span>
           </li>
         </ul>

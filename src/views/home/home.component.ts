@@ -15,6 +15,7 @@ import {UserService} from "../../services/user/user.service";
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
+  allTasks: Task[];
   tasks: Task[];
   users: User[];
   errorMessage: string;
@@ -31,6 +32,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.getTasks('');
     this.getUsers();
+  }
+
+  showAllFlows() {
+    this.tasks = this.allTasks;
   }
 
   getUsers() {
@@ -52,8 +57,13 @@ export class HomeComponent implements OnInit {
     this.project = project;
     this.taskService.getTasks(project)
       .subscribe(
-        tasks => this.setTasks(tasks),
-        error => this.errorMessage = <any>error);
+        tasks => {
+          this.allTasks = tasks;
+          this.tasks = tasks;
+        },
+        error => {
+          this.errorMessage = <any>error
+        });
   }
 
   goToUserIfms(user) {
@@ -70,7 +80,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getMore(){
+  getMore() {
     console.log('getMore()');
     // this.taskService.getMoreTasks(this.project, this.pageNumber)
     //   .subscribe(

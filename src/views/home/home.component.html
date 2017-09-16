@@ -17,7 +17,7 @@
           <li class="user" (click)="showAllFlows()">
             <span>All flows</span>
           </li>
-          <li class="user" *ngFor="let user of users; let i = index;" (click)="goToUserIfms(user)">
+          <li class="user" *ngFor="let user of users" (click)="goToUserIfms(user)">
             <span>{{user.name}}</span>
           </li>
         </ul>
@@ -31,14 +31,11 @@
                (scrolled)="getMore()" *ngIf="tasks">
           <thead>
             <tr>
-              <th (click)="sortTasks(tasks,'id')">
-                <button md-button>IFM</button>
+              <th (click)="sortTasks(tasks,'name')">
+                <button md-button>Task</button>
               </th>
               <th (click)="sortTasks(tasks,'project')">
                 <button md-button>Project</button>
-              </th>
-              <th (click)="sortTasks(tasks,'name')">
-                <button md-button>Task</button>
               </th>
               <th (click)="sortTasks(tasks,'description')">
                 <button md-button>Description</button>
@@ -50,10 +47,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
-              <td>{{task.id}}</td>
               <!--<td><a href="#/project/{{task.project}}">{{task.project}}</a></td>-->
-              <td><a href="#/project/{{task.project}}" #button2 md-button color="accent">{{task.project}}</a></td>
-              <td>{{task.name}}</td>
+              <td><a #button2 md-button color="accent" (click)="goToTask(task)">{{task.name}}</a></td>
+              <td>{{task.project}}</td>
               <td>{{task.description}}</td>
               <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar}}</td>
             </tr>

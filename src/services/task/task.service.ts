@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import Constants from '../../Constants';
 import { Task } from '../../models/task';
 import { TaskFullDetail } from '../../models/taskFullDetail';
+import {User} from "../../app/models/user";
 
 
 @Injectable()
@@ -27,12 +28,12 @@ export class TaskService {
       .map(res => res.json());
   }
 
-  getTasksForApiKey (apiKey: string): Observable<Task[]> {
-    const headers = new Headers({ 'X-API-Key': apiKey });
+  getTasksForUser (user: User): Observable<Task[]> {
+    const headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
     const options = new RequestOptions({headers: headers});
 
     return this.http
-      .get(this.apiUrl + '/ideaflow/task', options)
+      .get(this.apiUrl + '/ideaflow/task/user/'+user.id, options)
       .map( response => <Task[]>response.json().contents );
   }
 

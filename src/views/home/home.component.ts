@@ -43,14 +43,8 @@ export class HomeComponent implements OnInit {
       .subscribe(
         users => this.setUsers(users),
         error => {
-          // Remove once the user endpoint is live
-          const users: User[] = [];
-          for (let i = 0; i < 5; i++) {
-            const username = `User ${i}`;
-            users[i] = new User(i, username, username + '@openmastery.org');
-          }
-          this.users = users;
-        });
+          console.log(error);
+         });
   }
 
   getTasks(project) {
@@ -67,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToUserIfms(user) {
-    this.taskService.getTasksForApiKey(user.apiKey)
+    this.taskService.getTasksForUser(user)
       .subscribe(
         tasks => this.setTasks(tasks),
         error => this.errorMessage = <any>error
@@ -89,7 +83,7 @@ export class HomeComponent implements OnInit {
   }
 
   private setUsers(response) {
-    this.users = <User[]>response.filter(user => (user.name !== null) && (user.email !== null));
+    this.users = <User[]>response;//.filter(user => (user.name !== null) && (user.email !== null));
   }
 
   private setTasks(response) {

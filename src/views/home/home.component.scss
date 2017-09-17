@@ -1,0 +1,13 @@
+$lightPurple: #e0c1fc;
+
+.selectedUser {
+  background-color: $lightPurple;
+}
+
+.user {
+  padding: 20px;
+
+  :hover {
+    cursor: pointer;
+  }
+}

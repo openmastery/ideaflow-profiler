@@ -21,17 +21,18 @@ import {
   TimelineComponent,
   JourneyComponent,
   HaystackComponent,
-  MetricsComponent
+  MetricsComponent,
+  UserComponent
 } from '../views';
 
 import { routing } from './app.routing';
 
-import { Task } from '../models/task';
 
 import {
   RequestOptionsProvider,
   GlossaryService,
   TaskService,
+  UserService,
   FaqService,
 } from '../services';
 import {CapitalizePipe} from "../pipes/capitalizePipe";
@@ -56,6 +57,7 @@ import {TermsComponent} from "../views/terms/terms.component";
     JourneyComponent,
     HaystackComponent,
     MetricsComponent,
+    UserComponent,
     WtfsComponent,
     TermsComponent,
     CapitalizePipe ,
@@ -73,7 +75,7 @@ import {TermsComponent} from "../views/terms/terms.component";
     Ng2GoogleChartsModule,
     MaterialModule.forRoot()
   ],
-  providers: [RequestOptionsProvider, TaskService, GlossaryService, FaqService],
+  providers: [RequestOptionsProvider, TaskService, UserService, GlossaryService, FaqService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

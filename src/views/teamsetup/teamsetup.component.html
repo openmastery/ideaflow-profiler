@@ -1,0 +1,36 @@
+<main>
+  <header>
+    <main>
+      <h1>Recent Idea Flows</h1>
+      <div class="breadcrumb flat"><a href="/#/home">Home</a><a class="active" href="#">{{id}}</a></div>
+    </main>
+    <aside>
+      <md-input-container>
+        <input md-input type="search"/><md-icon>search</md-icon>
+      </md-input-container>
+    </aside>
+  </header>
+  <main>
+
+    <table class="mdl-data-table highlight" *ngIf="tasks">
+      <thead>
+        <tr>
+          <th (click)="sortTasks(tasks,'id')"><button md-button>IFM</button></th>
+          <th (click)="sortTasks(tasks,'project')"><button md-button>Project</button></th>
+          <th (click)="sortTasks(tasks,'name')"><button md-button>TaskId</button></th>
+          <th (click)="sortTasks(tasks,'description')"><button md-button>Description</button></th>
+          <th (click)="sortTasks(tasks,'modifyDate')"><button md-button>Most Recent Activity</button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; let i = index;" (click)="goToTask(task)">
+          <td>{{task.id}}</td>
+          <td>{{task.project}}</td>
+          <td>{{task.name}}</td>
+          <td>{{task.description}}</td>
+          <td>{{task?.modifyDate | date:'d MMMM yyyy hh:mm a' : 'UTC' | amCalendar }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</main>

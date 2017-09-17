@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import * as jQuery from 'jquery';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
@@ -35,6 +36,9 @@ export class HomeComponent implements OnInit {
   }
 
   showAllFlows() {
+    this.removeSelectedUserClasses();
+    const spanForAllFlows = jQuery('span:contains(\'All flows\')');  // Hack - use an I18N string instead
+    spanForAllFlows.addClass('selectedUser');
     this.tasks = this.allTasks;
   }
 
@@ -61,6 +65,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToUserIfms(user) {
+    this.selectUser(user);
     this.taskService.getTasksForUser(user)
       .subscribe(
         tasks => this.setTasks(tasks),
@@ -80,6 +85,17 @@ export class HomeComponent implements OnInit {
     //   .subscribe(
     //     tasks => this.setTasks(tasks),
     //     error =>  this.errorMessage = <any>error);
+  }
+
+  private selectUser(user) {
+    this.removeSelectedUserClasses();
+    const spanForUser = jQuery(`span:contains(${user.name})`);
+    spanForUser.addClass('selectedUser');
+  }
+
+  private removeSelectedUserClasses() {
+    const userSpans = jQuery('#userslist > li > span');
+    userSpans.removeClass('selectedUser');
   }
 
   private setUsers(response) {

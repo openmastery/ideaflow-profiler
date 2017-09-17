@@ -16,7 +16,7 @@
 .classpath
 *.launch
 .settings/
-*.iml
+ideaflow-profiler.iml
 
 # misc
 /.sass-cache

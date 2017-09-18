@@ -1,7 +1,6 @@
 import {Routes, RouterModule} from '@angular/router';
 import {
   LoginComponent,
-  AccountComponent,
   FaqComponent,
   GlossaryComponent,
   HomeComponent,
@@ -9,17 +8,14 @@ import {
   SubtaskComponent,
   TaskComponent
 } from '../views';
-import {UserComponent} from "../views/user/user.component";
+import {UserComponent} from '../views/user/user.component';
+import {TeamSetupComponent} from '../views/teamsetup/teamsetup.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent
-  },
-  {
-    path: 'account',
-    component: AccountComponent
   },
   {
     path: 'faq',
@@ -36,6 +32,10 @@ const routes: Routes = [
   {
     path: 'IdeaFlow',
     component: HomeComponent
+  },
+  {
+    path: 'TeamSetup',
+    component: TeamSetupComponent
   },
   {
     path: 'project/:id',

@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
   }
 
   private setUsers(response) {
-    this.users = <User[]>response;//.filter(user => (user.name !== null) && (user.email !== null));
+    this.users = <User[]>response; // .filter(user => (user.name !== null) && (user.email !== null));
   }
 
   private setTasks(response) {

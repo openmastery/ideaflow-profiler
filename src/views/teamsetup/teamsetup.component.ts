@@ -1,11 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/switchMap';
-import { Task } from '../../models/task';
-import { TaskService } from '../../services';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {UserService} from "../../services/user/user.service";
+import {User} from "../../app/models/user";
 
 @Component({
   selector: 'app-project',
@@ -14,57 +9,34 @@ import { Router } from '@angular/router';
   encapsulation:  ViewEncapsulation.None
 })
 export class TeamSetupComponent implements OnInit {
-  id: string;
-  private sub: any;
+  accountsSetup = false;
+  noAccountsSetup = !this.accountsSetup;
+  editingUser = false;
+  editedUser: User;
+  users: User[];
 
-  tasks: Task[];
-  errorMessage: string;
-
-  constructor(private taskService: TaskService, private route: ActivatedRoute, public router: Router) {
+  constructor(private userService: UserService) {
 
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
-    });
-
-    this.getTasks(this.id);
+    this.userService.getUsers()
+      .subscribe(
+        users => {
+          this.users = users;
+        },
+        error => {
+          console.log(error);
+        });
   }
 
-  getTasks(project) {
-    this.taskService.getTasks(project)
-    .subscribe(
-      tasks => this.setTasks(tasks),
-      error =>  this.errorMessage = <any>error);
+  public createAccounts() {
+    this.accountsSetup = true;
+    this.noAccountsSetup = false;
   }
 
-  goToTask(task) {
-    if (task.hasOwnProperty('id')) {
-      this.router.navigate(['/task/' + task.id]);
-    }
-  }
-
-  private setTasks(response) {
-    this.tasks = response;
-  }
-
-  private sortTasks(list, property) {
-    list.sort(function(a, b) {
-      let nameA = a[property];
-      let nameB = b[property];
-      nameA = (typeof nameA === 'string') ? nameA.toUpperCase() : nameA;
-      nameB = (typeof nameB === 'string') ? nameB.toUpperCase() : nameB;
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-
-      // names must be equal
-      return 0;
-    });
-    return list;
+  public editUser(user: User) {
+    this.editingUser = true;
+    this.editedUser = user;
   }
 }

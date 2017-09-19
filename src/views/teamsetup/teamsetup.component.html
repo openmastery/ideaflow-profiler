@@ -26,8 +26,8 @@
       <md-sidenav class="md-sidenav-left" mode="side" opened="true">
         <section layout="row">
           <span>Account</span>
-          <button md-raised-button ng-click="addUser()" ><span style="font-size: x-large">+</span></button>
-          <button md-raised-button ng-click="removeUser()"><span style="font-size: x-large">-</span></button>
+          <button md-raised-button (click)="addUser()" ><span style="font-size: x-large">+</span></button>
+          <button md-raised-button (click)="removeUser()"><span style="font-size: x-large">-</span></button>
         </section>
         <ul id="userslist" style="list-style: none;">
           <li class="user" *ngFor="let user of users" (click)="editUser(user)">
@@ -41,7 +41,7 @@
         <div *ngIf="editingUser">
           <app-user [user]="editedUser"></app-user>
           <div>
-            <button md-raised-button ng-click="generateKey()">Generate Key</button>
+            <button md-raised-button (click)="generateKey()">Generate Key</button>
           </div>
         </div>
       </div>

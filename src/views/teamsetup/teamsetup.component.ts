@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {UserService} from "../../services/user/user.service";
-import {User} from "../../app/models/user";
+import {UserService} from '../../services/user/user.service';
+import {User} from '../../app/models/user';
 
 @Component({
   selector: 'app-project',
@@ -20,6 +20,10 @@ export class TeamSetupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._getUsers();
+  }
+
+  private _getUsers() {
     this.userService.getUsers()
       .subscribe(
         users => {
@@ -38,5 +42,29 @@ export class TeamSetupComponent implements OnInit {
   public editUser(user: User) {
     this.editingUser = true;
     this.editedUser = user;
+  }
+
+  public addUser() {
+    this.editUser(new User());
+  }
+
+  public removeUser() {
+    this.editingUser = false;
+    this._removeUser();
+    this.editedUser = undefined;
+  }
+
+  private _removeUser() {
+    this.userService.removeUser(this.editedUser)
+      .subscribe(
+        result => {
+          this._getUsers();
+          console.log('Success!'); /* TODO: need to toast */
+        },
+        error => {
+          console.log(`Failure!  ${error}`);
+          /* TODO: need to toast */
+        }
+      );
   }
 }

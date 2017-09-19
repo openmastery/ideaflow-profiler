@@ -38,11 +38,11 @@ export class UserComponent implements OnInit {
   }
 
   get notNew(): boolean {
-    return isNullOrUndefined(this.user);
+    return this.user === undefined || this.user === null;
   }
 
   get isNew(): boolean {
-    return !this.notNew;
+    return !this.user;
   }
 
   create() {

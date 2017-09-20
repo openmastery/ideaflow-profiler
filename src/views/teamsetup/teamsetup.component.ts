@@ -14,6 +14,7 @@ export class TeamSetupComponent implements OnInit {
   editingUser = false;
   editedUser: User;
   users: User[];
+  apiKey: string;
 
   constructor(private userService: UserService) {
 
@@ -52,6 +53,20 @@ export class TeamSetupComponent implements OnInit {
     this.editingUser = false;
     this._removeUser();
     this.editedUser = undefined;
+  }
+
+  public generateKey() {
+    this.userService.create(this.editedUser)
+      .subscribe(
+        (apiKey) => {
+          console.log('Success!'); /* TODO: need to toast */
+          this.editedUser.apiKey = apiKey;
+        },
+        error => {
+          console.log(`Failure!  ${error}`);
+          /* TODO: need to toast */
+        }
+      );
   }
 
   private _removeUser() {

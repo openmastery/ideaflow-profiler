@@ -17,14 +17,17 @@ export class UserService {
 
   }
 
-  create(user: User) {
+  create(user: User): Observable<string> {
     return this.http
       .post(this.apiUrl + `/user`,
         JSON.stringify(user),
-        this.options);
+        this.options)
+      .map(response => {
+        return (<any>response)._body.trim();
+      });
   }
 
-  save(user: User) {
+  save(user: User)  {
     const url = this.apiUrl + `/user/${user.id}`;
     return this.http
       .put(url,

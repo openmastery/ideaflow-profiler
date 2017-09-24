@@ -14,7 +14,6 @@ export class TeamSetupComponent implements OnInit {
   editingUser = false;
   editedUser: User;
   users: User[];
-  apiKey: string;
 
   constructor(private userService: UserService) {
 
@@ -33,6 +32,14 @@ export class TeamSetupComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+
+  get hasApiKey(): boolean {
+    return !!this.editedUser.apiKey;
+  }
+
+  get hasNoApiKey(): boolean {
+    return !this.hasApiKey;
   }
 
   public createAccounts() {
@@ -61,6 +68,7 @@ export class TeamSetupComponent implements OnInit {
         (apiKey) => {
           console.log('Success!'); /* TODO: need to toast */
           this.editedUser.apiKey = apiKey;
+          this._getUsers();
         },
         error => {
           console.log(`Failure!  ${error}`);

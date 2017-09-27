@@ -31,8 +31,10 @@
         </section>
         <ul id="userslist" style="list-style: none;">
           <li class="user" *ngFor="let user of users" (click)="editUser(user)">
-            <div>{{user.name}}</div>
-            <div>{{user.email}}</div>
+            <div>
+              <span>{{user.name}}</span>
+              <div>{{user.email}}</div>
+            </div>
           </li>
         </ul>
       </md-sidenav>

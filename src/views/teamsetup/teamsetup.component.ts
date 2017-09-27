@@ -1,3 +1,4 @@
+import * as jQuery from 'jquery';
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserService} from '../../services/user/user.service';
 import {User} from '../../app/models/user';
@@ -6,7 +7,7 @@ import {User} from '../../app/models/user';
   selector: 'app-project',
   templateUrl: './teamsetup.component.html',
   styleUrls: ['./teamsetup.component.scss'],
-  encapsulation:  ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class TeamSetupComponent implements OnInit {
   accountsSetup = false;
@@ -28,10 +29,23 @@ export class TeamSetupComponent implements OnInit {
       .subscribe(
         users => {
           this.users = users;
+          this.editedUser = null;
+          this.removeSelectedUserClasses();
         },
         error => {
           console.log(error);
         });
+  }
+
+  private selectUser(user) {
+    this.removeSelectedUserClasses();
+    const divForEmail = jQuery(`div>div:contains(${user.email})`);
+    divForEmail.parent().addClass('selectedUser');
+  }
+
+  private removeSelectedUserClasses() {
+    const userDivs = jQuery(`#userslist > li > div[class='selectedUser']`);
+    userDivs.removeClass('selectedUser');
   }
 
   get hasApiKey(): boolean {
@@ -50,6 +64,7 @@ export class TeamSetupComponent implements OnInit {
   public editUser(user: User) {
     this.editingUser = true;
     this.editedUser = user;
+    this.selectUser(user);
   }
 
   public addUser() {
@@ -66,9 +81,11 @@ export class TeamSetupComponent implements OnInit {
     this.userService.create(this.editedUser)
       .subscribe(
         (apiKey) => {
-          console.log('Success!'); /* TODO: need to toast */
+          console.log('Success!');
+          /* TODO: need to toast */
           this.editedUser.apiKey = apiKey;
           this._getUsers();
+          this.selectUser(this.editedUser);
         },
         error => {
           console.log(`Failure!  ${error}`);
@@ -82,11 +99,16 @@ export class TeamSetupComponent implements OnInit {
       .subscribe(
         result => {
           this._getUsers();
-          console.log('Success!'); /* TODO: need to toast */
+          console.log('Success!');
+          /* TODO: need to toast */
         },
         error => {
           console.log(`Failure!  ${error}`);
           /* TODO: need to toast */
+        },
+        () => {
+          this.editedUser = null;
+          this.removeSelectedUserClasses();
         }
       );
   }

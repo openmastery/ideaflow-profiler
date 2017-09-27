@@ -49,6 +49,6 @@ export class UserService {
 
   removeUser(user: User) {
     return this.http
-      .delete(this.apiUrl + `/user/${user.id}`, this.options);
+      .delete(this.apiUrl + `/user/${user.email}`, this.options);
   }
 }

@@ -3,6 +3,7 @@ import { Headers, Http, BaseRequestOptions, RequestOptions } from '@angular/http
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import Constants from '../../Constants';
 import { FaqSummary } from '../../models/faqSummary';
 
 
@@ -15,8 +16,8 @@ export class FaqService {
   }
 
   getFaqs (): Observable<FaqSummary[]> {
-    let headers = new Headers({ 'X-API-Key': '2fe730cb-7b7b-4cf6-8228-0698c457cda8' });
-    let options = new RequestOptions({headers: headers});
+    const headers = new Headers({ 'X-API-Key': Constants.X_API_Key });
+    const options = new RequestOptions({headers: headers});
 
     return this.http
       .get(this.apiUrl + 'storyweb/faq', options)

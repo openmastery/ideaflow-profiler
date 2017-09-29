@@ -3,8 +3,8 @@ export class Task {
         public id: number,
         public creationDate: Date,
         public modifyDate: Date,
-        public name:string,
-        public description:string,
-        public project:string
+        public name: string,
+        public description: string,
+        public project: string
     ){}
 }

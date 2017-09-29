@@ -27,7 +27,8 @@ export class LoginComponent  {
     this.userService.getUsers()
       .subscribe(
         users => {
-          users.length = 0;
+          // Uncomment the next statement if you want to force routing to /TeamSetup
+          // users.length = 0;
           if (users.length === 0) {
             this.router.navigateByUrl('/TeamSetup');
           } else {
@@ -38,10 +39,6 @@ export class LoginComponent  {
           console.log(error);
         });
     return false;
-  }
-
-  private noTeamAccounts() {
-    return true;
   }
 
 }

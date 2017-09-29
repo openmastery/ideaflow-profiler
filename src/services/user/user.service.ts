@@ -38,7 +38,9 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http
       .get(this.apiUrl + '/user', this.options)
-      .map(response => <User[]>response.json());
+      .map(response => {
+          return <User[]>response.json();
+      });
   }
 
   load(id: string): Observable<User> {

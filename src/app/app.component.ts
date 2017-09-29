@@ -12,7 +12,7 @@ export class AppComponent {
   public navLinks = [
     'IdeaFlow',
     'Glossary',
-    'Team'
+    'TeamSetup'
   ];
 
   constructor(private userService: UserService) {

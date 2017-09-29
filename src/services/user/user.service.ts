@@ -44,4 +44,8 @@ export class UserService {
       .map(response => <User>response.json().contents);
   }
 
+  removeUser(user: User) {
+    return this.http
+      .delete(this.apiUrl + `/user/${user.apiKey}`, this.options);
+  }
 }

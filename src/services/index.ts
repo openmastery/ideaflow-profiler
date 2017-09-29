@@ -3,4 +3,3 @@ export { TaskService } from './task/task.service';
 export { UserService } from './user/user.service';
 export { GlossaryService } from './glossary/glossary.service';
 export { FaqService } from './faq/faq.service';
-export { AccountService } from './account/account.service';

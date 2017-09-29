@@ -1,6 +1,5 @@
 export { LoginComponent } from './login/login.component';
 export { ElementsComponent } from './elements/elements.component';
-export { AccountComponent } from './account/account.component';
 export { FaqComponent } from './faq/faq.component';
 export { GlossaryComponent } from './glossary/glossary.component';
 export { HomeComponent } from './home/home.component';

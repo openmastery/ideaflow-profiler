@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import {User} from '../../app/models/user';
 import {UserService} from '../../services';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-user',
@@ -13,10 +14,8 @@ import {ActivatedRoute} from "@angular/router";
   encapsulation: ViewEncapsulation.None
 })
 export class UserComponent implements OnInit {
+  @Input() user: User;
   private id: string;
-  private _user: User = new User();
-  public isNew = true;
-  public notNew = !this.isNew;
   public name = {
       errors: []
   };
@@ -38,13 +37,12 @@ export class UserComponent implements OnInit {
    }
   }
 
-  get user(): User {
-    return this._user;
+  get notNew(): boolean {
+    return this.user === undefined || this.user === null;
   }
 
-  set user(user: User) {
-    this.isNew = false;
-    this._user = user;
+  get isNew(): boolean {
+    return !this.user;
   }
 
   create() {
@@ -62,12 +60,10 @@ export class UserComponent implements OnInit {
   }
 
   save() {
-    debugger;
     this.userService.save(this.user)
       .subscribe(
         result => {
           console.log('Save success!'); /* TODO: need to toast */
-          this.isNew = false;
         },
         error => {
           console.log(`Failure to save!  ${error}`); /* TODO: need to toast */

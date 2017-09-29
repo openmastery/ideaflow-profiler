@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import {
   LoginComponent,
-  AccountComponent,
   FaqComponent,
   GlossaryComponent,
   HomeComponent,
@@ -35,18 +34,17 @@ import {
   UserService,
   FaqService,
 } from '../services';
-import {CapitalizePipe} from "../pipes/capitalizePipe";
-import {InlineEditComponent} from "../custom/inline-edit/inline-edit.component";
-import {WtfsComponent} from "../views/wtfs/wtfs.component";
-import {TermsComponent} from "../views/terms/terms.component";
-
+import {CapitalizePipe} from '../pipes/capitalizePipe';
+import {InlineEditComponent} from '../custom/inline-edit/inline-edit.component';
+import {WtfsComponent} from '../views/wtfs/wtfs.component';
+import {TermsComponent} from '../views/terms/terms.component';
+import {TeamSetupComponent} from '../views/teamsetup/teamsetup.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     AppComponent,
     LoginComponent,
-    AccountComponent,
     FaqComponent,
     GlossaryComponent,
     HomeComponent,
@@ -61,7 +59,8 @@ import {TermsComponent} from "../views/terms/terms.component";
     WtfsComponent,
     TermsComponent,
     CapitalizePipe ,
-    InlineEditComponent
+    InlineEditComponent,
+    TeamSetupComponent
 ],
   imports: [
     BrowserModule,

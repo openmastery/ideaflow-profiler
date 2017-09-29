@@ -89,17 +89,17 @@ export class HomeComponent implements OnInit {
 
   private selectUser(user) {
     this.removeSelectedUserClasses();
-    const spanForUser = jQuery(`span:contains(${user.name})`);
+    const spanForUser = jQuery(`span:contains(${user.name})`).filter(function() {return jQuery(this).text() === `${user.name}`; });
     spanForUser.addClass('selectedUser');
   }
 
   private removeSelectedUserClasses() {
-    const userSpans = jQuery('#userslist > li > span');
-    userSpans.removeClass('selectedUser');
+    const selectedUsers = jQuery(`span[class='selectedUser']`)
+      .removeClass('selectedUser');
   }
 
   private setUsers(response) {
-    this.users = <User[]>response;//.filter(user => (user.name !== null) && (user.email !== null));
+    this.users = <User[]>response; // .filter(user => (user.name !== null) && (user.email !== null));
   }
 
   private setTasks(response) {

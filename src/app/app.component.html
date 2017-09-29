@@ -1,15 +1,17 @@
 <main>
-  <header>
-    <nav md-tab-nav-bar>
-      <a md-tab-link
+  <div *ngIf="showNavlinks">
+    <header>
+      <nav md-tab-nav-bar>
+        <a md-tab-link
            *ngFor="let link of navLinks"
            [routerLink]="link"
            routerLinkActive #rla="routerLinkActive"
            [active]="rla.isActive">
           {{link}}
         </a>
-    </nav>
-  </header>
+      </nav>
+    </header>
+  </div>
   <main>
     <router-outlet></router-outlet>
   </main>

@@ -20,7 +20,6 @@ export class AppComponent {
     userService.getUsers()
       .subscribe(
         users => {
-          users.length = 0;
           this.showNavlinks = users.length > 0;
         },
         error => {
